@@ -12,16 +12,14 @@ while (<DATA>) {
 
     next if /^$/;
 
-    s/\s*//g;
-
     print "\n" if ( $. - 1 ) % 6 == 0;
 
-    my ( $id, $rgb ) = split(";");
+    my ( $space, $id, $rgb ) = /^(\s*)(\S+);(\S+)$/;
 
     my $fg = "\x1b[38;5;${id}m";
     my $bg = "\x1b[48;5;${id}m  ";
 
-    print sprintf( "%3s", $id ) . ":$fg $rgb $bg [33;5;0m ";
+    print $space . $id . ":$fg $rgb $bg \x1b[33;5;0m ";
 }
 
 print "\n\n";
