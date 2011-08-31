@@ -1,0 +1,79 @@
+#!/usr/bin/perl
+
+=pod
+
+=head1 Gnome_Nautilus_Send_Resized_Image_Via_Email
+
+Resize one or more images and add them as attachements to a new compose email window of the
+Evolution email client.
+
+=head1 Prerequisites
+
+Needs imagemagick
+
+=head1 Installation
+
+=over
+
+=item - copy script to ~/.gnome2/nautilus-scripts
+
+=item - rename the script to match what you want to see in the gnome file context menu
+
+=back
+
+=head1 Usage
+
+=over
+
+=item - select one or more images in Gnome-Nautilus
+
+=item - right click on one of the images
+
+=item - select scripts->"name you gave the script"
+
+=item - evolution compose window now opens with resized image/s as attachment
+
+=back
+
+=cut
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+
+use File::Basename;
+
+my $imgsize = "x600";
+
+my $evolution_cmd = "/usr/bin/evolution mailto:";
+
+my $first = 1;
+my $found = 0;
+foreach my $infile (@ARGV) {
+
+    next if !-e $infile;
+
+    $found = 1;
+
+    my $outfile = basename($infile);
+    my $image_type;
+    ( $outfile, $image_type ) = $outfile =~ /^(.+)\.(.+?)$/;
+
+    $outfile = "/tmp/${outfile}_verkleinert.$image_type";
+
+    qx { /usr/bin/convert -antialias -scale $imgsize "$infile" "$outfile" };
+
+    if ($first) {
+        $evolution_cmd .= "?";
+        $first--;
+    }
+    else {
+        $evolution_cmd .= "\\&";
+    }
+
+    $evolution_cmd .= qq{attach="$outfile"};
+}
+
+exit if !$found;
+
+qx { $evolution_cmd };
