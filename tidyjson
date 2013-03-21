@@ -5,7 +5,8 @@ use Pretty;
 use Sort::Naturally;
 
 undef $/;
-my $in   = <>;
+my $in = <> || exit;
+
 my $json = JSON::PP->new;
 my $dec  = $json->decode($in);
 
