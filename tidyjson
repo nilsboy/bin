@@ -1,0 +1,16 @@
+#!/usr/bin/env perl
+
+use JSON::PP;
+use Pretty;
+use Sort::Naturally;
+
+undef $/;
+my $in   = <>;
+my $json = JSON::PP->new;
+my $dec  = $json->decode($in);
+
+print $json->pretty->sort_by(
+    sub {
+        ncmp($JSON::PP::a, $JSON::PP::b);
+    }
+)->encode($dec);
