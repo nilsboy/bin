@@ -1,0 +1,55 @@
+#!/usr/bin/env perl
+
+use JSON::PP;
+use Pretty;
+use Sort::Naturally;
+use Path::Tiny;
+
+my $json = JSON::PP->new->filter_json_object(
+    sub {
+        my $o = shift;
+
+        if (ref $o eq 'HASH') {
+
+            while (my ($key, $value) = each %$o) {
+
+                if (ref $value eq 'HASH' && !%$value) {
+                    delete $o->{$key};
+                    next;
+                }
+
+                if (ref $value eq 'ARRAY' && !@$value) {
+                    delete $o->{$key};
+                    next;
+                }
+            }
+        }
+
+        return ();
+    }
+);
+
+if (@ARGV) {
+    foreach my $file (@ARGV) {
+        my $path = path($file);
+        my $in   = $json->decode($path->slurp);
+        $path->spew(
+            $json->pretty->sort_by(
+                sub {
+                    ncmp($JSON::PP::a, $JSON::PP::b);
+                }
+                )->encode($in)
+        );
+    }
+}
+else {
+    undef $/;
+    my $in = <STDIN> || exit;
+    $in = $json->decode($in);
+    print $json->pretty->sort_by(
+        sub {
+            ncmp($JSON::PP::a, $JSON::PP::b);
+        }
+    )->encode($in);
+}
+
