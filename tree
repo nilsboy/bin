@@ -1,0 +1,556 @@
+#!/usr/bin/env perl
+
+# List a directory as a tree.
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+
+use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
+
+use File::stat;
+
+binmode STDOUT, ":utf8";
+use File::Basename;
+use Cwd;
+
+use Getopt::Long;
+Getopt::Long::Configure("bundling");
+my %o                  = ();
+my @option_definitions = (
+    "directories-only|d", "summary",   "all|a",            "colors!",
+    "ascii",              "eval|e=s",  "exec|execute|x=s", "include=s",
+    "grep|g=s",           "exclude=s", "empty!",           "v|verbose",
+    "info|i",             "warnings!", "mounted!",         "stats",
+    "age",                "size|s",    "entry-count",      "html",
+);
+
+GetOptions( \%o, @option_definitions )
+    or die "Usage:\n" . join( "\n", sort @option_definitions ) . "\n";
+
+$o{empty}    = 1 if !defined $o{empty};
+$o{warnings} = 1 if !defined $o{warnings};
+$o{mounted}  = 0 if !defined $o{mounted};
+$o{colors}   = 1 if !defined $o{colors};
+
+if ( $ENV{LANG} !~ /utf/i ) {
+    $o{ascii} = 1;
+}
+
+if ( $o{info} ) {
+    $o{age}           = 1;
+    $o{size}          = 1;
+    $o{'entry-count'} = 1;
+}
+
+if ( $o{grep} ) {
+    $o{include} = ".*" . $o{grep} . ".*";
+    $o{empty}   = 0;
+}
+if ( $o{include} ) {
+    $o{all} = 1;
+}
+
+my $root_dir = $ARGV[0] || getcwd;
+my $root_dev = stat($root_dir)->dev;
+$root_dir =~ s/\/$//g;
+
+if ( $o{v} ) {
+    print STDERR "Using options: \n", Dumper \%o;
+}
+
+my $root = Path->new(
+    name        => basename($root_dir),
+    parent_name => dirname($root_dir),
+    is_root     => 1
+);
+
+$root->add_children;
+$root->print;
+$root->print_warnings;
+$root->print_stats;
+
+package Path;
+
+use Data::Dumper;
+use File::stat;
+
+my ( $blue, $green, $red, $gray, $no_color );
+my ( $graph_vertical, $graph_t, $graph_l, $graph_line );
+my %warnings;
+my %stats;
+
+sub init {
+    if ( $o{colors} ) {
+        $blue     = "\x1b[34;5;250m";
+        $green    = "\x1b[32;5;250m";
+        $red      = "\x1b[31;5;250m";
+        $gray     = "\x1b[38;5;243m";
+        $no_color = "\x1b[33;0m";
+    }
+
+    if ( $o{html} ) {
+        $blue     = q{<font color="blue">};
+        $green    = q{<font color="green">};
+        $red      = q{<font color="red">};
+        $gray     = q{<font color="gray">};
+        $no_color = q{</font>};
+    }
+
+    $graph_vertical = "\x{2502}";
+    $graph_t        = "\x{251c}";
+    $graph_l        = "\x{2514}";
+    $graph_line     = "\x{2500}";
+
+    if ( $o{ascii} ) {
+        $graph_vertical = "|";
+        $graph_t        = "+";
+        $graph_l        = "+";
+        $graph_line     = "-";
+    }
+}
+
+sub print {
+    my ( $self, $parent, $is_parent_last_entry, $prefix ) = @_;
+
+    $self->prefix($prefix);
+
+    print $self->prefix
+        . $self->dir_prefix($is_parent_last_entry)
+        . $self->color
+        . $self->name
+        . $self->link_info
+        . $no_color
+        . $self->warnings
+        . $self->info . "\n";
+
+    my $next_prefix = $is_parent_last_entry ? "  " : $graph_vertical . " ";
+    $next_prefix = $self->prefix . $next_prefix;
+    $next_prefix = "" if $self->is_root;
+
+    my $entry_count         = keys $self->entries;
+    my $current_entry_count = 0;
+    foreach my $path_name ( sort keys $self->entries ) {
+
+        $current_entry_count++;
+        my $is_last_entry = $current_entry_count == $entry_count;
+
+        my $path = $self->entries->{$path_name};
+
+        if ( $path->is_dir ) {
+            $path->print( $self, $is_last_entry, $next_prefix );
+            next;
+        }
+
+        my $name = $path->name;
+        if ( $path->count > 1 ) {
+            $name
+                = $red
+                . $path->count . "x "
+                . $green
+                . $path->normalized_marking
+
+                # . $gray . " ("
+                # . $path->name . ")"
+                . $no_color;
+        }
+
+        print $self->prefix
+            . $self->file_prefix( $is_parent_last_entry, $is_last_entry )
+            . $path->color
+            . $name
+            . $path->link_info
+            . $path->warnings
+            . $no_color
+            . $path->info . "\n";
+    }
+}
+
+sub link_info {
+    my ($self) = @_;
+    return if !$self->is_link;
+    return "$red -> " . readlink( $self->abs ) . $no_color;
+}
+
+sub print_warnings {
+
+    return if !%warnings;
+    return if !$o{warnings};
+
+    print "\n${red}Warnings:\n", dumps( \%warnings, $red ), "\n";
+}
+
+sub print_stats {
+
+    return if !%stats;
+    return if !$o{stats};
+
+    print "\nStats:\n", dumps( \%stats ), "\n";
+}
+
+sub dumps {
+    my ( $ref, $color ) = @_;
+
+    $Data::Dumper::Sortkeys = 1;
+    $Data::Dumper::Terse    = 1;
+    $Data::Dumper::Indent   = 1;
+    $Data::Dumper::Pair     = ": ";
+
+    my $s = Dumper $ref;
+    $s =~ s/['{}]*//g;
+    $s =~ s/,$//gm;
+    $s =~ s/\s+$//gms;
+    $s =~ s/\n\n//gm;
+    $s =~ s/^\n//gm;
+    $s = $color . $s . $no_color;
+    $s .= "\n";
+    return $s;
+}
+
+sub humanize_secs {
+    my ($secs) = @_;
+
+    my $human;
+
+    if ( $secs >= 359999 ) {    # 99 h
+        $human = sprintf( "%0dd", $secs / 60 / 60 / 24 );
+    }
+    elsif ( $secs >= 5999 ) {    # 99 m
+        $human = sprintf( "%0dh", $secs / 60 / 60 );
+    }
+    elsif ( $secs >= 60 ) {
+        $human = sprintf( "%0dm", $secs / 60 );
+    }
+    else {
+        $human = $secs . "s";
+    }
+
+    return $human;
+}
+
+sub humanize_bytes {
+    my ($bytes) = @_;
+
+    my $k = 1024;
+    my $m = $k * 1024;
+    my $g = $m * 1024;
+    my $t = $g * 1024;
+
+    my $human;
+
+    if ( $bytes >= $t ) {
+        $human = sprintf( "%.1fT", $bytes / $t );
+    }
+    elsif ( $bytes >= $g ) {
+        $human = sprintf( "%.1fG", $bytes / $g );
+    }
+    elsif ( $bytes >= $m ) {
+        $human = sprintf( "%.1fM", $bytes / $m );
+    }
+    elsif ( $bytes >= $k ) {
+        $human = sprintf( "%.1fK", $bytes / $k );
+    }
+    elsif ( $bytes == 0 ) {
+        $human = $bytes;
+    }
+    else {
+        $human = $bytes . "B";
+    }
+
+    return $human;
+}
+
+BEGIN {
+    for my $accessor (qw( color prefix name parent_name is_root count)) {
+        no strict 'refs';
+        *{$accessor} = sub {
+            my $self = shift;
+            return $self->{$accessor} if !@_;
+            $self->{$accessor} = shift;
+        };
+    }
+}
+
+sub warnings {
+    my ($self) = @_;
+    return if !$self->{warnings};
+    return
+          " "
+        . $red
+        . join( "$no_color, $red", @{ $self->{warnings} } )
+        . $no_color;
+}
+
+sub info {
+    my ($self) = @_;
+
+    my @info;
+
+    if ( $o{'entry-count'} ) {
+        push( @info, "Entries: " . ( keys $self->entries || 0 ) )
+            if $self->is_dir;
+    }
+
+    if ( $o{age} ) {
+        push( @info, "Changed: " . $self->age );
+    }
+
+    if ( $o{size} ) {
+        push( @info, $self->size );
+    }
+
+    if ( $o{eval} ) {
+        $_ = $self->abs;
+        my $eval = eval $o{eval};
+        die $@ if $@;
+        push( @info, $eval );
+    }
+
+    if ( $o{exec} ) {
+        my $exec = $o{exec};
+        my $abs  = $self->abs;
+        $exec =~ s/\{\}/'$abs'/g;
+        print STDERR "Executing in the shell: $exec\n" if $o{v};
+        $exec = `$exec`;
+        $exec =~ s/\n+$//g;
+        $exec =~ s/\n/ | /g;
+        $exec =~ s/^ +//g;
+        push( @info, $exec );
+    }
+
+    return if !@info;
+    return " " . $gray . join( ", ", @info ) . $no_color;
+}
+
+sub file_prefix {
+    my ( $self, $is_last_dir_entry, $is_last_entry ) = @_;
+
+    my $fork     = $is_last_entry     ? $graph_l : $graph_t;
+    my $dir_fork = $is_last_dir_entry ? " "      : $graph_vertical;
+    if ( $self->is_root ) {
+        $dir_fork = "";
+    }
+    else {
+        $dir_fork .= " ";
+    }
+
+    return $dir_fork . $fork . $graph_line;
+}
+
+sub dir_prefix {
+    my ( $self, $is_last_entry ) = @_;
+
+    return if $self->is_root;
+
+    my $fork = $is_last_entry ? $graph_l : $graph_t;
+
+    return $fork . $graph_line;
+}
+
+sub new {
+    init;
+    my $class = shift;
+    my %p     = @_;
+    return bless { %p, color => $blue }, $class;
+}
+
+sub add_children {
+    my ($self) = @_;
+
+    my $dirh;
+    if ( !opendir( $dirh, $self->abs ) ) {
+        $self->add_warning( "ERROR: " . $! );
+        return;
+    }
+
+    while ( my $entry = readdir($dirh) ) {
+
+        next if $entry =~ /^\.{1,2}$/;
+
+        my $path = Path->new( parent_name => $self->abs, name => $entry, );
+
+        if ( $entry =~ /^\./ ) {
+            $path->add_warning('DOTFILE');
+            next if !$o{all};
+        }
+
+        $self->add($path);
+    }
+    closedir($dirh) || die $!;
+}
+
+sub has_entries {
+    my ($self) = @_;
+    keys %{ $self->{entries} } != 0;
+}
+
+sub entries {
+    my ($self) = @_;
+    $self->{entries} ||= {};
+    return $self->{entries};
+}
+
+sub is_mounted {
+    my ($self) = @_;
+
+    my $dev = stat( $self->abs )->dev;
+
+    if ( $dev != $root_dev ) {
+        return 1;
+    }
+
+    return 0;
+}
+
+sub add_warning {
+    my ( $self, $warning ) = @_;
+
+    $warnings{$warning}++;
+    push( @{ $self->{warnings} }, $warning );
+}
+
+sub add {
+    my ( $self, $path ) = @_;
+
+    $path->add_warning("PRECEDING SPACE") if $path->name =~ /^\ /;
+    $path->add_warning("TRAILING SPACE")  if $path->name =~ /\ $/;
+
+    if ( $o{include} ) {
+        return 0 if $path->abs !~ /$o{include}/i;
+    }
+
+    if ( $o{exclude} ) {
+        return 0 if $path->abs =~ /$o{exclude}/i;
+    }
+
+    if ( $path->is_link ) {
+        $path->add_warning("LINK");
+    }
+
+    if ( $path->is_dir ) {
+
+        $path->color($blue);
+        $stats{Directories}++;
+
+        if ( $path->name =~ /^\.(git|svn)/ ) {
+            $path->add_warning("SCM DIR");
+        }
+        elsif ( $path->is_mounted ) {
+            $path->add_warning("MOUNTED");
+        }
+        else {
+            if ( !$path->is_link ) {
+                $path->add_children;
+            }
+            if ( !$path->has_entries && !$o{empty} ) {
+                return;
+            }
+        }
+
+        $self->entries->{ $path->name } = $path;
+        return;
+    }
+
+    if ( $o{'directories-only'} ) {
+        return;
+    }
+
+    $path->color($green);
+
+    my ($extension) = $path->name =~ /\.([^\.]+)$/;
+    $extension = "" if $path->name !~ /\./;
+    $extension = "" if $extension =~ /^\d+$/;
+
+    $stats{Files}++;
+    $stats{'File extensions'}{$extension}++;
+
+    my $path_key = $path->name;
+
+    if ( $o{summary} ) {
+        $path_key = $path->normalized;
+        $path->count(1);
+    }
+
+    if ( exists $self->entries->{$path_key} ) {
+        $self->entries->{$path_key}{count}++;
+    }
+    else {
+        $self->entries->{$path_key} = $path;
+    }
+}
+
+sub is_dir {
+    my ($self) = @_;
+    return -d $self->abs;
+}
+
+sub is_link {
+    my ($self) = @_;
+    return -l $self->abs;
+}
+
+sub abs {
+    my ($self) = @_;
+
+    return $self->name if !$self->parent_name;
+    return $self->parent_name . "/" . $self->name;
+}
+
+sub normalized {
+    my ($self) = @_;
+
+    my $normalized = $self->name;
+    $normalized =~ s/[0-9a-f\W\d\s_]{2,}//gi;
+    return $normalized;
+}
+
+sub normalized_marking {
+    my ($self) = @_;
+
+    # return $self->normalized;
+
+    my $normalized = $self->name;
+    $normalized =~ s/([0-9a-f\-]{2,}|[\W\d\s_]{2,})/${red}$^N$no_color/gi;
+    return $normalized;
+}
+
+sub age {
+    my ($self) = @_;
+
+    my $sb = stat( $self->abs );
+
+    my $age   = time - $sb->mtime;
+    my $h_age = humanize_secs($age);
+    $h_age = $red . $h_age . $no_color if $h_age =~ /[sm]/;
+    return $h_age;
+}
+
+sub size {
+    my ($self) = @_;
+
+    return if $self->is_dir;
+
+    my $size       = stat( $self->abs )->size;
+    my $blocks     = stat( $self->abs )->blocks;
+    my $block_size = stat( $self->abs )->blksize;
+
+    my $alloc = $blocks * 512;
+    my $done  = 100;
+    $done = $alloc / ( $size / 100 ) if $size != 0;
+    $done = int($done);
+
+    my $info = $gray . "Size: " . humanize_bytes($size);
+
+    return $info if $done >= 100;
+
+    $self->add_warning("INCOMPLETE");
+
+    return
+          $gray
+        . "Size: "
+        . humanize_bytes($alloc) . "/"
+        . humanize_bytes($size)
+        . " - ${red}$done\%"
+        . $gray;
+}
