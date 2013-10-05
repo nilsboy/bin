@@ -1,0 +1,4 @@
+Tools that make my shell life easier and are too big to fit into my bashrc.
+
+Most of the tools are implemented in core perl so they do not need additional
+modules from CPAN and thus can be used directly on most unix systems.
