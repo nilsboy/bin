@@ -1,0 +1,47 @@
+#!/usr/bin/env perl
+
+# Search for lines matching one or more perl regex patterns.
+
+use strict;
+use warnings;
+use Data::Dumper;
+
+use Getopt::Long;
+Getopt::Long::Configure("bundling");
+
+my $red      = "\x1b[38;5;124m";
+my $no_color = "\x1b[33;0m";
+
+if ( !-t STDOUT ) {
+    $red = $no_color = "";
+}
+
+my $opts = {
+    "f|file=s"           => \my $file,
+    "p|prefix-file-name" => \my $prefix,
+};
+GetOptions(%$opts) or die "Usage:\n$0 " . join( "\n", sort keys %$opts ) . "\n";
+
+my @patterns = @ARGV;
+@patterns || die "Specify patterns to search for.";
+
+my $h = *STDIN;
+if ($file) {
+    open( $h, $file ) || die $!;
+}
+
+LINE: while (<$h>) {
+
+    foreach my $pattern (@patterns) {
+        if ( !s/(\Q$pattern\E)/$red$1$no_color/gi ) {
+            next LINE;
+        }
+    }
+
+    if ($prefix) {
+        print "$file:$.:$_";
+    }
+    else {
+        print;
+    }
+}

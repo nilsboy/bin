@@ -1,0 +1,289 @@
+#!/usr/bin/env perl
+
+# Quick way to view a csv file on the command line.
+
+use warnings;
+no warnings qw{uninitialized};
+use Data::Dumper;
+
+use Getopt::Long;
+use Encode;
+
+my $opts = { "c|count=i" => \my $count, };
+GetOptions(%$opts) or die "Usage:\n" . join( "\n", sort keys %$opts ) . "\n";
+
+my %field_types = (
+    num   => qr/^[\.,\d]+[%gmt]{0,1}$/i,
+    nnum  => qr/^[\-\.,\d]+$/,
+    alph  => qr/^[a-z]+$/i,
+    anum  => qr/^[a-z0-9]+$/i,
+    msc   => qr/./i,
+    blank => qr/^[\s]*$/,
+    empty => qr/^$/,
+);
+
+my @field_type_order = qw(num nnum alph anum blank empty msc);
+
+my $file;
+my $is_temp_file = 0;
+if ( !-t STDIN ) {
+    $file         = "/tmp/csvvview.stdin.$$.csv";
+    $is_temp_file = 1;
+
+    open( F, ">", $file ) || die $!;
+    while (<>) {
+        print F $_;
+    }
+    close(F);
+
+}
+else {
+    $file = shift @ARGV || die "File?";
+}
+
+open( F, $file ) || die $!;
+
+my %stats        = ( File => $file );
+my %fields       = ();
+my $delimiter    = find_delimiter();
+my $screen_lines = $ENV{LINES} - 1;
+
+my $empty_line_regex = qr/^[$delimiter\s]*$/;
+
+my @header;
+my $header;
+my @column_ids_header;
+my $column_ids_header;
+my @line;
+my $line;
+
+analyze_data();
+
+my $lines_shown = 0;
+
+my $last_line;
+open( F, $file ) || die $!;
+binmode STDOUT, ":utf8";
+while (<F>) {
+
+    s/[\r\n]//g;
+
+    # convert latin to utf8 if necessary
+    if (/[\xc0\xc1\xc4-\xff]/) {
+        $stats{encoding} = "latin1";
+        $_ = decode( "iso-8859-15", $_ );
+    }
+
+    if ( $_ =~ $empty_line_regex || $_ =~ /^#/ ) {
+        next;
+    }
+
+    if ( $lines_shown % $screen_lines == 0 ) {
+        print stats()
+            . $column_ids_header
+            . $header
+            . padded_line( \@line, "-" );
+        $lines_shown += 4;
+        next;
+    }
+
+    print padded_line( [ split($delimiter) ] );
+
+    $lines_shown++;
+    $last_line = $.;
+}
+
+print "\n" x ( $screen_lines
+        - ( $lines_shown - int( $lines_shown / $screen_lines ) * $screen_lines )
+);
+
+close(F);
+
+sub find_delimiter {
+
+    my $sample;
+
+    open( F, $file ) || die $!;
+    my $line = 0;
+    while (<F>) {
+        next if /^#/;
+        s/[\r\n]//g;
+        $line++;
+        $sample .= $_;
+        last if $line == 3;
+    }
+    close(F);
+
+    my @special_chars      = $sample =~ /([^\w"])/g;
+    my %special_char_count = ();
+    map { $special_char_count{$_}++ } @special_chars;
+
+    my $delimiter;
+
+    if ( $sample =~ / {3,}/ ) {
+        $delimiter = " +";
+    }
+    else {
+        my $max = 0;
+        foreach my $special_char ( keys %special_char_count ) {
+            next if $special_char_count{$special_char} < $max;
+            $delimiter = $special_char;
+            $max       = $special_char_count{$special_char};
+        }
+    }
+
+    $stats{delimiter} = '"' . $delimiter . '"';
+    return $delimiter || die "No delimiter found.";
+}
+
+sub calculate_alpha_column_name {
+    my ($num) = @_;
+
+    my $r;
+    while ( $num != 0 ) {
+        $r = chr( $num % 26 + 64 ) . $r if $num % 26;
+        $num = int( $num / 26 );
+    }
+
+    return $r;
+}
+
+sub analyze_data {
+
+    my $header_line;
+    open( F, $file ) || die $!;
+
+    while (<F>) {
+
+        $stats{format} = "dos" if /\r/;
+        s/[\r\n]//g;
+
+        $stats{Lines} = $.;
+
+        if ( $. == 1 ) {
+            $header_line = $_;
+            next;
+        }
+
+        if ( $_ =~ $empty_line_regex ) {
+            $stats{"Empty Lines"}++;
+            next;
+        }
+
+        add_field_stats( [ split($delimiter) ] );
+    }
+    close(F);
+
+    @header = split( $delimiter, $header_line );
+    add_field_stats( \@header, 1 );
+
+    set_field_types();
+    create_column_ids_header();
+    add_field_stats( \@column_ids_header, 1 );
+
+    $column_ids_header = padded_line( \@column_ids_header );
+    $header            = padded_line( \@header );
+
+    my $i = -1;
+    foreach my $value (@header) {
+        $i++;
+        $line[$i] = "-" x $fields{$i}{length};
+    }
+    $line = padded_line( \@line );
+
+    foreach my $field ( keys %fields ) {
+
+        if ( $fields{$field}{type} eq "blank" ) {
+            $stats{"Blank columns"}++;
+            next;
+        }
+
+        if ( $fields{$field}{type} eq "empty" ) {
+            $stats{"Empty columns"}++;
+            next;
+        }
+    }
+}
+
+sub add_field_stats {
+    my ( $line, $ignore_empty ) = @_;
+    my $i = -1;
+    foreach my $value (@$line) {
+        $i++;
+        if ( !$ignore_empty || $fields{$i}{length} ) {
+            $fields{$i}{length} = length($value)
+                if length($value) > $fields{$i}{length};
+        }
+
+        next if $ignore_empty;
+
+        $fields{$i}{values}{$value}++;
+
+        foreach my $field_type (@field_type_order) {
+            my $regex = $field_types{$field_type};
+            if ( $value =~ $regex ) {
+                $fields{$i}{types}{$field_type} = $value;
+                last;
+            }
+        }
+    }
+}
+
+sub padded_line {
+    my ( $in, $pad ) = @_;
+
+    $pad ||= " ";
+
+    my @out;
+    my $i2 = -1;
+    foreach my $i ( sort { $a <=> $b } keys %fields ) {
+        my $value = $in->[$i];
+        next if $fields{$i}{type} =~ /empty|blank/;
+        $i2++;
+        $fields{$i}{name} = $header[$i];
+        my $justify = $fields{$i}{type} eq "num" ? "" : "-";
+        $out[$i2]
+            = sprintf( '%' . $justify . $fields{$i}{length} . 's', $value );
+    }
+    return join( " | ", @out ) . "\n";
+}
+
+sub stats {
+    my $s = "File: " . $stats{File};
+    local $stats{File};
+    delete $stats{File};
+    my @r;
+    my $i = -1;
+    map { $i++; $r[$i] = $_ . ": " . $stats{$_} } sort keys %stats;
+    return $s . ", " . join( ", ", @r ) . "\n";
+}
+
+sub create_column_ids_header {
+    my $i = -1;
+    foreach my $value (@header) {
+        $i++;
+        $column_ids_header[$i]
+            = ( $i + 1 ) . " ("
+            . calculate_alpha_column_name( $i + 1 ) . ") "
+            . $fields{$i}{type} . " "
+            . keys( %{ $fields{$i}{values} } );
+    }
+}
+
+sub set_field_types {
+    my $i = -1;
+    foreach my $field (@header) {
+        $i++;
+        foreach my $type (@field_type_order) {
+            next if !exists $fields{$i}{types}{$type};
+            $fields{$i}{type} = $type;
+            last;
+        }
+    }
+}
+
+END {
+    if ($is_temp_file) {
+        unlink($file) if -e $file;
+    }
+}

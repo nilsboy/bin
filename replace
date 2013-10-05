@@ -1,0 +1,64 @@
+#!/usr/bin/env perl
+
+# Change the contens of text files by perl expression.
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+use Data::Dumper;
+use Getopt::Long;
+
+my $red = "\x1b[38;5;124m";
+my $dry = 1;
+
+my $opts = {
+    "e|eval=s"  => \my $op,
+    "x|execute" => sub { $dry = 0 },
+};
+GetOptions(%$opts) || usage();
+$op || usage();
+
+sub usage { die "Usage:\n" . join( "\n", sort keys %$opts ) . "\n"; }
+
+my $file_count;
+my $files_changed = 0;
+my $example_file;
+
+while (<STDIN>) {
+
+    $file_count++;
+
+    local $/ = undef;
+
+    chomp;
+    my $file = $_;
+    $file =~ s/\n//g;
+
+    open( F, $file ) || die $!;
+    my $data = <F>;
+    close(F) || die $!;
+
+    $_ = $data;
+
+    eval $op;
+    die $@ if $@;
+
+    next if $_ eq $data;
+
+    $files_changed++;
+    $example_file = $file;
+
+    next if $dry;
+
+    $data = $_;
+
+    open( F, ">", $file ) || die $!;
+    print F $data;
+    close(F) || die $!;
+}
+
+exit 1 if !$files_changed;
+
+print STDERR "$files_changed of $file_count files changed"
+    . " (example: $example_file)"
+    . ( $dry ? "$red - dry run." : "" ) . "\n";

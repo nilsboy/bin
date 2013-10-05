@@ -1,0 +1,141 @@
+#!/usr/bin/env perl
+
+# Cleaned up jobs replacement.
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+use Data::Dumper;
+
+my $black     = "\x1b[38;5;0m";
+my $gray      = "\x1b[38;5;250m";
+my $dark_gray = "\x1b[38;5;243m";
+my $red       = "\x1b[38;5;124m";
+
+my %cmds      = ();
+my %last_args = ();
+
+foreach ( split( "\n", $ENV{_bashrc_jobs} ) ) {
+
+    my ( $jid, $state, $cmd ) = /^(\[\d+\][+-]*)\s+(\S+)\s+(.+)\s*$/;
+
+    next if !$jid;
+
+    $jid =~ s/[\[\]]//g;
+    $jid = " $jid" if $jid !~ /\d\d/g;
+    my ($wd) = $cmd =~ /\s+\(wd\:\ (.+)\)\s*$/;
+    $cmd =~ s/\s+\(wd\:\ (.+)\)\s*$//g;
+
+    $cmd =~ s/^(\w+=\w*\s+)*//g;
+
+    my $args = $cmd;
+
+    ($cmd) = $cmd =~ /^\s*([^\s]+)/;
+
+    my ($last_arg) = $args;
+    $last_arg =~ s/(\||\().*$//g;
+    $last_arg =~ s/\w*>.*$//g;
+    $last_arg =~ s/[\s&]*$//g;
+    ($last_arg) = $last_arg =~ /[\s]*([^\s]+|$)$/;
+    my $full_last_arg = $last_arg;
+    $last_arg =~ s/.*\///g;
+
+    if ( $args eq $cmd ) {
+        $args = "";
+    }
+
+    if ( $last_arg eq $cmd ) {
+        $last_arg = "";
+    }
+
+    if ( $cmd eq "(" ) {
+        $cmd .= ")";
+    }
+    else {
+        $args = "";
+    }
+
+    my $max = $ENV{_bashrc_columns} - length($cmd) - length($last_arg) - 5 - 1;
+    my $length = length($args);
+
+    if ( $length > $max ) {
+        my $leave = $max / 2;
+        $args
+            = substr( $args, 0, $leave - 1 )
+            . "$red*$gray"
+            . substr( $args, $length - $leave + 1, $leave );
+    }
+
+    push( @{ $last_args{$last_arg} }, $jid ) if $last_arg;
+    $cmds{$jid} = [ $cmd, $last_arg, $args, $full_last_arg, $state ];
+}
+
+# lengthen args that are the same until they are not
+foreach my $jid ( keys %last_args ) {
+
+    next if @{ $last_args{$jid} } == 1;
+
+    my %diff       = ();
+    my $length     = 0;
+    my $max_length = 0;
+
+    while (1) {
+
+        %diff = ();
+        $length++;
+
+        foreach my $same_jid ( @{ $last_args{$jid} } ) {
+
+            my $arg = $cmds{$same_jid}[3];
+
+            $max_length = length($arg) if length($arg) > $max_length;
+
+            if ( length($arg) <= $length ) {
+                $diff{$arg} = $same_jid;
+                next;
+            }
+
+            $arg = substr( $arg, length($arg) - $length, length($arg) );
+
+            $diff{$arg} = $same_jid;
+        }
+
+        last if keys(%diff) == @{ $last_args{$jid} };
+        last if $length == $max_length;
+    }
+
+    my $final_length = 0;
+
+    # add everything after the first slash
+    foreach my $arg ( keys %diff ) {
+
+        my $jid = $diff{$arg};
+
+        my $org_arg = $cmds{$jid}[3];
+
+        ($arg) = $org_arg =~ /.*\/(.+$arg)$/;
+
+        $arg =~ s#/.+/#/\*/#g;
+
+        $final_length = length($arg) if length($arg) > $final_length;
+
+        $cmds{$jid}[1] = $arg || $org_arg;
+    }
+
+    # prefix with space to same length
+    foreach my $jid ( values %diff ) {
+        my $arg = $cmds{$jid}[1];
+        $cmds{$jid}[1] = sprintf( "%${final_length}s", $arg );
+    }
+}
+
+foreach my $jid ( sort keys %cmds ) {
+
+    my ( $cmd, $last_arg, $args, $full_last_arg, $state ) = @{ $cmds{$jid} };
+
+    my $fg = $black;
+    $fg = $red if $state =~ /running/i;
+
+    print $fg;
+    printf( "%-3s %s %s %s\n", $jid, $cmd, $last_arg, $gray . $args . $black );
+}

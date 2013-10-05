@@ -1,0 +1,78 @@
+#!/usr/bin/env perl
+
+# Easily dump a web site.
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+use Data::Dumper;
+use File::Copy;
+use Getopt::Long;
+Getopt::Long::Configure("bundling");
+
+my $opts = {
+    "h|only-show-response-headers" => \my $show_headers,
+    "s|strip-tags"                 => \my $strip_tags,
+    "f|save-to-file"               => \my $to_file,
+    "r|replace"                    => \my $overwrite,
+    "o|out-file=s"                 => \my $file,
+};
+GetOptions(%$opts) or die "Usage:\n" . join( "\n", sort keys %$opts ) . "\n";
+
+my $url = $ARGV[0] || die "Specify URL.";
+
+if ( $url !~ m#^(.+?)://# ) {
+    $url = "http://$url";
+}
+
+if ($to_file) {
+    if ( !$file ) {
+        ($file) = $url =~ m#^.+?://.*?/([^\/]+)$#;
+    }
+    die "Error creating file name from url." if !$file;
+    die "File exists: $file" if -f $file && !$overwrite;
+}
+
+my $options = "--no-check-certificate ";
+if ($show_headers) {
+    $options .= "-S ";
+}
+
+my $content = `wget $options -qqO- "$url"` || die "Request failed. $!";
+
+exit 0 if $show_headers;
+
+die "Empty response from $url." if !$content;
+
+if ($strip_tags) {
+    $content =~ s#<\s*script.+?>.+?</script>##imsg;
+    $content =~ s#<\s*head.+?>.+?</head>##imsg;
+    $content =~ s#\n+##igms;
+    $content =~ s#<(br)/*>#\n#igms;
+    $content =~ s#<(li).*?>#\* #igms;
+    $content =~ s#</(li).*?>#\n#igms;
+    $content =~ s#</(p|div).*?>#\n\n#igms;
+    $content =~ s#</h\d+.*?>#\n\n#igms;
+    $content =~ s#<.+?/>\n*##igms;
+    $content =~ s#<td.*?>#\t#igms;
+    $content =~ s#</tr.*?>#\n#igms;
+
+    $content =~ s#<.+?>##igms;
+
+    $content =~ s#&minus;#-#igms;
+    $content =~ s#&gt;#>#igms;
+    $content =~ s#&lt;#<#igms;
+    $content =~ s#&\w+;# #igms;
+    $content =~ s/&#\d+;/ /igms;
+}
+
+if ( $to_file || $file ) {
+    my $tmp_file = "/tmp/wcat.$$.$file";
+    open( F, ">", $tmp_file ) || die "Cannot write to file: $tmp_file: $!";
+    print F $content;
+    close(F);
+    move( $tmp_file, $file ) || die "Cannot move to file $file: $!";
+}
+else {
+    print $content;
+}

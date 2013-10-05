@@ -1,0 +1,145 @@
+#!/usr/bin/env perl
+
+# Rename files by perl expression.
+# Protect against duplicate resulting file names.
+
+use strict;
+use warnings;
+use Data::Dumper;
+
+use File::Basename;
+use File::Copy qw(mv);
+use File::stat;
+
+use Getopt::Long;
+Getopt::Long::Configure('bundling');
+
+my $dry = 1;
+
+my $opts = {
+    'x|execute' => sub { $dry = 0 },
+    'd|include-directories' => \my $include_directories,
+    'n|normalize'           => \my $normalize,
+    'e|execute-perl=s'      => \my $op,
+    'l|list-from-file=s'    => \my $list_file,
+    'S|dont-split-off-dir'  => \my $dont_split_off_dir,
+};
+GetOptions(%$opts) or die "Usage:\n" . join( "\n", sort keys %$opts ) . "\n";
+
+if ($list_file) {
+    open( F, $list_file ) || die $!;
+    @ARGV = <F>;
+    close(F);
+    map {chop} @ARGV;
+}
+
+if ( !@ARGV ) {
+    die "Usage: xmv [-x] [-d] [-n] [-l file] [-S] [-e perlexpr] [filenames]\n";
+}
+
+my %will  = ();
+my %was   = ();
+my $abort = 0;
+my $COUNT = 0;
+
+for (@ARGV) {
+
+    next if /^\.{1,2}$/;
+
+    my $abs  = $_;
+    my $dir  = dirname($_);
+    my $file = basename($_);
+
+    if ($dont_split_off_dir) {
+        $dir  = "";
+        $file = $_;
+    }
+
+    $dir = "" if $dir eq ".";
+    $dir .= "/" if $dir;
+
+    $abs = $dir . $file;
+    my $was = $file;
+    $_ = $file;
+
+    $_ = normalize($abs) if $normalize;
+
+    # vars to use in perlexpr
+    $COUNT++;
+    $COUNT = sprintf( "%0" . length( scalar(@ARGV) ) . "d", $COUNT );
+
+    if ($op) {
+        eval $op;
+        die $@ if $@;
+    }
+
+    my $will = $dir . $_;
+
+    if ( !-e $abs ) {
+        warn "no such file: '$was'";
+        $abort = 1;
+        next;
+    }
+
+    if ( -d $abs && !$include_directories ) {
+        next;
+    }
+
+    my $other = $will{$will} if exists $will{$will};
+    if ($other) {
+        warn "name '$will' for '$abs' already taken by '$other'.";
+        $abort = 1;
+        next;
+    }
+
+    next if $will eq $abs;
+
+    if ( -e $will ) {
+        warn "file '$will' already exists.";
+        $abort = 1;
+        next;
+    }
+
+    $will{$will} = $abs;
+    $was{$abs}   = $will;
+}
+
+exit 1 if $abort;
+
+foreach my $was ( sort keys %was ) {
+
+    my $will = $was{$was};
+
+    print "moving '$was' -> '$will'\n";
+
+    next if $dry;
+
+    # system("mv", $was, $will) && die $!;
+    my $stat = stat($was) || die $!;
+    mv( $was, $will ) || die $!;
+    utime( $stat->atime, $stat->mtime, $will ) || die $!;
+}
+
+sub normalize {
+    my ($abs) = @_;
+
+    my $file = basename($abs);
+    my $ext  = "";
+
+    if ( !-d $abs && $file =~ /^(.+)(\..+?)$/ ) {
+        ( $file, $ext ) = ( $1, $2 );
+    }
+
+    $_ = $file;
+
+    s/www\.[^\.]+\.[[:alnum:]]+//g;
+    s/['`´]+//g;
+    s/[^\w\.]+/_/g;
+    s/[\._]+/_/g;
+    s/^[\._]+//g;
+    s/[\._]+$//g;
+
+    $_ ||= "_empty_file_name";
+
+    return $_ . lc($ext);
+}
