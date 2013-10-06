@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 
+# Tidy a json file and sort hash keys to make the output diffable.
+
 use strict;
 use warnings;
 use JSON::PP;
