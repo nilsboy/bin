@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Recursively decompile a jar including contained jars.
+
+set -e
+
+org_jar=$1
+tmp_dir=$(basename $org_jar).decompiled
+
+mkdir $tmp_dir
+cp $org_jar $tmp_dir/
+
+cd $tmp_dir
+
+while true ; do
+
+    for jar in $(find -iname "*.jar") ; do
+
+        INFO "Unpacking jar: $jar..."
+        jar xf $jar
+        rm $jar
+
+    done
+
+    if [[ ! $(find -iname "*.jar") ]] ; then
+        break
+    fi
+
+done
+
+INFO "Decompiling classes..."
+
+set +e
+for class in `find . -name '*.class'`; do
+
+    if jad -d $(dirname $class) -s java -lnc $class 2>/dev/null 1>/dev/null ; then
+        rm $class
+    else
+        ERROR "Can not be decompiled: $class"
+    fi
+
+done
