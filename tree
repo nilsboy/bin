@@ -13,7 +13,8 @@ use File::stat;
 
 binmode STDOUT, ":utf8";
 use File::Basename;
-use Cwd;
+use Cwd qw(abs_path getcwd);
+use File::Spec;
 
 use Getopt::Long;
 Getopt::Long::Configure("bundling");
@@ -24,6 +25,7 @@ my @option_definitions = (
     "grep|g=s",           "exclude=s", "empty!",           "v|verbose",
     "info|i",             "warnings!", "mounted!",         "stats",
     "age",                "size|s",    "entry-count",      "html",
+    "abs",
 );
 
 GetOptions(\%o, @option_definitions)
@@ -58,6 +60,7 @@ my $root_dev;
 
 foreach my $root_dir (@ARGV) {
 
+    $root_dir = File::Spec->rel2abs($root_dir);
     $root_dev = stat($root_dir)->dev;
     $root_dir =~ s/\/$//g;
 
@@ -115,7 +118,12 @@ sub init {
 
 sub print {
     my ($self) = @_;
+
+    %warnings = ();
+    %stats = ();
+
     $self->add_children;
+    $self->add_warnings;
 
     if ($o{html}) {
         print "<pre>\n";
@@ -136,10 +144,13 @@ sub _print {
 
     $self->prefix($prefix);
 
+    my $name = $self->name;
+    $name = $self->abs if $o{abs} && $self->is_root;
+
     print $self->prefix
         . $self->dir_prefix($is_parent_last_entry)
         . $self->color
-        . $self->name
+        . $name
         . $self->link_info
         . $no_color
         . $self->warnings
@@ -170,9 +181,6 @@ sub _print {
                 . $path->count . "x "
                 . $green
                 . $path->normalized_marking
-
-                # . $gray . " ("
-                # . $path->name . ")"
                 . $no_color;
         }
 
@@ -231,20 +239,38 @@ sub dumps {
 sub humanize_secs {
     my ($secs) = @_;
 
+    my $m = 60;
+    my $h = $m * 60;
+    my $d = $h * 24;
+    my $w = $d * 7;
+    my $y = $d * 365;
+
+    my $m99 = $m * 99;
+    my $h99 = $h * 99;
+    my $d99 = $d * 99;
+
     my $human;
 
-    if ($secs >= 359999) {    # 99 h
-        $human = sprintf("%0dd", $secs / 60 / 60 / 24);
+    if ($secs >= $y) {
+        $human = sprintf("%.1fy", $secs / $y);
     }
-    elsif ($secs >= 5999) {    # 99 m
-        $human = sprintf("%0dh", $secs / 60 / 60);
+    elsif ($secs >= $d99) {
+        $human = sprintf("%0dw", $secs / $w);
     }
-    elsif ($secs >= 60) {
-        $human = sprintf("%0dm", $secs / 60);
+    elsif ($secs >= $h99) {
+        $human = sprintf("%0dd", $secs / $d);
+    }
+    elsif ($secs >= $m99) {
+        $human = sprintf("%0dh", $secs / $h);
+    }
+    elsif ($secs >= $m) {
+        $human = sprintf("%0dm", $secs / $m);
     }
     else {
         $human = $secs . "s";
     }
+
+    $human =~ s/\.0(\D)/$1/g;
 
     return $human;
 }
@@ -376,31 +402,6 @@ sub new {
     return bless { %p, color => $blue }, $class;
 }
 
-sub add_children {
-    my ($self) = @_;
-
-    my $dirh;
-    if (!opendir($dirh, $self->abs)) {
-        $self->add_warning("ERROR: " . $!);
-        return;
-    }
-
-    while (my $entry = readdir($dirh)) {
-
-        next if $entry =~ /^\.{1,2}$/;
-
-        my $path = Path->new(parent_name => $self->abs, name => $entry,);
-
-        if ($entry =~ /^\./) {
-            $path->add_warning('DOTFILE');
-            next if !$o{all};
-        }
-
-        $self->add($path);
-    }
-    closedir($dirh) || die $!;
-}
-
 sub has_entries {
     my ($self) = @_;
     keys %{ $self->{entries} } != 0;
@@ -434,19 +435,12 @@ sub add_warning {
 sub add {
     my ($self, $path) = @_;
 
-    $path->add_warning("PRECEDING SPACE") if $path->name =~ /^\ /;
-    $path->add_warning("TRAILING SPACE")  if $path->name =~ /\ $/;
-
-    if ($o{include}) {
+    if (!$path->is_dir && $o{include}) {
         return 0 if $path->abs !~ /$o{include}/i;
     }
 
-    if ($o{exclude}) {
+    if (!$path->is_dir && $o{exclude}) {
         return 0 if $path->abs =~ /$o{exclude}/i;
-    }
-
-    if ($path->is_link) {
-        $path->add_warning("LINK");
     }
 
     if ($path->is_dir) {
@@ -464,10 +458,18 @@ sub add {
             if (!$path->is_link) {
                 $path->add_children;
             }
-            if (!$path->has_entries && !$o{empty}) {
-                return;
-            }
         }
+
+        if (!$path->has_entries && !$o{empty}) {
+            return;
+        }
+
+        if ($path->name =~ /^\./) {
+            $path->add_warning('DOTFILE');
+            return if !$o{all};
+        }
+
+        $path->add_warnings;
 
         $self->entries->{ $path->name } = $path;
         return;
@@ -493,12 +495,50 @@ sub add {
         $path->count(1);
     }
 
+    $path->add_warnings;
+
     if (exists $self->entries->{$path_key}) {
         $self->entries->{$path_key}{count}++;
     }
     else {
         $self->entries->{$path_key} = $path;
     }
+}
+
+sub add_warnings {
+    my ($self) = @_;
+
+    if ($self->name =~ /^\./) {
+        $self->add_warning('DOTFILE');
+        return if !$o{all};
+    }
+
+    if ($self->is_link) {
+        $self->add_warning("LINK");
+    }
+
+    $self->add_warning("PRECEDING SPACE") if $self->name =~ /^\ /;
+    $self->add_warning("TRAILING SPACE")  if $self->name =~ /\ $/;
+}
+
+sub add_children {
+    my ($self) = @_;
+
+    my $dirh;
+    if (!opendir($dirh, $self->abs)) {
+        $self->add_warning("ERROR: " . $!);
+        return;
+    }
+
+    while (my $entry = readdir($dirh)) {
+
+        next if $entry =~ /^\.{1,2}$/;
+
+        my $path = Path->new(parent_name => $self->abs, name => $entry,);
+
+        $self->add($path);
+    }
+    closedir($dirh) || die $!;
 }
 
 sub is_dir {
