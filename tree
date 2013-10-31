@@ -129,9 +129,9 @@ sub print {
     $next_prefix = $self->prefix . $next_prefix;
     $next_prefix = "" if $self->is_root;
 
-    my $entry_count         = keys $self->entries;
+    my $entry_count         = keys %{$self->entries};
     my $current_entry_count = 0;
-    foreach my $path_name ( sort keys $self->entries ) {
+    foreach my $path_name ( sort keys %{$self->entries} ) {
 
         $current_entry_count++;
         my $is_last_entry = $current_entry_count == $entry_count;
@@ -288,7 +288,7 @@ sub info {
     my @info;
 
     if ( $o{'entry-count'} ) {
-        push( @info, "Entries: " . ( keys $self->entries || 0 ) )
+        push( @info, "Entries: " . ( keys %{$self->entries} || 0 ) )
             if $self->is_dir;
     }
 
