@@ -120,7 +120,7 @@ sub print {
     my ($self) = @_;
 
     %warnings = ();
-    %stats = ();
+    %stats    = ();
 
     $self->add_children;
     $self->add_warnings;
@@ -340,7 +340,7 @@ sub info {
     }
 
     if ($o{age}) {
-        push(@info, "Changed: " . $self->age);
+        push(@info, $self->age);
     }
 
     if ($o{size}) {
@@ -519,6 +519,10 @@ sub add_warnings {
 
     $self->add_warning("PRECEDING SPACE") if $self->name =~ /^\ /;
     $self->add_warning("TRAILING SPACE")  if $self->name =~ /\ $/;
+
+    if (!stat $self->abs) {
+        $self->add_warning("READ ERROR");
+    }
 }
 
 sub add_children {
@@ -579,12 +583,12 @@ sub normalized_marking {
 sub age {
     my ($self) = @_;
 
-    my $sb = stat($self->abs);
+    my $stat = stat($self->abs) || return;
 
-    my $age   = time - $sb->mtime;
+    my $age   = time - $stat->mtime;
     my $h_age = humanize_secs($age);
     $h_age = $red . $h_age . $no_color if $h_age =~ /[sm]/;
-    return $h_age;
+    return "Changed: $h_age";
 }
 
 sub size {
@@ -592,9 +596,11 @@ sub size {
 
     return if $self->is_dir;
 
-    my $size       = stat($self->abs)->size;
-    my $blocks     = stat($self->abs)->blocks;
-    my $block_size = stat($self->abs)->blksize;
+    my $stat = stat($self->abs) || return;
+
+    my $size       = $stat->size;
+    my $blocks     = $stat->blocks;
+    my $block_size = $stat->blksize;
 
     my $alloc = $blocks * 512;
     my $done  = 100;
