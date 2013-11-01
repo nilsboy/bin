@@ -153,7 +153,7 @@ sub _print {
         . $name
         . $self->link_info
         . $no_color
-        . $self->warnings
+        . ($o{warnings} ? $self->warnings : "")
         . $self->info . "\n";
 
     my $next_prefix = $is_parent_last_entry ? "  " : $graph_vertical . " ";
@@ -189,7 +189,7 @@ sub _print {
             . $path->color
             . $name
             . $path->link_info
-            . $path->warnings
+            . ($o{warnings} ? $path->warnings : "")
             . $path->info
             . $no_color . "\n";
     }
@@ -425,13 +425,6 @@ sub is_mounted {
     return 0;
 }
 
-sub add_warning {
-    my ($self, $warning) = @_;
-
-    $warnings{$warning}++;
-    push(@{ $self->{warnings} }, $warning);
-}
-
 sub add {
     my ($self, $path) = @_;
 
@@ -443,33 +436,30 @@ sub add {
         return 0 if $path->abs =~ /$o{exclude}/i;
     }
 
+    $path->add_warnings;
+
     if ($path->is_dir) {
 
         $path->color($blue);
         $stats{Directories}++;
 
         if ($path->name =~ /^\.(git|svn)/) {
-            $path->add_warning("SCM DIR");
         }
         elsif ($path->is_mounted) {
-            $path->add_warning("MOUNTED");
         }
-        else {
-            if (!$path->is_link) {
-                $path->add_children;
-            }
+        elsif (!$path->is_link) {
+            $path->add_children;
+        }
+
+        $path->add_to_global_warnings;
+
+        if ($path->name =~ /^\./) {
+            return if !$o{all};
         }
 
         if (!$path->has_entries && !$o{empty}) {
             return;
         }
-
-        if ($path->name =~ /^\./) {
-            $path->add_warning('DOTFILE');
-            return if !$o{all};
-        }
-
-        $path->add_warnings;
 
         $self->entries->{ $path->name } = $path;
         return;
@@ -480,6 +470,12 @@ sub add {
     }
 
     $path->color($green);
+
+    $path->add_to_global_warnings;
+
+    if ($path->name =~ /^\./) {
+        return if !$o{all};
+    }
 
     my ($extension) = $path->name =~ /\.([^\.]+)$/;
     $extension = "" if $path->name !~ /\./;
@@ -495,8 +491,6 @@ sub add {
         $path->count(1);
     }
 
-    $path->add_warnings;
-
     if (exists $self->entries->{$path_key}) {
         $self->entries->{$path_key}{count}++;
     }
@@ -505,12 +499,16 @@ sub add {
     }
 }
 
+sub add_warning {
+    my ($self, $warning) = @_;
+    push(@{ $self->{warnings} }, $warning);
+}
+
 sub add_warnings {
     my ($self) = @_;
 
     if ($self->name =~ /^\./) {
         $self->add_warning('DOTFILE');
-        return if !$o{all};
     }
 
     if ($self->is_link) {
@@ -522,6 +520,21 @@ sub add_warnings {
 
     if (!stat $self->abs) {
         $self->add_warning("READ ERROR");
+    }
+
+    if ($self->name =~ /^\.(git|svn)/) {
+        $self->add_warning("SCM DIR");
+    }
+    elsif ($self->is_mounted) {
+        $self->add_warning("MOUNTED");
+    }
+}
+
+sub add_to_global_warnings {
+    my ($self) = @_;
+
+    foreach my $warning (@{ $self->{warnings} }) {
+        $warnings{$warning}++;
     }
 }
 
