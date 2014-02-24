@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+
+# Print file contens from where a specified regex first matches.
+
+use strict;
+use warnings;
+
+my $found;
+while (<STDIN>) {
+    $found = 1 if /@ARGV/i;
+    print if $found;
+}
+
+exit 1 if !$found;

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Create a relative path from an absolute path.
+
+abs "$@" | perl -pe "s#^('|)($HOME/)#\$1#g"

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Set proxy environment variables
+
+port=${1:-8080}
+
+for proto in http https ftp ; do
+    export ${proto}_proxy=$proto://localhost:$port/
+done

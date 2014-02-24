@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Find a process and kill it with all its children.
+
+set -e
+pattern=${1?Process name or argument?}
+
+pgrep $pattern
+WARN "These and their sub processes?"
+
+read a
+
+if [[ $a != y ]] ; then
+    DIE "User interupt."
+fi
+
+pids=$(\pgrep -f $pattern)
+pids=$(ps opgid= $pids | perl -pe 's/^/-/g; s/\n/ /g')
+kill -TERM $pids

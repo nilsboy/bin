@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Prevent a deb package from beeing upgraded.
+
+set -e
+
+package_name=${1?package name?}
+dpkg --get-selections $package_name
+echo $package_name hold | sudo dpkg --set-selections
+dpkg --get-selections $package_name

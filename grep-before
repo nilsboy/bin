@@ -1,0 +1,10 @@
+#!/usr/bin/env perl
+
+# Print file contens before a specified regex first matches.
+
+while (<STDIN>) {
+    print;
+    exit 0 if /@ARGV/i;
+}
+
+exit 1;

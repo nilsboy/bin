@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Change the title of a x window.
+
+case "$TERM" in
+    *term | rxvt)
+        echo -ne "\033]0;$*\007"
+        ;;
+    screen)
+        # echo -ne "%{ESC_#$WINDOW %m:%c3ESC\\%}%h (%m:%.)%# "
+        # echo -ne "\033]$*\033\]"
+        ;;
+    *)
+        ;;
+esac

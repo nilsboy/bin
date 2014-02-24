@@ -1,0 +1,11 @@
+#!/usr/bin/env perl
+
+# Print date for a timestamp.
+
+use strict;
+use warnings;
+use POSIX;
+
+my $timestamp = $ARGV[0] || die "Timestamp?";
+
+print strftime( "%F %T", localtime( substr( $timestamp, 0, 10 ) ) ) . "\n";

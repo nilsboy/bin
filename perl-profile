@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Profile a perl app and display the html results.
+
+set -e
+
+perl-install-module Devel::NYTProf
+
+set -x
+
+local script=$(basename $1)
+local dir=/tmp/nytprof.$script.$(date +%F_%H%M%S)
+mkdir $dir
+local file=$dir/nytprof.out
+
+NYTPROF=file=$file perl -d:NYTProf "$@"
+
+nytprofhtml --file $file --out $dir
+
+if [ -e nytprof.out ] ; then
+    rm nytprof.out
+fi
+
+see $dir/index.html

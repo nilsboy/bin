@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Diff two directory structures.
+
+left=$1 ; shift
+right=$1 ; shift
+
+diff=diff
+
+if [[ $(type -p colordiff) ]] ; then
+    diff=colordiff
+fi
+
+$diff -y \
+    <(tree --no-colors --ascii $@ "$left") \
+    <(tree --no-colors --ascii $@ "$right") \
+    | less

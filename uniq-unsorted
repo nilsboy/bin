@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+
+# uniq replacement without the need for sorted input.
+use strict;
+use warnings;
+
+my %seen;
+
+while (<STDIN>) {
+    print if !exists $seen{$_};
+    $seen{$_} = 1;
+}

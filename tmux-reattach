@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Reattach to a screen or tmux session.
+
+session=$1
+
+if [[ ! $session ]] ; then
+    session=main
+fi
+
+ssh-agent-env-grab
+
+(
+    if tmux has-session -t $session ; then
+        tmux -2 att -d -t $session
+        exit 0
+    fi
+
+    if tmux has-session ; then
+        tmux -2 att -d
+        exit 0
+    fi
+
+    screen -rd $session && exit
+    screen -rd && exit
+
+    exit 1
+
+) && clear

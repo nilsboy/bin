@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Install and run a proxyserver from the cpan.
+
+set -e
+
+source bash-helpers
+
+perl-install-module HTTP::Proxy
+
+port=${1:-8080}
+name=proxyserver_$port
+
+if pidof $name >/dev/null ; then
+    INFO "Proxy server already running on port $port"
+    exit 0
+fi
+
+port=$port \
+exec -a $name \
+    perl -MHTTP::Proxy -e 'HTTP::Proxy->new(port => $ENV{port})->start' &
+disown -har
+
+INFO "Proxy server is now running on port $port."

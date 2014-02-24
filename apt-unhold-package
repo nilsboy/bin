@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Return a deb package to its default upgrade state.
+
+set -e
+package_name=${1?package name?}
+dpkg --get-selections $package_name
+echo $package_name install | sudo dpkg --set-selections
+dpkg --get-selections $package_name

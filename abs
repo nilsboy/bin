@@ -1,0 +1,11 @@
+#!/usr/bin/env perl
+
+# Print the absolute path of a file or dir.
+
+use Cwd;
+my $file = $ARGV[0] || ".";
+my $abs = Cwd::abs_path($file);
+$abs .= "/" if -d $file;
+$abs = "'$abs'" if $abs =~ /\s/;
+$abs =~ s/;/\\;/g;
+print "$abs\n";

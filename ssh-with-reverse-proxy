@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Proxy traffic of a remote host through localhost
+# i.e. if the remote host has no access to the cpan or
+# other parts of the internet
+
+set -e
+
+host=${1?specify host}
+port=${2:-59347}
+
+proxyserver $port
+
+ssh -t $host -R $port:localhost:$port \
+    http_proxy=http://localhost:$port \
+    https_proxy=https://localhost:$port \
+    ftp_proxy=ftp://localhost:$port \
+    bash -i

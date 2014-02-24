@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Upgrade installed perl modules if a new version is available.
+
+perlbrew list-modules | cpanm

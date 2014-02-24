@@ -1,0 +1,41 @@
+#!/usr/bin/env perl
+
+# Run a script that is attached to the bashrc.
+
+use strict;
+use warnings;
+
+my $app = shift @ARGV || die "Specify app.";
+
+$/ = undef;
+open( my $f, $ENV{REMOTE_BASHRC} ) || die $!;
+my $bashrc = <$f>;
+
+if ( $bashrc =~ /^### fatpacked app $app #*\n(.*?)(?=\n###)/igsm ) {
+    my $app = $1;
+    $app =~ s/^\n//g;
+    my ($shebang) = $app =~ /(.+)/;
+    $app =~ s/(.+)//;
+
+    if ( $shebang =~ /^#!.* perl/ ) {
+        eval $app;
+        die $@ if $@;
+    }
+    else {
+
+        $ENV{haha} = $app;
+
+        # print $app;
+
+        $app =~ s/\\/\\\\/gms;
+
+        print `echo "\$haha"`;
+        print `eval "\$haha"`;
+
+        exit 0;
+    }
+}
+else {
+
+    die "App $app not found.";
+}

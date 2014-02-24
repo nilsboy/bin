@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Setup a persistent reverse tunnel.
+
+source bash-helpers
+
+set -e
+
+local ssh_key_file=~/.ssh/reverse-tunnel
+
+if [[ -e $ssh_key_file ]] ; then
+    DIE "$ssh_key_file already exists"
+fi
+
+local server=${1?Server?}
+local port=${2?Port?}
+
+ssh-keygen -q -t rsa -b 2048 -P "" -f $ssh_key_file
+
+INFO "Add this new public key to tunnel@$server"
+cat $ssh_key_file.pub
+
+INFO "Adding ~/.ssh/config entry..."
+
+cat << EOF >> ~/.ssh/config
+
+Host reverse-tunnel-server
+    Hostname $server
+    Port $port
+    User tunnel
+    IdentityFile $ssh_key_file
+    RemoteForward 0 localhost:22
+    CheckHostIP no
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    ServerAliveInterval 60
+    Compression yes
+EOF
+
+CMD="bash -c '(while true ; do ssh -N reverse-tunnel-server 2>&1 ; sleep 300 ; done 0<&- | logger -i) &' # reverse tunnel dont edit"
+
+INFO "Adding crontab entry..."
+((crontab -l || echo) | grep -v "# reverse tunnel dont edit" ; echo "@reboot $CMD") | crontab -
+
+INFO "Starting tunnel now..."
+echo $CMD | bash
+
+INFO "done."

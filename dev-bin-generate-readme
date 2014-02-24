@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+# Generate README with descriptions for bin scripts.
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+use Path::Tiny;
+
+die "Current dir not called bin" if !path(".")->basename eq "bin";
+
+my $readme = path("README");
+my ($preamble) = $readme->slurp =~ /(.+Descriptions\:)/igms;
+
+$readme->spew("$preamble\n\n");
+
+foreach my $app ( sort( path(".")->children ) ) {
+
+    next if $app->is_dir;
+    next if $app->basename eq "README";
+
+    my ($description) = $app->slurp =~ /^# (.+?)\n/m;
+    $description = " " . $description if $description;
+
+    print STDERR "No description found for app: $app\n" if !$description;
+
+    $readme->append("$app:$description\n");
+}

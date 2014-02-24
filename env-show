@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Display infos about the system.
+
+function SHOW()  {
+    local var=$1
+    shift
+    echo "$GREEN$var$NO_COLOR: $@"
+}
+
+
+while read v ; do
+    SHOW $v ${!v}
+done<<EOF
+    DISTRIBUTION
+    REMOTE_USER
+    REMOTE_HOME
+    REMOTE_HOST
+    REMOTE_BASHRC
+    HISTFILE_ETERNAL
+    SHELL
+    PATH
+    PERL5LIB
+EOF
+
+SHOW Uname $(uname -a)
+SHOW Kernel $(cat /proc/version)
+
+ubuntu_version=$(cat /etc/issue | perl -ne 'print $1 if /ubuntu (\d+\.\d+)/i')
+
+if [[ $ubuntu_version ]] ; then
+    release=$(note ubuntu | perl -ne 'print $_ if /^\s+'$ubuntu_version'\s+(.+?)\s+\d+/')
+    SHOW Ubuntu $release
+else
+    SHOW Linux $(cat /etc/issue.net)
+fi

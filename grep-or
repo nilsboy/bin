@@ -1,0 +1,18 @@
+#!/usr/bin/env perl
+
+# or-grep list matching lines
+
+use strict;
+use warnings;
+
+my $matches;
+while ( my $line = <STDIN> ) {
+    foreach my $regex (@ARGV) {
+        next if $line !~ /$regex/i;
+        $matches++;
+        print $line;
+        last;
+    }
+}
+
+exit 1 if ! $matches;

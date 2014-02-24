@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Find own public ip if behind firewall etc.
+
+wcat http://checkip.dyndns.org \
+    | perl -ne '/Address\: (.+?)</i || die; print $1'

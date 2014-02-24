@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Find an unused port.
+
+set -e
+
+port=$1
+ports="32768..61000";
+
+if [[ $port ]] ; then
+    ports="$port,$ports";
+fi
+
+netstat  -atn \
+    | perl -0777 -ne '@ports = /tcp.*?\:(\d+)\s+/imsg ; for $port ('$ports') {if(!grep(/^$port$/, @ports)) { print $port; last } }'

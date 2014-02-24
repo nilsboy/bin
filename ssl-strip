@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Remove ssl encryption from https ect.
+
+source bash-helpers
+
+in=$1
+out=$2
+
+if [[ $@ < 2 ]] ; then
+    die "usage: sslstrip [in_host:]in_port out_host:out_port"
+fi
+
+cmd="sudo stunnel -c -d $in -r $out -f"
+INFO "running: $cmd"
+xtitle "ssl-strip $cmd" && $cmd

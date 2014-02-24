@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Create shell access on a free port.
+# TODO
+
+set -x
+fifo
+
+(
+    set -e
+
+    port=$(freeport)
+    fifo=$(tempfile)
+
+    echo "using port: $port"
+    echo "using fifo: $fifo"
+
+    if [ -e $fifo ] ; then
+        rm -f $fifo
+    fi
+
+    mkfifo $fifo
+
+    # nc -k respawns
+
+    cat $fifo \
+        | /bin/sh -i 2>&1 \
+        | nc -l 127.0.0.1 $port
+    > $fifo
+)
+
+if [ -e $fifo ] ; then
+    echo "removing fifo: $fifo"
+#    rm -f $fifo
+fi

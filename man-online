@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Lookup a man page on the internet.
+
+cmd=$1
+(
+    wcat -s http://man.cx/$cmd \
+        | perl -0777 -pe 's/^.*\n(?=\s*NAME\s*$)|\n\s*COMMENTS.*$//smg' \
+        | perl -0777 -pe 'exit 1 if /Sorry, I don.t have this manpage/' \
+        && echo
+
+) | LESS="-j.5 -inRg" less $arg

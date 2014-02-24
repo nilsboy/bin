@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Install all modules from one perlbrew managed perl installation into another.
+
+source bash-helpers
+
+version=$1
+
+if [[ ! $version ]] ; then
+    perlbrew list
+    DIE "Specify perl version."
+fi
+
+perlbrew list-modules | perlbrew exec --with $version cpanm

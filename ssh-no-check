@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# SSH without host key checks.
+
+ssh -q \
+    -o CheckHostIP=no \
+    -o UserKnownHostsFile=/dev/null \
+    -o StrictHostKeyChecking=no

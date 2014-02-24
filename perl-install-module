@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Quickly check if a module is installed - if not install it.
+
+perl -M"$@" -e "1;" 2>/dev/null && exit 0
+cpanm $1

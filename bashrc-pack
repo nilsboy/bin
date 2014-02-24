@@ -1,0 +1,30 @@
+#!/usr/bin/env perl
+
+# Attach scripts to the bashrc skeleton.
+
+use strict;
+use warnings;
+use Path::Tiny;
+
+die "Not in bin dir." if path(".")->absolute->basename ne "bin";
+
+my $bashrc_skel = path("../dotfiles/bashrc");
+my $bashrc_phat = path("../bashrc/bashrc");
+
+# my $file_to_fatpack = path("../dotfiles/bashrc_files_to_fatpack");
+
+$bashrc_skel->copy($bashrc_phat);
+
+# foreach my $bin ( sort $file_to_fatpack->lines( { chomp => 1 } ) ) {
+
+foreach my $bin ( sort ( path(".")->children ) ) {
+
+    next if $bin->is_dir;
+
+    my $description = "fatpacked app $bin";
+
+    $bashrc_phat->append( "### ", $description, " ",
+        "#" x ( 80 - length($description) - 5 ) . "\n\n" );
+
+    $bashrc_phat->append( $bin->slurp, "\n" );
+}

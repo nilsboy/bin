@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# Helper functions for shell scripts.
+# Put in you path and you can use them using "source bash-helpers".
+
+function _LOG() {
+
+    local level=$1 ; shift
+
+    local log_level_prio crap
+    read log_level_prio crap <<<$(_calc_prio $LOG_LEVEL)
+    if [[ ! $LOG_LEVEL ]] ; then
+        if [[ -t 1 ]] ; then
+            log_level_prio=3
+        else
+            log_level_prio=6
+        fi
+    fi
+
+    local message_prio
+    local prio
+    local location
+    local color
+
+    read message_prio show_location color <<<$(_calc_prio $level)
+
+    if [[ $message_prio < $log_level_prio ]] ; then
+        return
+    fi
+
+    if [[ $show_location ]] ; then
+
+        read line function file <<<$(caller 1)
+        local location=$line
+
+        if [[ $file ]] ; then
+            location=$(basename $file)":"$location
+        fi
+
+        if [[ $location ]] ; then
+            location=" "$location
+        fi
+    fi
+
+    if [ -t 1 ] ; then
+        echo "$color${level}$location> $@${NO_COLOR}" >&1
+    else
+        echo "$(date +'%F %T') ${level}$location> $@" >&1
+    fi
+}
+
+function _calc_prio() {
+    local level=$1
+
+    case $level in
+        TRACE) prio=1 ; show_location=1 ; color=$GRAY ;;
+        DEBUG) prio=2 ; show_location=0 ; color=$GRAY ;;
+        INFO)  prio=3 ; show_location=0 ; color=$GREEN ;;
+        WARN)  prio=4 ; show_location=0 ; color=$ORANGE ;;
+        ERROR) prio=5 ; show_location=1 ; color=$RED ;;
+        FATAL) prio=6 ; show_location=1 ; color=$RED ;;
+    esac
+
+    echo $prio $show_location $color
+}
+
+function TRACE() { _LOG "TRACE" "$@" ; }
+function DEBUG() { _LOG "DEBUG" "$@" ; }
+function INFO()  { _LOG "INFO " "$@" ; }
+function WARN()  { _LOG "WARN " "$@" ; }
+function ERROR() { _LOG "ERROR" "$@" ; }
+function DIE()   { _LOG "FATAL" "$@" ; exit 1 ; }
+
+function usefatal() {
+    trap DIE ERR
+}
+
+function nousefatal() {
+    trap ERR
+}
+
+function repeat() {
+    perl -0777 -e 'print <STDIN> x $ARGV[0]' "$@"
+}
+
+# Print a line with a message the length of the screen.
+function line() {
+    perl - $@ <<'EOF'
+        my $msg = " " . join(" ", @ARGV) . " ";
+        print "---", $msg , q{-} x ($ENV{COLUMNS} - 3 - length($msg)), "\n\n";
+EOF
+}

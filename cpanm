@@ -1,0 +1,7 @@
+#!/usr/bin/env perl
+
+# Allow cpanm to install modules specified via Path/File.pm.
+
+map { s/\//\:\:/g ; s/\.pm$//g } @ARGV;
+
+system("cpanm", "-nq" , @ARGV) && exit 1;

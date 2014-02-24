@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Setup remote desktop access via ssh and vnc right from the login screen of
+# lightdm.
+
+set -e
+
+sudo apt-get install x11vnc
+
+sudo tee /etc/init/lightdm-vnc.conf >/dev/null <<'EOF'
+# to reload: sudo initctl emit login-session-start
+start on login-session-start
+script
+set +e
+killall -9 x11vnc
+set -e
+/usr/bin/x11vnc \
+    -norc \
+    -localhost \
+    -forever \
+    -solid \
+    -nopw \
+    -nocursor \
+    -wireframe \
+    -wirecopyrect \
+    -xkb \
+    -auth /var/run/lightdm/root/:0 \
+    -noxrecord \
+    -noxfixes \
+    -noxdamage \
+    -rfbport 5900 \
+    -scale 3/4:nb \
+    -o /var/log/lightdm-vnc.log \
+    -bg
+end script
+EOF
+
+    sudo tee -a /etc/lightdm/lightdm.conf >/dev/null <<-'EOF'
+
+[VNCServer]
+enabled=true
+EOF
+
+sudo initctl reload-configuration
+sudo initctl emit login-session-start
+
+echo "check if vino is running!"

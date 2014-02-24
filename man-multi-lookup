@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Lookup help for a command in several places.
+
+source bash-helpers
+
+function _printifok() {
+    local msg=$1 ; shift
+    local cmd="$*"
+
+    local out=$(MANWIDTH=80 MAN_KEEP_FORMATTING=1 $cmd 2>/dev/null)
+    [[ ${out[@]} ]] || return 1
+    line $msg
+    echo "${out[@]}"
+    echo
+}
+
+cmd=$1 ; shift
+arg="$@"
+
+if [[ $arg =~ ^-- ]] ; then
+   arg="+/$arg"
+elif [[ $arg =~ ^- ]] ; then
+   arg="+/^\s+$arg"
+elif [[ $arg ]] ; then
+   arg="+/$arg"
+fi
+
+(
+    _printifok help help -m $cmd
+    _printifok man man -a $cmd
+    _printifok perldoc perldoc -f $cmd
+    _printifok related man -k $cmd
+
+) | LESS="-j.5 -inRg" less $arg

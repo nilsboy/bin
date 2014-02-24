@@ -1,0 +1,15 @@
+#!/usr/bin/env perl
+
+# Or-grep but list matching patterns instead of matching lines.
+# Only longest matches are returned.
+
+my $matches;
+while ( my $line = <STDIN> ) {
+    foreach my $regex ( sort { length($b) <=> length($a) } @ARGV ) {
+        next if $line !~ /$regex/ig;
+        $matches++;
+        print "$regex\n" x $line =~ s/$regex//ig;
+    }
+}
+
+exit 1 if !$matches;
