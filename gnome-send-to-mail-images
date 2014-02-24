@@ -4,8 +4,8 @@
 
 =head1 Send_Resized_Image_Via_Email
 
-Resize one or more images and add them as attachements to a new compose email
-window of the Evolution or Thunderbird email client.
+# Resize one or more images and add them as attachements
+to a new compose email window of the Evolution or Thunderbird email client.
 
 =head1 Prerequisites
 
