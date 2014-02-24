@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+source bash-helpers
+
+commit_id=${1?Specify commit id}
+
+git reset --hard $commit_id
+
+INFO "Push now with: git push origin HEAD --force"
