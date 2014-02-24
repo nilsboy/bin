@@ -1,0 +1,184 @@
+#!/bin/bash
+
+# Share one account with serveral users but create their own environment.
+# Users are identified by their public key and cd'ed to their respective homes.
+# Users have their own home and use their own .bashrc.
+
+set -e
+
+function find_remote_host_via_ssh() {
+    if [[ $SSH_CLIENT ]] ; then
+        export REMOTE_HOST=${SSH_CLIENT%% *}
+    fi
+}
+
+function find_login_via_ssh_key() {
+
+    [[ $SSH_AUTH_SOCK ]] || return 0
+
+    type -p ssh-add 1>/dev/null || return 0
+
+    shopt -s nullglob
+    local auth_files=(~/users/*/.ssh/authorized_keys)
+    shopt -u nullglob
+
+    [[ $auth_files ]] || return 0
+
+    local agent_key
+    while read agent_key ; do
+
+        agent_key=${agent_key%%=*}
+
+        [[ $agent_key ]] || continue;
+
+        local auth_file
+        for auth_file in ${auth_files[@]} ; do
+
+            if grep -q "${agent_key}" $auth_file ; then
+                REMOTE_USER=${auth_file%%/.ssh/authorized_keys};
+                REMOTE_USER=${REMOTE_USER##$HOME/users/};
+                return 0
+            fi
+
+        done
+
+    done < <(ssh-add -L 2>/dev/null)
+
+    return 0
+}
+
+function ask_for_login() {
+
+    local NO_COLOR="\033[0m"
+    local RED="\033[0;31m"
+
+    local noagent
+    ssh-add -L 1>/dev/null 2>/dev/null || noagent=1
+
+    echo -en $RED
+
+    if [[ $noagent ]] ; then
+        return 0
+    fi
+
+    echo
+    echo "Ups - do I know you?"
+    echo
+    echo -n "No - I'm new and "
+
+    local sure
+    until [[ $sure = "y" ]] ; do
+
+        echo -n "I like to use this login, please: "
+        read REMOTE_USER
+        echo
+
+        if [[ $REMOTE_USER =~ ^[a-z0-9_]+$ ]] ; then
+            true
+        elif [[ ! $REMOTE_USER ]] ; then
+            REMOTE_USER=anonymous
+        else
+            echo "Invalid login - please try again."
+            echo
+            unset sure
+            continue
+        fi
+
+        echo "Are sure you want to use $REMOTE_USER? (y/n)"
+        read sure
+
+    done
+
+    echo -ne $NO_COLOR
+}
+
+function create_remote_home() {(
+    set -e
+
+    local NO_COLOR="\033[0m"
+    local RED="\033[0;31m"
+
+    local ssh_home=$REMOTE_HOME/.ssh
+    local authorized_keys=$ssh_home/authorized_keys
+
+    mkdir -p $REMOTE_HOME/{tmp,etc,bin,lib}
+    mkdir -p $ssh_home
+
+    if [[ $user = anonymous ]] ; then
+        return 0
+    fi
+
+    set +e
+    ssh-add -L >> $authorized_keys 2>/dev/null
+    set -e
+
+    echo -ne $RED
+
+    if [[ $REMOTE_USER = anonymous ]] ; then
+        echo
+        echo "To get a personalized home directory please activate"
+        echo "   your ssh-agent with key forwarding!"
+        echo
+        echo "If you want to be someone specific remove your ssh public key from:"
+        echo "   $REMOTE_HOME/.ssh/authorized_keys"
+        echo "   and login again."
+        echo
+        echo "If you are a script please make sure you are not running"
+        echo "   bash interactively to avoid this screen."
+        echo
+        echo "For now you will be known as anonymous."
+    fi
+
+    echo
+    echo "Please keep the official home ($HOME) clean."
+    echo "Store your own files in $REMOTE_HOME."
+    echo "Thank you!"
+    echo
+    echo "   Use 'cdh' to go to your personal home at $REMOTE_HOME."
+    echo "   Use 'cdt' to go to your personal tmp at $REMOTE_HOME/tmp."
+    echo
+    echo "Have fun!"
+    echo
+    echo -ne $NO_COLOR
+)}
+
+# do not allow ctrl-c
+trap '' INT
+
+find_remote_host_via_ssh
+find_login_via_ssh_key
+
+if [[ ! $REMOTE_USER ]] ; then
+    ask_for_login >&2
+    new_user=1
+fi
+
+if [[ ! $REMOTE_USER ]] ; then
+    REMOTE_USER=anonymous
+    new_user=1
+fi
+
+export REMOTE_USER
+export REMOTE_HOME="$HOME/users/$REMOTE_USER"
+export REMOTE_BASHRC="$REMOTE_HOME/.bashrc"
+
+if [[ $new_user ]] ; then
+    create_remote_home >&2
+fi
+
+# needs trailing ; because eval joins the lines
+cat <<-EOF
+    export REMOTE_USER=$REMOTE_USER;
+    export REMOTE_HOME=$REMOTE_HOME;
+    export REMOTE_BASHRC=$REMOTE_BASHRC;
+    alias cdh="cd $REMOTE_HOME";
+    alias cdt="cd $REMOTE_HOME/tmp";
+    alias ssh="ssh -A";
+    cd $REMOTE_HOME;
+EOF
+
+if [[ -e $REMOTE_BASHRC ]] ; then
+    if [[ $REMOTE_USER != anonymous ]] ; then
+        echo "source $REMOTE_BASHRC"
+    fi
+fi
