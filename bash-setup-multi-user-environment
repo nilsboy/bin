@@ -4,6 +4,9 @@
 # Users are identified by their public key and cd'ed to their respective homes.
 # Users have their own home and use their own .bashrc.
 
+# Put this in your ~/.bashrc:
+# eval $(~/bin/bash-setup-multi-user-environment)
+
 set -e
 
 function find_remote_host_via_ssh() {
