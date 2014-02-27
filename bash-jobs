@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
 
-# Cleaned up jobs replacement.
+# Cleaned up bash jobs replacement.
+
+# Run like this: jobs=$(jobs) bash-jobs
 
 use strict;
 use warnings;
@@ -15,7 +17,7 @@ my $red       = "\x1b[38;5;124m";
 my %cmds      = ();
 my %last_args = ();
 
-foreach ( split( "\n", $ENV{_bashrc_jobs} ) ) {
+foreach ( split( "\n", $ENV{jobs} ) ) {
 
     my ( $jid, $state, $cmd ) = /^(\[\d+\][+-]*)\s+(\S+)\s+(.+)\s*$/;
 
@@ -55,7 +57,7 @@ foreach ( split( "\n", $ENV{_bashrc_jobs} ) ) {
         $args = "";
     }
 
-    my $max = $ENV{_bashrc_columns} - length($cmd) - length($last_arg) - 5 - 1;
+    my $max = $ENV{COLUMNS} - length($cmd) - length($last_arg) - 5 - 1;
     my $length = length($args);
 
     if ( $length > $max ) {
