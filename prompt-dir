@@ -1,0 +1,2 @@
+dir-name-prettifier $PWD
+echo -n "> "

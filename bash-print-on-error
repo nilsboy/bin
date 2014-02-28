@@ -1,0 +1,12 @@
+# Print error code of last command on failure
+
+source bash-helpers
+
+for item in $pipe_status ; do
+
+    if [ $item != 0 ] ; then
+        echo -e "${RED}exit: $pipe_status" >&2
+        break
+    fi
+
+done

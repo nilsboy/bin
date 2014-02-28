@@ -1,0 +1,11 @@
+# hostname=$(_color_user)"@\[$GREEN\]$HOSTNAME\[$NO_COLOR\]"
+
+time-humanize-seconds $elapsed
+echo -n " "
+bashrc-helper-login-name
+echo -n "@"
+bashrc-helper-hostname
+echo -n ":"
+dir-name-prettifier $PWD
+jobs=$jobs bash-background-jobs-count
+echo -n "> "

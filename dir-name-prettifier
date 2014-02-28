@@ -1,0 +1,37 @@
+# shorten prompt dir to max 15 chars
+
+source bash-helpers
+
+dir="$@"
+
+[[ $dir ]] || DIE "Specify directory"
+
+if [[ $dir = $HOME ]] ;  then
+    dir="~"
+elif [[ $dir = $HOME/ ]] ;  then
+    dir="~"
+else
+    dir=${dir##/*/}
+fi
+
+max_length=14
+length=${#dir}
+
+if [ $length -gt $(($max_length + 1)) ] ; then
+
+    left_split=$(($max_length-4))
+    right_split=4
+
+    right_start=$(($length-$right_split))
+
+    left=${dir:0:$left_split}
+    right=${dir:$right_start:$length}
+
+    dir="$left${RED}"*"${NO_COLOR}$right"
+    _xtitledir=$left"..."$right
+
+else
+    _xtitledir=$dir
+fi
+
+RETURN $dir

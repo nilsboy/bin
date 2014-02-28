@@ -1,0 +1,19 @@
+source bash-helpers
+
+secs=${1:-0}
+
+if  [ $secs -ge 359999 ] ; then # 99 h
+    human=$(($secs / 60 / 60 / 24))d
+elif [ $secs -ge 5999 ] ; then # 99 m
+    human=$(($secs / 60 / 60))h
+elif [ $secs -ge 60 ] ; then
+    human=$(($secs / 60))m
+else
+    human=$secs"s"
+fi
+
+if [ ${#human} = 2 ] ; then
+    human=" "$human
+fi
+
+RETURN $GREY"$human"$NO_COLOR

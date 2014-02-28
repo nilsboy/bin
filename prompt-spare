@@ -1,0 +1,3 @@
+dir-name-prettifier $PWD
+jobs=$jobs bash-background-jobs-count
+echo -n "> "
