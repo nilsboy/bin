@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
-# Rename files by perl expression.
-# Protect against duplicate resulting file names.
+# Rename files by perl expression
+# Protects against duplicate resulting file names.
 
 use strict;
 use warnings;

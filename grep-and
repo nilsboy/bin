@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Search for lines matching one or more perl regex patterns.
+# Search for lines matching one or more perl regex patterns
 
 use strict;
 use warnings;

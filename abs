@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Print the absolute path of a file or dir.
+# Print the absolute path of a file or dir
 
 use Cwd;
 my $file = $ARGV[0] || ".";

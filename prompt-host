@@ -1,4 +1,4 @@
-# hostname=$(_color_user)"@\[$GREEN\]$HOSTNAME\[$NO_COLOR\]"
+# Prompt containing the current hostname
 
 time-humanize-seconds $elapsed
 echo -n " "

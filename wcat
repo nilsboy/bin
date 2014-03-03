@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Easily dump a web site.
+# Easily dump a web site
 
 use strict;
 use warnings;

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Display infos about the system.
+# Display infos about the system
 
 function SHOW()  {
     local var=$1

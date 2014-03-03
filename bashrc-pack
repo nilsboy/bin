@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Attach scripts to the bashrc skeleton.
+# Attach scripts to the bashrc skeleton
 
 use strict;
 use warnings;

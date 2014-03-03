@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Print file contens before a specified regex first matches.
+# Print file contens before a specified regex first matches
 
 while (<STDIN>) {
     print;

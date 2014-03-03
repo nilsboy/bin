@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Quick way to view a csv file on the command line.
+# Quick way to view a csv file on the command line
 
 use warnings;
 no warnings qw{uninitialized};

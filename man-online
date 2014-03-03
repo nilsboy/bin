@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Lookup a man page on the internet.
+# Lookup a man page on the internet
 
 cmd=$1
 (

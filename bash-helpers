@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Helper functions for shell scripts.
+# Helper functions for shell scripts
 # Put in you path and you can use them using "source bash-helpers".
 
 if [[ $BASHRC_PROMPT_COLORS ]] ; then

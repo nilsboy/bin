@@ -1,5 +1,5 @@
 #!/bin/bash
 
-# Query wikipedia via DNS.
+# Query wikipedia via DNS
 
 dig +short txt "$@".wp.dg.cx | perl -0777 -pe 'exit 1 if ! $_ ; s/\\//g'

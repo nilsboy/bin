@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Ensure git-scm is configured appropriately
+
 set -e
 
 source bash-helpers

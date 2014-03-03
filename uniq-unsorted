@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# uniq replacement without the need for sorted input.
+# uniq replacement without the need for sorted input
 use strict;
 use warnings;
 

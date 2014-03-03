@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install all modules from one perlbrew managed perl installation into another.
+# Install all modules from one perlbrew managed perl installation into another
 
 source bash-helpers
 

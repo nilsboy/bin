@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install all CPAN dependencies for a module.
+# Install all CPAN dependencies for a module
 
 perl-install-module lib::xi
 perl -c -Mlib::xi=-nq "$@"

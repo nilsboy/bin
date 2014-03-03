@@ -5,73 +5,176 @@ modules from CPAN and thus can be used directly on most unix systems.
 
 Descriptions:
 
-abs: Print the absolute path of a file or dir.
-apt-hold-package: Prevent a deb package from beeing upgraded.
-apt-pop: Search for a debian package, sort by ranking, add description.
-apt-unhold-package: Return a deb package to its default upgrade state.
-bak: Backup a file appending a timestamp.
-bash-helpers: Helper functions for shell scripts.
-bash-history-search: Search specially formatted bash history.
-bash-jobs: Cleaned up jobs replacement.
-bashrc-fatpack-pack: Attach configured scripts to the bashrc skeleton.
-bashrc-fatpack-run: Run a script that is attached to another script
-bashrc-fatpack-unpack: Unpack fatpacked apps to $REMOTE_HOME/.bin
-cpanm: Allow cpanm to install modules specified via Path/File.pm.
-csvview: Quick way to view a csv file on the command line.
-dev-bin-generate-readme: Generate README with descriptions for bin scripts.
-dir-diff: Diff two directory structures.
-dos2unix: Convert line endings from dos to unix.
-env-show: Display infos about the system.
-file-template-filler: Create a file from a template
-freeport: Find an unused port.
-gnome-send-to-mail-images: Resize one or more images and add them as attachements
-grep-and: Search for lines matching one or more perl regex patterns.
-grep-before: Print file contens before a specified regex first matches.
-grep-from: Print file contens from where a specified regex first matches.
-grep-goo: Or-grep but list matching patterns instead of matching lines.
-grep-or: or-grep list matching lines
-java-decompile-jar: Recursively decompile a jar including contained jars.
-json-tidy: Tidy a json file and sort hash keys to make the output diffable.
-kill-tree: Kill a tree of processes by its root PID.
-kill-tree-grep: Find a process and kill it with all its children.
-man-multi-lookup: Lookup help for a command in several places.
-man-online: Lookup a man page on the internet.
-mysql-with-prompt-fix: Fix mysql prompt to show real hostname - NEVER localhost.
-note: File of notes and a way to query them.
-perl-install-deps-for-module: Install all CPAN dependencies for a module.
-perl-install-latest-stable-perl: Install latest stable perl via perlbrew
-perl-install-module: Quickly check if a module is installed - if not install it.
-perl-install-modules-into-perl-version: Install all modules from one perlbrew managed perl installation into another.
-perl-install-perlbrew: Install perlbrew
-perl-module-find: Search for a perl module or script.
-perl-module-version: Print version of an installed perl module.
-perl-profile: Profile a perl app and display the html results.
-perl-upgrade-outdated-modules: Upgrade installed perl modules if a new version is available.
-proxy-setup-env: Set proxy environment variables
-proxyserver: Install and run a proxyserver from the cpan.
-publicip: Find own public ip if behind firewall etc.
-rel: Create a relative path from an absolute path.
-replace: Change the contens of text files by perl expression.
-shell-color-test: most color mappings taken from xterm-colortest
-shell-open-access-on-freeport: Create shell access on a free port.
-ssh-agent-env-clear: Remove connection to ssh-agent for testing purposes ect.
-ssh-agent-env-grab: Save ssh-agent environemnt variables to be loaded in another session or on
-ssh-agent-env-restore: Load ssh-agent vars stored by grabssh()
-ssh-no-check: SSH without host key checks.
-ssh-persistent-reverse-tunnel-setup: Setup a persistent reverse tunnel.
-ssh-with-reverse-proxy: Proxy traffic of a remote host through localhost
-ssl-create-self-signed-certificate: Create a self signed certificate.
-ssl-strip: Remove ssl encryption from https ect.
-timestamp-to-date: Print date for a timestamp.
-tmux-reattach: Reattach to a screen or tmux session.
-tree: List a directory as a tree.
-uniq-unsorted: uniq replacement without the need for sorted input.
-unix2dos: Convert line endings from unix to dos.
-url: Print absolute SSH url of a file or directory.
-vnc-server-setup-upstart-script: Setup remote desktop access via ssh and vnc right from the login screen of
-vncviewer: vncviewer preconfigured to use ssh.
-wcat: Easily dump a web site.
-webserver-serve-current-directory: Serve current directory files via http.
-wikipedia-via-dns: Query wikipedia via DNS.
-xmv: Rename files by perl expression.
-xtitle: Change the title of a x window.
+abs:
+    Print the absolute path of a file or dir
+apt-hold-package:
+    Prevent a deb package from beeing upgraded
+apt-pop:
+    Search for a debian package, sort by ranking, add description
+apt-unhold-package:
+    Return a deb package to its default upgrade state
+bak:
+    Backup a file appending a timestamp
+bash-background-jobs-count:
+    Display one colored count for background jobs running and stopped
+bash-helpers:
+    Helper functions for shell scripts
+bash-history-search:
+    Search specially formatted bash history
+bash-jobs:
+    Cleaned up bash jobs replacement
+bash-print-on-error:
+    Print error code of last command on failure
+bash-setup-multi-user-environment:
+    Share one account with serveral users but create their own
+    environment
+bashrc-helper-hostname:
+    Format hostname for bash prompt usage
+bashrc-helper-login-name:
+    Format login for bash prompt usage
+bashrc-pack:
+    Attach scripts to the bashrc skeleton
+bashrc-unpack-and-run:
+    Run a script that is attached to the bashrc
+cpanm:
+    Allow cpanm to install modules specified via Path/File.pm
+csvview:
+    Quick way to view a csv file on the command line
+dev-bin-generate-readme:
+    Generate README with descriptions for bin scripts
+dir-diff:
+    Diff two directory structures
+dir-name-prettifier:
+    shorten prompt dir to max 15 chars
+dos2unix:
+    Convert line endings from dos to unix
+env-show:
+    Display infos about the system
+file-template-filler:
+    Create a file from a template
+git-env-validate:
+    Ensure git-scm is configured appropriately
+git-reset-head:
+    Discard commits dating back to specified commit
+gnome-send-to-mail-images:
+    Resize one or more images and add them as attachements
+grep-and:
+    Search for lines matching one or more perl regex patterns
+grep-before:
+    Print file contens before a specified regex first matches
+grep-from:
+    Print file contens from where a specified regex first matches
+grep-goo:
+    Or-grep but list matching patterns instead of matching lines
+grep-or:
+    or-grep list matching lines
+java-decompile-jar:
+    Recursively decompile a jar including contained jars
+json-tidy:
+    Tidy a json file and sort hash keys to make the output diffable
+kill-tree:
+    Kill a tree of processes by its root PID
+kill-tree-grep:
+    Find a process and kill it with all its children
+man-multi-lookup:
+    Lookup help for a command in several places
+man-online:
+    Lookup a man page on the internet
+mysql-with-prompt-fix:
+    Fix mysql prompt to show real hostname - NEVER localhost
+net-find-free-port:
+    Find an unused port
+note:
+    File of notes and a way to query them
+perl-install-deps-for-module:
+    Install all CPAN dependencies for a module
+perl-install-latest-stable-perl:
+    Install latest stable perl via perlbrew
+perl-install-module:
+    Quickly check if a module is installed - if not install it
+perl-install-modules-into-perl-version:
+    Install all modules from one perlbrew managed perl installation
+    into another
+perl-install-perlbrew:
+    Install perlbrew
+perl-module-find:
+    Search for a perl module or script
+perl-module-version:
+    Print version of an installed perl module
+perl-profile:
+    Profile a perl app and display the html results
+perl-upgrade-outdated-modules:
+    Upgrade installed perl modules if a new version is available
+prompt-dir:
+    Prompt containing only the prettified current directory
+prompt-dir-full:
+    Prompt containing the current directory ony
+prompt-host:
+    Prompt containing the current hostname
+prompt-local:
+    Prompt for local shells - without hostname
+prompt-plain:
+    Static prompt
+prompt-spare:
+    Prompt without user name
+proxy-setup-env:
+    Set proxy environment variables
+proxyserver:
+    Install and run a proxyserver from the cpan
+publicip:
+    Find own public ip when behind proxy
+rel:
+    Create a relative path from an absolute path
+replace:
+    Change the contens of text files by perl expression
+shell-color-test:
+    most color mappings taken from xterm-colortest
+shell-open-access-on-freeport:
+    Create shell access on a free port
+ssh-agent-env-clear:
+    Remove connection to ssh-agent
+ssh-agent-env-grab:
+    Save ssh-agent environemnt variables to be loaded in another
+    session or on
+ssh-agent-env-restore:
+    Load ssh-agent vars stored by grabssh()
+ssh-no-check:
+    SSH without host key checks
+ssh-persistent-reverse-tunnel-setup:
+    Setup a persistent reverse tunnel
+ssh-with-reverse-proxy:
+    Proxy traffic of a remote host through localhost
+ssl-create-self-signed-certificate:
+    Create a self signed certificate
+ssl-strip:
+    Remove ssl encryption from https and other protocols
+time-humanize-seconds:
+    Return a humanly comprehendable representation of an amount of
+    seconds
+timestamp-to-date:
+    Print date for a timestamp
+tmux-reattach:
+    Reattach to a screen or tmux session
+tree:
+    List a directory as a tree
+uniq-unsorted:
+    uniq replacement without the need for sorted input
+unix2dos:
+    Convert line endings from unix to dos
+url:
+    Print absolute SSH url of a file or directory
+vnc-server-setup-upstart-script:
+    Setup remote desktop access via ssh and vnc right from the login
+    screen of
+vncviewer:
+    vncviewer preconfigured to use ssh
+wcat:
+    Easily dump a web site
+webserver-serve-current-directory:
+    Serve current directory files via http
+wikipedia-via-dns:
+    Query wikipedia via DNS
+xmv:
+    Rename files by perl expression
+xtitle:
+    Change the title of a x window

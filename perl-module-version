@@ -1,5 +1,5 @@
 #!/bin/bash
 
-# Print version of an installed perl module.
+# Print version of an installed perl module
 
 perl -M"$@" -e 'print $ARGV[0]->VERSION . "\n"' "$@"

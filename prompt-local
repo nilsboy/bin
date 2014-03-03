@@ -1,3 +1,5 @@
+# Prompt for local shells - without hostname
+
 time-humanize-seconds "$elapsed"
 echo -n " "
 bashrc-helper-login-name 1

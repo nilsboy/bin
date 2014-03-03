@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Search for a debian package, sort by ranking, add description.
+# Search for a debian package, sort by ranking, add description
 
 use strict;
 use warnings;

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Diff two directory structures.
+# Diff two directory structures
 
 left=$1 ; shift
 right=$1 ; shift

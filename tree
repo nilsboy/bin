@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# List a directory as a tree.
+# List a directory as a tree
 
 use strict;
 use warnings;

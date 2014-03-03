@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Change the contens of text files by perl expression.
+# Change the contens of text files by perl expression
 
 use strict;
 use warnings;

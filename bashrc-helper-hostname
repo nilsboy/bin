@@ -1,3 +1,5 @@
+# Format hostname for bash prompt usage
+
 source bash-helpers
 
 echo -n $GREEN${HOSTNAME}$NO_COLOR

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Print file contens from where a specified regex first matches.
+# Print file contens from where a specified regex first matches
 
 use strict;
 use warnings;

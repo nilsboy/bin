@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Find a process and kill it with all its children.
+# Find a process and kill it with all its children
 
 set -e
 pattern=${1?Process name or argument?}

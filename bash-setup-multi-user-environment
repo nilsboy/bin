@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Share one account with serveral users but create their own environment.
+# Share one account with serveral users but create their own environment
+#
 # Users are identified by their public key and cd'ed to their respective homes.
 # Users have their own home and use their own .bashrc.
 

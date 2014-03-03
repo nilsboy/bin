@@ -1,3 +1,5 @@
+# Format login for bash prompt usage
+
 source bash-helpers
 
 skip_non_root=$1

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Lookup help for a command in several places.
+# Lookup help for a command in several places
 
 source bash-helpers
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Recursively decompile a jar including contained jars.
+# Recursively decompile a jar including contained jars
 
 set -e
 

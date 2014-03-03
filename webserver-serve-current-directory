@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Serve current directory files via http.
+# Serve current directory files via http
 
 perl-install-module App::HTTPThis
 http_this

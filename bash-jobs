@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Cleaned up bash jobs replacement.
+# Cleaned up bash jobs replacement
 
 # Run like this: jobs=$(jobs) bash-jobs
 

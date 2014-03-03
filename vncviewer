@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# vncviewer preconfigured to use ssh.
+# vncviewer preconfigured to use ssh
 
 host=$1
 port=${2:-0}

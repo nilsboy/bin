@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Profile a perl app and display the html results.
+# Profile a perl app and display the html results
 
 set -e
 

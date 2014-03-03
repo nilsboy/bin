@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Fix mysql prompt to show real hostname - NEVER localhost.
+# Fix mysql prompt to show real hostname - NEVER localhost
 
 h=$(perl -e '"'"$*"'" =~ /[-]+h(?:ost)*\ ([^ \\.]+)/ && print $1')
 

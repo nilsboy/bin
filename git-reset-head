@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Discard commits dating back to specified commit
+
 set -e
 
 source bash-helpers

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Search specially formatted bash history.
+# Search specially formatted bash history
 
 use strict;
 use warnings;

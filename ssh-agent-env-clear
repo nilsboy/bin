@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Remove connection to ssh-agent for testing purposes ect.
+# Remove connection to ssh-agent
 
 ssh-agent-env-grab \
     && unset SSH_AUTH_SOCK SSH_CLIENT SSH_CONNECTION SSH_TTY

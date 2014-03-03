@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SSH without host key checks.
+# SSH without host key checks
 
 ssh -q \
     -o CheckHostIP=no \

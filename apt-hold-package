@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Prevent a deb package from beeing upgraded.
+# Prevent a deb package from beeing upgraded
 
 set -e
 

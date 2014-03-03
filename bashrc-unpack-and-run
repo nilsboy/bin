@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Run a script that is attached to the bashrc.
+# Run a script that is attached to the bashrc
 
 use strict;
 use warnings;

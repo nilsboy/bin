@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Print absolute SSH url of a file or directory.
+# Print absolute SSH url of a file or directory
 
 my $rel = qx{rel "@ARGV"};
 $rel =~ s/\n$//g;

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Remove ssl encryption from https ect.
+# Remove ssl encryption from https and other protocols
 
 source bash-helpers
 

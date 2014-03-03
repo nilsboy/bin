@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install and run a proxyserver from the cpan.
+# Install and run a proxyserver from the cpan
 
 set -e
 

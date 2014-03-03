@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Reattach to a screen or tmux session.
+# Reattach to a screen or tmux session
 
 session=$1
 

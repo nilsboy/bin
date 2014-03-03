@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Find an unused port.
+# Find an unused port
 
 set -e
 

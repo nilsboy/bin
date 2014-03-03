@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 
-# Or-grep but list matching patterns instead of matching lines.
+# Or-grep but list matching patterns instead of matching lines
+#
 # Only longest matches are returned.
 
 my $matches;

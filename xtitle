@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Change the title of a x window.
+# Change the title of a x window
 
 case "$TERM" in
     *term | rxvt)

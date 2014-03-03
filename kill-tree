@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Kill a tree of processes by its root PID.
+# Kill a tree of processes by its root PID
 
 pid=${1?PID?}
 pids=$(ps opgid= $pid | perl -pe 's/^/-/g; s/\n/ /g')

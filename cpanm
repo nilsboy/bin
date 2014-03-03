@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Allow cpanm to install modules specified via Path/File.pm.
+# Allow cpanm to install modules specified via Path/File.pm
 
 map { s/\//\:\:/g ; s/\.pm$//g } @ARGV;
 

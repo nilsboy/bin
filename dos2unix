@@ -1,5 +1,5 @@
 #!/bin/bash
 
-# Convert line endings from dos to unix.
+# Convert line endings from dos to unix
 
 perl -i -pe 's/\r//g' "$@"

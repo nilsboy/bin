@@ -1,3 +1,5 @@
+# Return a humanly comprehendable representation of an amount of seconds
+
 source bash-helpers
 
 secs=${1:-0}

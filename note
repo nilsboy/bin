@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# File of notes and a way to query them.
+# File of notes and a way to query them
 
 search=$1
 

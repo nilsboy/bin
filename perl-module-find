@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Search for a perl module or script.
+# Search for a perl module or script
 
 find $(perl -e 'print join (" ", @INC)') -iname "*$@*.pm" 2>/dev/null \
     | cat
