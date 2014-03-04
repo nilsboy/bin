@@ -1,0 +1,24 @@
+# Find an on disk executable alternative
+
+source bash-helpers
+
+app=${1?Specify app}
+app=$(abs $app)
+
+base=$(basename $app)
+
+INFO "Searching for alternative for $base ($app)"
+
+while read candidate ; do
+
+    if [[ $candidate = $app ]] ; then
+        continue
+    fi
+
+    RETURN $candidate
+
+done <<EOF
+    $(type -ap $base || echo $app)
+EOF
+
+DIE "No alternative found for $base ($app)"

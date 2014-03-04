@@ -11,12 +11,12 @@ if [[ $BASHRC_PROMPT_COLORS ]] ; then
       ORANGE='\[\e[38;5;3m\]'
          RED='\[\e[38;5;9m\]'
 else
-    NO_COLOR='\e[33;0;m'
-        GRAY='\e[38;5;243m'
-        GREY='\e[38;5;243m'
-       GREEN='\e[38;5;2m'
-      ORANGE='\e[38;5;3m'
-         RED='\e[38;5;9m'
+    NO_COLOR=$(echo -e '\x1b[33;0;m')
+        GRAY=$(echo -e '\x1b[38;5;243m')
+        GREY=$(echo -e '\x1b[38;5;243m')
+       GREEN=$(echo -e '\x1b[38;5;2m')
+      ORANGE=$(echo -e '\x1b[38;5;')
+         RED=$(echo -e '\x1b[38;5;9m')
 fi
 
 function _LOG() {
@@ -59,9 +59,9 @@ function _LOG() {
     fi
 
     if [ -t 1 ] ; then
-        echo "$color${level}$location> $@${NO_COLOR}" >&1
+        echo -e "$color${level}$location> $@${NO_COLOR}" >&1
     else
-        echo "$(date +'%F %T') ${level}$location> $@" >&1
+        echo -e "$(date +'%F %T') ${level}$location> $@" >&1
     fi
 }
 

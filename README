@@ -17,10 +17,10 @@ bak:
     Backup a file appending a timestamp
 bash-background-jobs-count:
     Display one colored count for background jobs running and stopped
+bash-eternal-history-search:
+    Search specially formatted bash history
 bash-helpers:
     Helper functions for shell scripts
-bash-history-search:
-    Search specially formatted bash history
 bash-jobs:
     Cleaned up bash jobs replacement
 bash-print-on-error:
@@ -28,6 +28,8 @@ bash-print-on-error:
 bash-setup-multi-user-environment:
     Share one account with serveral users but create their own
     environment
+bashrc-eternal-history-add:
+    Add entry to the eternal bash history
 bashrc-helper-hostname:
     Format hostname for bash prompt usage
 bashrc-helper-login-name:
@@ -68,6 +70,8 @@ grep-goo:
     Or-grep but list matching patterns instead of matching lines
 grep-or:
     or-grep list matching lines
+java:
+    Run java with setting up neccessary environment
 java-decompile-jar:
     Recursively decompile a jar including contained jars
 json-tidy:
@@ -157,6 +161,8 @@ tmux-reattach:
     Reattach to a screen or tmux session
 tree:
     List a directory as a tree
+type-alternative:
+    Find an on disk executable alternative
 uniq-unsorted:
     uniq replacement without the need for sorted input
 unix2dos:
