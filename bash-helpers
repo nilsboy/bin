@@ -80,14 +80,14 @@ function _calc_prio() {
     echo $prio $show_location $color
 }
 
-function TRACE() { _LOG "TRACE" "$@" ; }
-function DEBUG() { _LOG "DEBUG" "$@" ; }
-function INFO()  { _LOG "INFO " "$@" ; }
-function WARN()  { _LOG "WARN " "$@" ; }
-function ERROR() { _LOG "ERROR" "$@" ; }
-function DIE()   { _LOG "FATAL" "$@" ; exit 1 ; }
-function EXIT()  { _LOG "FATAL" "$@" ; exit 0 ; }
-function RETURN(){ echo -ne "$@" ; exit 0 ; }
+function TRACE()  { _LOG "TRACE" "$@" ; }
+function DEBUG()  { _LOG "DEBUG" "$@" ; }
+function INFO()   { _LOG "INFO " "$@" ; }
+function WARN()   { _LOG "WARN " "$@" ; }
+function ERROR()  { _LOG "ERROR" "$@" ; }
+function DIE()    { _LOG "FATAL" "$@" ; exit 1 ; }
+function EXIT()   { _LOG "INFO"  "$@" ; exit 0 ; }
+function RETURN() { echo -ne "$@"     ; exit 0 ; }
 
 function usefatal() {
     trap DIE ERR
