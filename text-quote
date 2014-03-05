@@ -1,0 +1,3 @@
+# Quote text
+
+fmt -s | perl -pe 's/^/> /g' -

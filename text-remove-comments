@@ -1,0 +1,3 @@
+# Remove comment from text
+
+perl -ne 'print if ! /^#/ && ! /^$/' -

@@ -1,0 +1,17 @@
+# Edit a file from a list on STDIN
+
+set -e
+
+line=$1
+
+if [[ ! $line ]] ; then
+    cat | nl
+    exit 0
+fi
+
+file=$(cat | perl -ne 'print if $. == '$line)
+
+# close STDIN by connecting it back to the terminal
+exec < $BASHRC_TTY
+
+vi $file

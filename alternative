@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Find an on disk executable alternative
 
 source bash-helpers

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Find an executable in path
+compgen -c | grep -i "$@"

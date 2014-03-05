@@ -1,0 +1,3 @@
+# Watch a process
+
+watch -n1 "ps -A | grep -i $@ | grep -v grep"

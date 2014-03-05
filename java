@@ -6,4 +6,4 @@ if [[ ! $JAVA_HOME ]] ; then
     export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 fi
 
-exec $(type-alternative $0)
+alternative-run $0

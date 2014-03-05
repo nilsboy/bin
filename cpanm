@@ -4,4 +4,4 @@
 
 map { s/\//\:\:/g ; s/\.pm$//g } @ARGV;
 
-system("cpanm", "-nq" , @ARGV) && exit 1;
+system("alternative-run", "$0", "-nq" , @ARGV) && exit 1;

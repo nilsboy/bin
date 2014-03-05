@@ -1,0 +1,7 @@
+#!/bin/bash 
+
+# Find files excluding dotfiles optional matching several strings
+
+find . -mount \
+    | perl -ne 'print if ! m#/\.#' \
+    | grep-and -e $@

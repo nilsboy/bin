@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Find an on disk executable alternative and run it
+
+app=$1 ; shift
+
+exec $(alternative $app) $@

@@ -1,0 +1,3 @@
+# Edit perl module that is located within perls module path
+
+perl-module-find "$@" | vi-choose-file-from-list 1
