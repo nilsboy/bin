@@ -23,8 +23,10 @@ function _LOG() {
 
     local level=$1 ; shift
 
-    local log_level_prio crap
+    local log_level_prio
+    local crap
     read log_level_prio crap <<<$(_calc_prio $LOG_LEVEL)
+
     if [[ ! $LOG_LEVEL ]] ; then
         if [[ -t 1 ]] ; then
             log_level_prio=3
@@ -33,21 +35,24 @@ function _LOG() {
         fi
     fi
 
-    local message_prio
-    local prio
     local location
+
+    local prio
+    local show_location
     local color
 
-    read message_prio show_location color <<<$(_calc_prio $level)
+    read prio show_location color <<<$(_calc_prio $level)
 
-    if [[ $message_prio < $log_level_prio ]] ; then
+    if [[ $prio < $log_level_prio ]] ; then
         return
     fi
 
-    if [[ $show_location ]] ; then
+    if [[ $show_location > 0 ]] ; then
 
-        read line function file <<<$(caller 1)
-        local location=$line
+        local function
+        local file
+
+        read location function file <<<$(caller 1)
 
         if [[ $file ]] ; then
             location=$(basename $file)":"$location
@@ -66,7 +71,12 @@ function _LOG() {
 }
 
 function _calc_prio() {
+
     local level=$1
+
+    local prio
+    local show_location
+    local color
 
     case $level in
         TRACE) prio=1 ; show_location=1 ; color=$GRAY ;;
