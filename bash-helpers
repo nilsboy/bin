@@ -64,9 +64,9 @@ function _LOG() {
     fi
 
     if [ -t 1 ] ; then
-        echo -e "$color${level}$location> $@${NO_COLOR}" >&1
+        echo -e "$color${level}$location> $@${NO_COLOR}" >&2
     else
-        echo -e "$(date +'%F %T') ${level}$location> $@" >&1
+        echo -e "$(date +'%F %T') ${level}$location> $@" >&2
     fi
 }
 

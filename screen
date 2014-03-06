@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+xtitle screen@$HOSTNAME
+alternative-run screen -c $REMOTE_HOME/.screenrc $@

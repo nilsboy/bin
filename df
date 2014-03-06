@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Cleaned up df version
+
+if [[ $@ ]] ; then
+    command df "$@"
+    EXIT
+fi
+
+alternative-run df -h \
+    | perl -0777 -pe 's/Mounted on/Mounted_on/gm' \
+    | perl -0777 -pe 's/^(\S+)\n/$1/gm' \
+    | csvview \
+    | less -S
