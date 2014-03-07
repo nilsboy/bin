@@ -1,1 +1,3 @@
+# Recursively find files oder than days
+
 find . -type f -ctime +$1 | less

@@ -7,6 +7,10 @@ Descriptions:
 
 abs:
     Print the absolute path of a file or dir
+alternative:
+    Find an on disk executable alternative
+alternative-run:
+    Find an on disk executable alternative and run it
 apt-hold-package:
     Prevent a deb package from beeing upgraded
 apt-pop:
@@ -44,16 +48,34 @@ csvview:
     Quick way to view a csv file on the command line
 dev-bin-generate-readme:
     Generate README with descriptions for bin scripts
+df:
+    Cleaned up df version
 dir-diff:
     Diff two directory structures
 dir-name-prettifier:
     shorten prompt dir to max 15 chars
+distribution-fix:
+    Set conveniences depending on distribution
 dos2unix:
     Convert line endings from dos to unix
+env-grep:
+    Grep environment
 env-show:
     Display infos about the system
 file-template-filler:
     Create a file from a template
+find-and:
+    Find files excluding dotfiles optional matching several strings
+find-from-date:
+    Find files newer than date
+find-largest-files:
+    Find largest files recursively from current directory
+find-newest:
+    Recursively find newest files
+find-older-than-days:
+    Recursively find files oder than days
+find-or-grep:
+    Find a file or grep stdin
 git-env-validate:
     Ensure git-scm is configured appropriately
 git-reset-head:
@@ -68,6 +90,8 @@ grep-from:
     Print file contens from where a specified regex first matches
 grep-goo:
     Or-grep but list matching patterns instead of matching lines
+grep-list:
+    Grep for a list of values
 grep-or:
     or-grep list matching lines
 java:
@@ -88,8 +112,12 @@ mysql-with-prompt-fix:
     Fix mysql prompt to show real hostname - NEVER localhost
 net-find-free-port:
     Find an unused port
+net-open-ports:
+    List all open ports
 note:
     File of notes and a way to query them
+path-grep:
+    Find an executable in path
 perl-install-deps-for-module:
     Install all CPAN dependencies for a module
 perl-install-latest-stable-perl:
@@ -101,8 +129,10 @@ perl-install-modules-into-perl-version:
     into another
 perl-install-perlbrew:
     Install perlbrew
+perl-module-edit:
+    Edit perl module that is located within perls module path
 perl-module-find:
-    Search for a perl module or script
+    Find a perl module or script
 perl-module-version:
     Print version of an installed perl module
 perl-profile:
@@ -125,12 +155,18 @@ proxy-setup-env:
     Set proxy environment variables
 proxyserver:
     Install and run a proxyserver from the cpan
+ps-watch:
+    Watch a process
+pstree-search:
+    Display or search pstree, exclude current process
 publicip:
     Find own public ip when behind proxy
 rel:
     Create a relative path from an absolute path
 replace:
     Change the contens of text files by perl expression
+screen:
+    Run screen
 shell-color-test:
     most color mappings taken from xterm-colortest
 shell-open-access-on-freeport:
@@ -152,26 +188,40 @@ ssl-create-self-signed-certificate:
     Create a self signed certificate
 ssl-strip:
     Remove ssl encryption from https and other protocols
+text-quote:
+    Quote text
+text-remove-comments:
+    Remove comment from text
 time-humanize-seconds:
     Return a humanly comprehendable representation of an amount of
     seconds
-timestamp-to-date:
+time-stamp-to-date:
     Print date for a timestamp
+tmux:
+    Run tmux
 tmux-reattach:
     Reattach to a screen or tmux session
 tree:
     List a directory as a tree
-type-alternative:
-    Find an on disk executable alternative
 uniq-unsorted:
     uniq replacement without the need for sorted input
 unix2dos:
     Convert line endings from unix to dos
 url:
     Print absolute SSH url of a file or directory
+vi-choose-file-from-list:
+    Edit a file from a list on STDIN
+vi-from-find:
+    Recursively search for a file and open it in vim - TODO
+vi-from-history:
+    Search eternal history for an existing file an open it in vi
 vnc-server-setup-upstart-script:
     Setup remote desktop access via ssh and vnc right from the login
     screen of
+vnc-start-vino:
+    Start vino vnc server
+vnc-vino-preferences:
+    Set vino preferences
 vncviewer:
     vncviewer preconfigured to use ssh
 wcat:
