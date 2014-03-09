@@ -1,1 +1,3 @@
+# List all open ports
+
 netstat -tapnu | less -S
