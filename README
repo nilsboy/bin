@@ -215,6 +215,8 @@ vi-from-find:
     Recursively search for a file and open it in vim - TODO
 vi-from-history:
     Search eternal history for an existing file an open it in vi
+vi-from-path:
+    Find an executable in the path and edit it
 vnc-server-setup-upstart-script:
     Setup remote desktop access via ssh and vnc right from the login
     screen of

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Find an executable in the path and edit it
+
 set -e
 
 file=$(type -p $@)
