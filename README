@@ -48,6 +48,8 @@ csvview:
     Quick way to view a csv file on the command line
 dev-bin-generate-readme:
     Generate README with descriptions for bin scripts
+dev-deploy-fat-bashrc:
+    Generate and deploy fat packed bashrc
 df:
     Cleaned up df version
 dir-diff:
@@ -100,6 +102,12 @@ java-decompile-jar:
     Recursively decompile a jar including contained jars
 json-tidy:
     Tidy a json file and sort hash keys to make the output diffable
+keyboard-disable-caps-lock-console:
+    Map caps lock to escape for consoles
+keyboard-disable-caps-lock-xwindows:
+    Map caps lock to escape for X
+keyboard-reset:
+    Reset keyboard settings
 kill-tree:
     Kill a tree of processes by its root PID
 kill-tree-grep:

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Map caps lock to escape for X
+
+if [[ $(xmodmap -pke | grep -i caps) ]] ; then
+    xmodmap -e "remove lock = Caps_Lock" -e "keysym Caps_Lock = Escape"
+fi
