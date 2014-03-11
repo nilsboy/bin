@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+# Reset keyboard settings
+
+use strict;
+use warnings;
+
+my $current = `setxkbmap -query`;
+
+die "Error querying current keyboard setting." if !$current;
+
+print "Current keyboard settings:\n$current\n";
+
+my ($rules)   = $current =~ /rules:\s+(\S+)/igm;
+my ($model)   = $current =~ /model:\s+(\S+)/igm;
+my ($layout)  = $current =~ /layout:\s+(\S+)/igm;
+my ($variant) = $current =~ /variant:\s+(\S+)/igm;
+
+$rules   ||= "evdev";
+$model   ||= "pc105";
+$layout  ||= "de";
+$variant ||= "nodeadkeys";
+
+my $cmd =
+    "setxkbmap -model $model -layout $layout -variant $variant -rules $rules";
+
+print STDERR "Running: $cmd\n";
+print `$cmd`;
