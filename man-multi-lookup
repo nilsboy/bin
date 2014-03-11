@@ -35,6 +35,3 @@ fi
     _printifok related man -k $cmd
 
 ) | LESS="-j.5 -inRg" less $arg
-
-
-# This app was created automatically and may be overridden - DONT TOUCH THIS!

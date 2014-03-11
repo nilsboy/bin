@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Generate and deploy fat packed bashrc
+
+set -e
+
+cd ~/src/bin
+./bashrc-pack
+cd ~/src/bashrc
+git add bashrc
+git commit -m "new fat pack"
+git push
