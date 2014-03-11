@@ -10,4 +10,4 @@ app=$1 ; shift
 
 alternative=$(alternative $app)
 
-exec $alternative $@
+exec $alternative "$@"

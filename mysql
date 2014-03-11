@@ -15,5 +15,5 @@ fi
 # MYSQL_PS1="\\u@${GREEN}$h${NO_COLOR}:${RED}\\d db${NO_COLOR}> " \
 xtitle "mysql@$h" && \
     MYSQL_PS1="\\u@$h:\\d db> " \
-    command $luit mysql --default-character-set=latin1 \
+    $luit alternative-run $0 --default-character-set=latin1 \
         --show-warnings --pager="less -FX" "$@"
