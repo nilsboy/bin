@@ -17,6 +17,8 @@ apt-pop:
     Search for a debian package, sort by ranking, add description
 apt-unhold-package:
     Return a deb package to its default upgrade state
+archive:
+    Backup a file appending a timestamp
 bak:
     Backup a file appending a timestamp
 bash-background-jobs-count:
@@ -116,7 +118,7 @@ man-multi-lookup:
     Lookup help for a command in several places
 man-online:
     Lookup a man page on the internet
-mysql-with-prompt-fix:
+mysql:
     Fix mysql prompt to show real hostname - NEVER localhost
 net-find-free-port:
     Find an unused port
