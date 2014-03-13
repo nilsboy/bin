@@ -1,0 +1,60 @@
+#!/usr/bin/env perl
+# Add git information to prompt
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+
+my $red      = '\[\e[38;5;9m\]';
+my $gray     = '\[\e[38;5;243m\]';
+my $no_color = '\[\e[33;0;m\]';
+
+# test data
+my $git = <<'git';
+# On branch masterx
+# Your branch is ahead of 'origin/master' by 1 commit.
+# Untracked files
+# Changes not staged for commit
+# Changes to be committed
+git
+
+$git = `git status 2>/dev/null` || exit;
+
+my ($branch_status) = $git =~ /^# Your branch is (\w+) of/gm;
+
+my ($branch) = $git =~ /^# On branch (.+)$/gm;
+
+if ($branch_status) {
+    $branch_status = $gray . ":" . $red . $branch_status . $no_color;
+
+    if ($branch ne "master") {
+        $branch = $red . $branch;
+    }
+    else {
+        $branch = $gray . $branch;
+    }
+
+    $branch = $gray . "@" . $branch . $no_color;
+}
+elsif ($branch eq "master") {
+    $branch = "";
+}
+else {
+    $branch = $gray . "@" . $red . $branch . $no_color;
+}
+
+my $untracked = $gray;
+my $unstaged  = $gray;
+my $staged    = $gray;
+
+$untracked = $red if $git =~ /^# Untracked files/m;
+$unstaged  = $red if $git =~ /^# Changes not staged for commit/m;
+$staged    = $red if $git =~ /^# Changes to be committed/m;
+
+print " "
+    . $untracked . "g"
+    . $unstaged . "i"
+    . $staged . "t"
+    . $no_color
+    . $branch
+    . $branch_status;
