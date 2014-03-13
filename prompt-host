@@ -7,5 +7,6 @@ echo -n "@"
 bashrc-helper-hostname
 echo -n ":"
 dir-name-prettifier $PWD
+$BASHRC_PROMPT_HELPERS
 jobs=$jobs bash-background-jobs-count
 echo -n "> "

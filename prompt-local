@@ -4,5 +4,6 @@ time-humanize-seconds "$elapsed"
 echo -n " "
 bashrc-helper-login-name 1
 dir-name-prettifier $PWD
+$BASHRC_PROMPT_HELPERS
 jobs=$jobs bash-background-jobs-count
 echo -n "> "
