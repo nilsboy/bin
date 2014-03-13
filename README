@@ -18,7 +18,7 @@ apt-pop:
 apt-unhold-package:
     Return a deb package to its default upgrade state
 archive:
-    Backup a file appending a timestamp
+    Archive a file appending a timestamp
 bak:
     Backup a file appending a timestamp
 bash-background-jobs-count:
@@ -153,6 +153,8 @@ prompt-dir:
     Prompt containing only the prettified current directory
 prompt-dir-full:
     Prompt containing the current directory ony
+prompt-helper-git:
+    Add git status information to prompt
 prompt-host:
     Prompt containing the current hostname
 prompt-local:
