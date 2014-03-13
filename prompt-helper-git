@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # Add git status information to prompt
 
-# The status is represented in from of the word git followed by a + or -.
+# The status is represented in the form of the word git followed by a + or -.
 #
 # Of the word git+/- the red characters represent:
 # g = untracked files
