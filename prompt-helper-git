@@ -25,6 +25,7 @@ my $git = <<'git';
 # Untracked files
 # Changes not staged for commit
 # Changes to be committed
+# Your branch and 'origin/master' have diverged,
 git
 
 $git = `git status 2>/dev/null` || exit;
@@ -54,15 +55,18 @@ if ($branch_status) {
 my $untracked = $gray;
 my $unstaged  = $gray;
 my $staged    = $gray;
+my $conflicts = $gray;
 
 $untracked = $red if $git =~ /^# Untracked files/m;
 $unstaged  = $red if $git =~ /^# Changes not staged for commit/m;
 $staged    = $red if $git =~ /^# Changes to be committed/m;
+$conflicts = $red . "!" if $git =~ /^# Your branch .*have diverged/m;
 
 print " "
     . $untracked . "g"
     . $unstaged . "i"
     . $staged . "t"
     . $branch_status
+    . $conflicts
     . $no_color
     . $branch;
