@@ -5,6 +5,7 @@
 set -e
 
 cd ~/src/bin
+git pull
 ./bashrc-pack
 cd ~/src/bashrc
 git add bashrc
