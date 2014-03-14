@@ -177,8 +177,6 @@ rel:
     Create a relative path from an absolute path
 replace:
     Change the contens of text files by perl expression
-screen:
-    Run screen
 shell-color-test:
     most color mappings taken from xterm-colortest
 shell-open-access-on-freeport:
@@ -209,8 +207,6 @@ time-humanize-seconds:
     seconds
 time-stamp-to-date:
     Print date for a timestamp
-tmux:
-    Run tmux
 tmux-reattach:
     Reattach to a screen or tmux session
 tree:
