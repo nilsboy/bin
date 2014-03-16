@@ -147,6 +147,8 @@ perl-module-version:
     Print version of an installed perl module
 perl-profile:
     Profile a perl app and display the html results
+perl-setup-local-lib:
+    Setup user dir for cpan perl libs using local::lib and cpanm
 perl-upgrade-outdated-modules:
     Upgrade installed perl modules if a new version is available
 prompt-dir:
