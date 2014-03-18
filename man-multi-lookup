@@ -30,6 +30,8 @@ elif [[ $arg =~ ^- ]] ; then
    arg="+/^\\\s+$arg"
 elif [[ $arg ]] ; then
    arg="+/$arg"
+else
+   arg="+/^--- "
 fi
 
 (
