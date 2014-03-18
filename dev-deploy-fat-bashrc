@@ -5,9 +5,10 @@
 set -e
 
 cd ~/src/bin
-git pull
 ./bashrc-pack
 cd ~/src/bashrc
+git reset --hard HEAD
+git pull
 git add bashrc
 git commit -m "new fat pack"
 git push
