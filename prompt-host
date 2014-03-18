@@ -1,12 +1,14 @@
 # Prompt containing the current hostname
 
+source bash-helpers
+
 time-humanize-seconds $elapsed
+prefix-if $($BASHRC_PROMPT_HELPERS)
 echo -n " "
 bashrc-helper-login-name
 echo -n "@"
 bashrc-helper-hostname
 echo -n ":"
 dir-name-prettifier $PWD
-$BASHRC_PROMPT_HELPERS
 jobs=$jobs bash-background-jobs-count
 echo -n "> "

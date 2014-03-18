@@ -118,3 +118,13 @@ function line() {
         print "---", $msg , q{-} x ($ENV{COLUMNS} - 3 - length($msg)), "\n\n";
 EOF
 }
+
+function prefix-if() {
+    
+    if [[ "$@" ]] ; then
+        echo -ne " $@"
+        return
+    fi
+
+    echo -ne "$@"
+}
