@@ -4,11 +4,14 @@
 
 set -e
 
-cd ~/src/bin
-./bashrc-pack
 cd ~/src/bashrc
 git reset --hard HEAD
-git pull
+git pull || echo "Nothing to pull"
+
+cd ~/src/bin
+./bashrc-pack
+
+cd ~/src/bashrc
 git add bashrc
 git commit -m "new fat pack"
 git push
