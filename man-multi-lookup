@@ -16,6 +16,12 @@ function _printifok() {
 }
 
 cmd=$1 ; shift
+
+if [[ $cmd = git ]] ; then
+    cmd=$cmd-$1
+    shift
+fi
+
 arg="$@"
 
 if [[ $arg =~ ^-- ]] ; then
