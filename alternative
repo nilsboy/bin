@@ -5,15 +5,14 @@
 source bash-helpers
 
 app=${1?Specify app}
-app=$(abs $app)
+
+if ! [[ $app =~ / ]] ; then
+    DIE "Specify absolute path to executable."
+fi
 
 base=$(basename $app)
 
 INFO "Searching for alternative for $base ($app)"
-
-if [[ $SHLVL -gt 20 ]] ; then
-    DIE "Recursion depth of $SHLVL detected."
-fi
 
 while read candidate ; do
 

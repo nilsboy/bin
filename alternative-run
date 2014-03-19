@@ -8,6 +8,10 @@ source bash-helpers
 
 app=$1 ; shift
 
+if [[ $SHLVL -gt 20 ]] ; then
+    DIE "Recursion depth of $SHLVL detected."
+fi
+
 alternative=$(alternative $app)
 
 exec $alternative "$@"

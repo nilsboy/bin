@@ -96,8 +96,14 @@ function INFO()   { _LOG "INFO " "$@" ; }
 function WARN()   { _LOG "WARN " "$@" ; }
 function ERROR()  { _LOG "ERROR" "$@" ; }
 function DIE()    { _LOG "FATAL" "$@" ; exit 1 ; }
-function EXIT()   { _LOG "INFO"  "$@" ; exit 0 ; }
 function RETURN() { echo -ne "$@"     ; exit 0 ; }
+
+function EXIT()   {
+    if [[ "$@" ]] ; then
+        _LOG "INFO"  "$@"
+    fi
+    exit 0
+}
 
 function usefatal() {
     trap DIE ERR

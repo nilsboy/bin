@@ -2,12 +2,14 @@
 
 # Cleaned up df version
 
+source bash-helpers
+
 if [[ $@ ]] ; then
-    command df "$@"
+    alternative-run $0 "$@"
     EXIT
 fi
 
-alternative-run df -h \
+alternative-run $0 -h \
     | perl -0777 -pe 's/Mounted on/Mounted_on/gm' \
     | perl -0777 -pe 's/^(\S+)\n/$1/gm' \
     | csvview \
