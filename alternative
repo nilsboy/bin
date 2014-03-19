@@ -11,6 +11,10 @@ base=$(basename $app)
 
 INFO "Searching for alternative for $base ($app)"
 
+if [[ $SHLVL -gt 20 ]] ; then
+    DIE "Recursion depth of $SHLVL detected."
+fi
+
 while read candidate ; do
 
     if [[ $candidate = $app ]] ; then
