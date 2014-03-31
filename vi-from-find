@@ -2,7 +2,7 @@
 
 search=$(perl -e '$_ = "'"$@"'" ; s#\:\:#/#g; print')
 
-entry=$(f "$search" | head -1)
+entry=$(find-and "$search" | head -1)
 
 if [[ ! "$entry" ]] ; then
     exit 1
