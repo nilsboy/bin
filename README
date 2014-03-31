@@ -128,6 +128,9 @@ note:
     File of notes and a way to query them
 path-grep:
     Find an executable in path
+perl:
+    Set process name of perl process to script name. Usefull when run
+    via /usr/bin/env
 perl-install-deps-for-module:
     Install all CPAN dependencies for a module
 perl-install-latest-stable-perl:
