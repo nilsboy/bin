@@ -125,7 +125,7 @@ function line() {
 EOF
 }
 
-function prefix-if() {
+function prefixif() {
     
     if [[ "$@" ]] ; then
         echo -ne " $@"
