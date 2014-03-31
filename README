@@ -110,10 +110,6 @@ keyboard-disable-caps-lock-xwindows:
     Map caps lock to escape for X
 keyboard-reset:
     Reset keyboard settings
-kill-tree:
-    Kill a tree of processes by its root PID
-kill-tree-grep:
-    Find a process and kill it with all its children
 man-multi-lookup:
     Lookup help for a command in several places
 man-online:
