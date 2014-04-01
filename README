@@ -98,8 +98,6 @@ grep-list:
     Grep for a list of values
 grep-or:
     or-grep list matching lines
-java:
-    Run java with setting up neccessary environment
 java-decompile-jar:
     Recursively decompile a jar including contained jars
 json-tidy:
