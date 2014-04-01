@@ -8,12 +8,8 @@ if [[ ! $h || $h = localhost ]] ; then
     h=$HOSTNAME
 fi
 
-if [[ $(type -t luit) ]] ; then
-    luit="luit -encoding ISO885915"
-fi
-
 # MYSQL_PS1="\\u@${GREEN}$h${NO_COLOR}:${RED}\\d db${NO_COLOR}> " \
 xtitle "mysql@$h" && \
     MYSQL_PS1="\\u@$h:\\d db> " \
-    $luit alternative-run $0 --default-character-set=latin1 \
+    alternative-run $0 --default-character-set=latin1 \
         --show-warnings --pager="less -FX" "$@"
