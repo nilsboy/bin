@@ -2,14 +2,21 @@
 
 # Fix mysql prompt to show real hostname - NEVER localhost
 
-host=$(perl -e '"'"$*"'" =~ /[-]+h(?:ost)*\ ([^ \\.]+)/ && print $1')
+source bash-helpers
+
+host=$(perl -e '"'"$*"'" =~ /[-]+h(?:ost(?:=*))*\ ([^ \\.]+)/ && print $1')
+database=$(perl -e '"'"$*"'" =~ /([-]+d(?:atabase(?:=))*\ ([^ \\.]+)|(\w+$))/ && print $1')
 
 if [[ ! $host || $host = localhost ]] ; then
     host=$HOSTNAME
 fi
 
+if ! [[ $database ]] ; then
+    DIE "Cannot identify database"
+fi
+
 history_dir=$REMOTE_HOME/.mysql/history
-history_file=$history_dir/$host
+history_file=$history_dir/$database"@"$host
 
 mkdir -p $history_dir
 
