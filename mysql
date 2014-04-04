@@ -2,14 +2,20 @@
 
 # Fix mysql prompt to show real hostname - NEVER localhost
 
-h=$(perl -e '"'"$*"'" =~ /[-]+h(?:ost)*\ ([^ \\.]+)/ && print $1')
+host=$(perl -e '"'"$*"'" =~ /[-]+h(?:ost)*\ ([^ \\.]+)/ && print $1')
 
-if [[ ! $h || $h = localhost ]] ; then
-    h=$HOSTNAME
+if [[ ! $host || $host = localhost ]] ; then
+    host=$HOSTNAME
 fi
 
+history_dir=$REMOTE_HOME/.mysql/history
+history_file=$history_dir/$host
+
+mkdir -p $history_dir
+
 # MYSQL_PS1="\\u@${GREEN}$h${NO_COLOR}:${RED}\\d db${NO_COLOR}> " \
-xtitle "mysql@$h" && \
-    MYSQL_PS1="\\u@$h:\\d db> " \
-    alternative-run $0 --default-character-set=utf8 \
+xtitle "mysql@$host" && \
+    MYSQL_PS1="\\u@$host:\\d db> " \
+    MYSQL_HISTFILE=$history_file alternative-run $0 \
+        --default-character-set=utf8 \
         --show-warnings --pager="less -FX" "$@"
