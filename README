@@ -186,7 +186,7 @@ ssh-agent-env-grab:
     Save ssh-agent environemnt variables to be loaded in another
     session or on
 ssh-agent-env-restore:
-    Load ssh-agent vars stored by grabssh()
+    Dump ssh-agent vars stored by ssh-agent-env-grab
 ssh-no-check:
     SSH without host key checks
 ssh-persistent-reverse-tunnel-setup:

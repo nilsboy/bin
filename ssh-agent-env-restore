@@ -1,5 +1,7 @@
 #!/bin/bash
 
-# Load ssh-agent vars stored by grabssh()
+# Dump ssh-agent vars stored by ssh-agent-env-grab
 
-source $REMOTE_HOME/.ssh/agent_env
+# source this file to load the vars in your current shell
+
+cat $REMOTE_HOME/.ssh/agent_env
