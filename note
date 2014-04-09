@@ -7,7 +7,7 @@ search=$1
 if [[ ! $search ]] ; then
     perl -ne 'print " * $1\n" if /^# NOTES ON (.*)/' \
         $0| sort
-    return
+    exit
 fi
 
 perl -0777 -ne \
