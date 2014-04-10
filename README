@@ -11,6 +11,8 @@ alternative:
     Find an on disk executable alternative
 alternative-run:
     Find an on disk executable alternative and run it
+app-knows-switch:
+    Check if an app supports specified switch
 apt-hold-package:
     Prevent a deb package from beeing upgraded
 apt-pop:

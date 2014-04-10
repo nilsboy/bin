@@ -1,0 +1,15 @@
+#!/usr/bin/env perl
+
+# Check if an app supports specified switch
+
+use strict;
+use warnings;
+
+my $app    = $ARGV[0] || die "Specify app.";
+my $switch = $ARGV[1] || die "Specify switch.";
+
+my $output = `$app --help 2>&1`;
+
+exit 0 if $output =~ /^\s*$switch/ms;
+
+exit 1;
