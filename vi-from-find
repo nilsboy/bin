@@ -8,4 +8,4 @@ if [[ ! "$entry" ]] ; then
     exit 1
 fi
 
-command vi "$entry"
+command eval $EDITOR "$entry"

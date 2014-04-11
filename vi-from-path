@@ -6,4 +6,6 @@ set -e
 
 file=$(type -p $@)
 
-$EDITOR "$file"
+echo running $EDITOR
+
+command eval $EDITOR "$file"
