@@ -3,7 +3,7 @@
 source bash-helpers
 
 time-humanize-seconds $elapsed
-prefixif $($BASHRC_PROMPT_HELPERS)
+eval $BASHRC_PROMPT_HELPERS
 echo -n " "
 bashrc-helper-login-name
 echo -n "@"

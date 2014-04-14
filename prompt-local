@@ -3,7 +3,7 @@
 source bash-helpers
 
 time-humanize-seconds "$elapsed"
-prefixif $($BASHRC_PROMPT_HELPERS)
+eval $BASHRC_PROMPT_HELPERS
 prefixif $(bashrc-helper-login-name 1)
 prefixif $(dir-name-prettifier $PWD)
 jobs=$jobs bash-background-jobs-count
