@@ -3,6 +3,9 @@
 # Helper functions for shell scripts
 # Put in you path and you can use them using "source bash-helpers".
 
+set -e
+set -o pipefail
+
 if [[ $BASHRC_PROMPT_COLORS ]] ; then
     NO_COLOR='\[\e[33;0;m\]'
         GRAY='\[\e[38;5;243m\]'
@@ -133,4 +136,10 @@ function prefixif() {
     fi
 
     echo -ne "$@"
+}
+
+function docopt() {
+    docopt='docopt-convert $(readlink -f $0) -- "$@"'
+    eval $docopt
+    docopt=$(eval $docopt)
 }
