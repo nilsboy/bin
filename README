@@ -63,7 +63,7 @@ dir-name-prettifier:
 distribution-fix:
     Set conveniences depending on distribution
 docopt-convert:
-    use Pretty;
+    Convert a docopt specification
 dos2unix:
     Convert line endings from dos to unix
 env-grep:
@@ -236,7 +236,7 @@ vnc-start-vino:
 vnc-vino-preferences:
     Set vino preferences
 vncviewer:
-    vncviewer preconfigured to use ssh
+    preconfigured to use ssh
 wcat:
     Easily dump a web site
 webserver-serve-current-directory:

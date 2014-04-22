@@ -21,7 +21,11 @@ foreach my $app (sort(path(".")->children)) {
     next if $app->is_dir;
     next if $app->basename eq "README";
 
-    my ($description) = $app->slurp =~ /^# (.+?)\n/m;
+    my ($description) = $app->slurp =~ /^=head1 NAME\s+(.+)/m;
+    ($description) = $app->slurp =~ /^# (.+?)\n/m if !$description;
+
+    $description =~ s/^$app[\s-]*//g;
+
     $description = wrap('    ', '    ', $description) if $description;
 
     print STDERR "Description ends with a dot app: $app\n"

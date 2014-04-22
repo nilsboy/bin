@@ -70,7 +70,7 @@ __END__
 
 =head1 NAME
 
-docopt-convert - Convert a docopt specification.
+docopt-convert - Convert a docopt specification
 
 =head1 SYNOPSIS
 
