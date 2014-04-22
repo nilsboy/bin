@@ -3,13 +3,11 @@
 use strict;
 use warnings;
 no warnings 'uninitialized';
-# use Pretty;
 
 use Docopt;
 use JSON;
 use autobox::Core;
 use Path::Tiny;
-use Try::Tiny;
 
 my $options  = docopt();
 my $app_argv = $options->{"<argv>"};
@@ -56,7 +54,7 @@ sub convert_booleans {
     $twig->each(
         sub {
             my ($key, $value) = @_;
-            rec($value) if ref($value) eq 'HASH';
+            convert_booleans($value) if ref($value) eq 'HASH';
             $twig->{$key} = $value == 1 ? "boolean:true" : "boolean:false"
                 if ref $value eq 'boolean';
         }
