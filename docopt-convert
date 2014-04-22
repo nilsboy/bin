@@ -1,0 +1,83 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+# use Pretty;
+
+use Docopt;
+use JSON;
+use autobox::Core;
+use Path::Tiny;
+use Try::Tiny;
+
+my $options  = docopt();
+my $app_argv = $options->{"<argv>"};
+
+my $doc_file = path($options->{"<file.docopt>"});
+my $doc      = $doc_file->slurp;
+
+my $docopt_ran = 0;
+
+if ($doc =~ /^### docopt #*(.+)/sm) {
+    $doc = $1;
+}
+
+my $basename = $doc_file->basename;
+
+$doc =~ s/\$0/$basename/gm;
+
+parse_external_doc($doc, $app_argv);
+
+sub parse_external_doc {
+    my ($doc, $argv) = @_;
+
+    my $app_options = docopt(doc => $doc, argv => $argv);
+
+    $docopt_ran = 1;
+
+    convert_booleans($app_options);
+
+    my $json =
+        JSON->new->pretty($options->{'--pretty'})->encode($app_options);
+
+    $json =~ s/"boolean:(true|false)"/$1/gm;
+
+    print $json;
+}
+
+sub convert_booleans {
+    my ($twig) = @_;
+
+    if (!ref $twig eq 'HASH') {
+        return;
+    }
+
+    $twig->each(
+        sub {
+            my ($key, $value) = @_;
+            rec($value) if ref($value) eq 'HASH';
+            $twig->{$key} = $value == 1 ? "boolean:true" : "boolean:false"
+                if ref $value eq 'boolean';
+        }
+    );
+}
+
+# Prevent docopt to exit with 0 if --help is specified
+END { exit 1 if !$docopt_ran; }
+
+__END__
+
+=head1 NAME
+
+docopt-convert - Convert a docopt specification.
+
+=head1 SYNOPSIS
+
+    docopt-convert [options] <file.docopt> -- [<argv>...]
+
+    Options: 
+    -h --help     Show this screen.
+    --shell       Print bash parsable result - TODO
+    --p --pretty  Pretty print JSON
+

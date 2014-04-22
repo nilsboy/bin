@@ -62,6 +62,8 @@ dir-name-prettifier:
     shorten prompt dir to max 15 chars
 distribution-fix:
     Set conveniences depending on distribution
+docopt-convert:
+    use Pretty;
 dos2unix:
     Convert line endings from dos to unix
 env-grep:
