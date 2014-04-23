@@ -30,7 +30,9 @@ git
 
 $git = `git status 2>/dev/null` || exit;
 
-my ($branch) = $git =~ /^# On branch (.+)$/gm;
+$git =~ s/^# //gm;
+
+my ($branch) = $git =~ /^On branch (.+)$/gm;
 
 if ($branch eq "master") {
     $branch = "";
@@ -39,7 +41,7 @@ else {
     $branch = $gray . "@" . $red . $branch . $no_color;
 }
 
-my ($branch_status) = $git =~ /^# Your branch is (\w+) of/gm;
+my ($branch_status) = $git =~ /^Your branch is (\w+) of/gm;
 
 if ($branch_status eq "ahead") {
     $branch_status = "+";
@@ -57,10 +59,10 @@ my $unstaged  = $gray;
 my $staged    = $gray;
 my $conflicts = $gray;
 
-$untracked = $red if $git =~ /^# Untracked files/m;
-$unstaged  = $red if $git =~ /^# Changes not staged for commit/m;
-$staged    = $red if $git =~ /^# Changes to be committed/m;
-$conflicts = $red . "!" if $git =~ /^# Your branch .*have diverged/m;
+$untracked = $red if $git =~ /^Untracked files/m;
+$unstaged  = $red if $git =~ /^Changes not staged for commit/m;
+$staged    = $red if $git =~ /^Changes to be committed/m;
+$conflicts = $red . "!" if $git =~ /^Your branch .*have diverged/m;
 
 print " "
     . $untracked . "g"
