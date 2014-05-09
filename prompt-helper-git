@@ -32,7 +32,7 @@ $git = `git status 2>/dev/null` || exit;
 
 $git =~ s/^# //gm;
 
-my ($branch) = $git =~ /^On branch (.+)$/gm;
+my ($branch)   = $git =~ /^On branch (.+)$/gm;
 my ($revision) = $git =~ /^HEAD detached at (.+)$/gm;
 $branch ||= "?" . $revision;
 
@@ -46,7 +46,9 @@ else {
 my ($branch_status) = $git =~ /^Your branch is (\w+) of/gm;
 
 if ($branch_status eq "ahead") {
-    $branch_status = "+";
+    my ($commit_count) =
+        $git =~ /^Your branch is ahead of .* by (\d+) commit/gm;
+    $branch_status = "+". $commit_count;
 }
 elsif ($branch_status) {
     $branch_status = "-";
