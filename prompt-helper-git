@@ -33,6 +33,8 @@ $git = `git status 2>/dev/null` || exit;
 $git =~ s/^# //gm;
 
 my ($branch) = $git =~ /^On branch (.+)$/gm;
+my ($revision) = $git =~ /^HEAD detached at (.+)$/gm;
+$branch ||= "?" . $revision;
 
 if ($branch eq "master") {
     $branch = "";
