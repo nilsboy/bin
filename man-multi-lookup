@@ -29,7 +29,7 @@ arg="$@"
 if [[ $arg =~ ^-- ]] ; then
    arg="+/$arg"
 elif [[ $arg =~ ^- ]] ; then
-   arg="+/^\\\s+$arg"
+   arg="+/^\\s+$arg"
 elif [[ $arg ]] ; then
    arg="+/$arg"
 else
