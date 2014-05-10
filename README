@@ -112,6 +112,8 @@ keyboard-disable-caps-lock-xwindows:
     Map caps lock to escape for X
 keyboard-reset:
     Reset keyboard settings
+man-explain-options:
+    Display man page infos about command line options
 man-multi-lookup:
     Lookup help for a command in several places
 man-online:
