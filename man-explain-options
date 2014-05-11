@@ -45,7 +45,7 @@ foreach my $option (@options) {
         next;
     }
     $desc =~ s/\n$//gms;
-    print "$desc\n";
+    print "   $desc\n";
 }
 
 print STDERR "No description found for options: "
