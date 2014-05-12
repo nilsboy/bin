@@ -30,6 +30,8 @@ foreach my $option (@options) {
 
 @options = @normalized_options;
 
+die "No options found." if ! @options;
+
 my $man = `man $command` || die "Cannot open man page for $command";
 
 my @unknown_options = ();
