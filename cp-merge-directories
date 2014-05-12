@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Merge two directories on the same disk recursively by using hard links
+# and avoiding to copy a file
+
+source bash-helpers
+
+src=${1?specify source directory}
+dst=${2?specify destination directory}
+
+test -d $src || DIE "Not a directory: $src"
+test -d $dst || DIE "Not a directory: $dst"
+
+cp -rnl "$src"/* "$dst"/

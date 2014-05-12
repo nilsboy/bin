@@ -46,6 +46,9 @@ bashrc-pack:
     Attach scripts to the bashrc skeleton
 bashrc-unpack-and-run:
     Run a script that is attached to the bashrc
+cp-merge-directories:
+    Merge two directories on the same disk recursively by using hard
+    links
 cpanm:
     Allow cpanm to install modules specified via Path/File.pm
 csvview:
