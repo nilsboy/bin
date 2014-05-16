@@ -8,7 +8,14 @@ source bash-helpers
 src=${1?specify source directory}
 dst=${2?specify destination directory}
 
-test -d $src || DIE "Not a directory: $src"
-test -d $dst || DIE "Not a directory: $dst"
+test -d "$src" || DIE "Not a directory: $src"
+test -d "$dst" || DIE "Not a directory: $dst"
+
+src_device=$(stat --format "%d" "$src")
+dst_device=$(stat --format "%d" "$dst")
+
+if [[ $src_device != $dst_device ]] ; then
+    DIE "$src and $dst have to reside on the same device for hard links to work"
+fi
 
 cp -rnl "$src"/* "$dst"/
