@@ -2,7 +2,8 @@
 
 # SSH without host key checks
 
-ssh -q \
+ssh -A \
+    -q \
     -o CheckHostIP=no \
     -o UserKnownHostsFile=/dev/null \
     -o StrictHostKeyChecking=no
