@@ -138,8 +138,19 @@ function prefixif() {
     echo -ne "$@"
 }
 
+# Interpret argv using a docopt spec and save a JSON representation into $docopt
 function docopt() {
-    docopt='docopt-convert $(readlink -f $0) -- "$@"'
-    eval $docopt
-    docopt=$(eval $docopt)
+
+    if [[ $docopt_files ]] ; then
+        docopt_files=","$docopt_files
+    fi
+
+    local trace=$(docopt-convert $(readlink -f $0)$docopt_files --json --pretty -- "$@" 2>&1)
+    TRACE "$trace"
+
+    # print help and die if doc is invalid
+    docopt-convert $(readlink -f $0)$docopt_files -- "$@" || return 1
+
+    # save json to $docopt
+    docopt=$(docopt-convert $(readlink -f $0)$docopt_files --json -- "$@")
 }
