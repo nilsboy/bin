@@ -3,25 +3,34 @@
 use strict;
 use warnings;
 no warnings 'uninitialized';
+use Data::Dumper;
 
 use Docopt;
 use JSON;
 use autobox::Core;
 use Path::Tiny;
+use Try::Tiny;
 
-my $options  = docopt();
+my $options = docopt();
 my $app_argv = $options->{"<argv>"};
 
-my $doc_file = path($options->{"<file.docopt>"});
-my $doc      = $doc_file->slurp;
+my $doc;
+my $basename;
 
-my $docopt_ran = 0;
+foreach my $doc_file_name ($options->{"<file.docopt>"}->split(",")) {
 
-if ($doc =~ /^### docopt #*(.+)/sm) {
-    $doc = $1;
+    my $doc_file = path($doc_file_name);
+
+    my $current_doc .= $doc_file->slurp;
+    if ($current_doc =~ /^### docopt [#|\n]*(.+)/sm) {
+        $current_doc = $1;
+    }
+
+    $doc .= $current_doc;
+    $basename ||= $doc_file->basename;
 }
 
-my $basename = $doc_file->basename;
+my $docopt_ran = 0;
 
 $doc =~ s/\$0/$basename/gm;
 
@@ -41,7 +50,7 @@ sub parse_external_doc {
 
     $json =~ s/"boolean:(true|false)"/$1/gm;
 
-    print $json;
+    print $json if $options->{'--json'};
 }
 
 sub convert_booleans {
@@ -54,7 +63,7 @@ sub convert_booleans {
     $twig->each(
         sub {
             my ($key, $value) = @_;
-            convert_booleans($value) if ref($value) eq 'HASH';
+            rec($value) if ref($value) eq 'HASH';
             $twig->{$key} = $value == 1 ? "boolean:true" : "boolean:false"
                 if ref $value eq 'boolean';
         }
@@ -68,7 +77,7 @@ __END__
 
 =head1 NAME
 
-docopt-convert - Convert a docopt specification
+docopt-convert - Convert a docopt specification.
 
 =head1 SYNOPSIS
 
@@ -76,6 +85,6 @@ docopt-convert - Convert a docopt specification
 
     Options: 
     -h --help     Show this screen.
-    --shell       Print bash parsable result - TODO
-    --p --pretty  Pretty print JSON
+    --json        Output JSON
+    -p --pretty   Pretty print JSON
 
