@@ -2,4 +2,15 @@
 
 # Install latest stable perl via perlbrew
 
-perlbrew install stable --notest --switch
+set -e
+
+perlbrew install stable --notest
+
+echo "Now installed perl versions:"
+perlbrew list
+
+echo
+echo "to install all currently installed modues to new version use:"
+echo "    perl-install-modules-into-perl-version (version)"
+echo
+echo "to switch to new version use: perlbrew swith (version)"
