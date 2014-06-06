@@ -11,4 +11,4 @@ if [[ ! $version ]] ; then
     DIE "Specify perl version."
 fi
 
-perlbrew list-modules | perlbrew exec --with $version cpanm
+perlbrew list-modules | perlbrew exec --with $version cpanm -nq
