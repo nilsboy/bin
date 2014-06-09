@@ -8,10 +8,10 @@ perl-install-module Devel::NYTProf
 
 set -x
 
-local script=$(basename $1)
-local dir=/tmp/nytprof.$script.$(date +%F_%H%M%S)
+script=$(basename $1)
+dir=/tmp/nytprof.$script.$(date +%F_%H%M%S)
 mkdir $dir
-local file=$dir/nytprof.out
+file=$dir/nytprof.out
 
 NYTPROF=file=$file perl -d:NYTProf "$@"
 

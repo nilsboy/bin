@@ -6,14 +6,14 @@ source bash-helpers
 
 set -e
 
-local ssh_key_file=~/.ssh/reverse-tunnel
+ssh_key_file=~/.ssh/reverse-tunnel
 
 if [[ -e $ssh_key_file ]] ; then
     DIE "$ssh_key_file already exists"
 fi
 
-local server=${1?Server?}
-local port=${2?Port?}
+server=${1?Server?}
+port=${2?Port?}
 
 ssh-keygen -q -t rsa -b 2048 -P "" -f $ssh_key_file
 
