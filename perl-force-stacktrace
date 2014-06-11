@@ -1,0 +1,3 @@
+# Force stracktrace output from a perl script
+
+perl -Mdiagnostics=-traceonly "$@"
