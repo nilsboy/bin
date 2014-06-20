@@ -7,9 +7,10 @@ use warnings;
 no warnings 'uninitialized';
 use Data::Dumper;
 use autodie;
+use File::stat;
 
 my %apps = ();
-open( F, qq{apt-cache search "@{[ join(" ", @ARGV) ]}" |} );
+open( F, qq{apt-cache search --names-only "@{[ join(" ", @ARGV) ]}" |} );
 while (<F>) {
     my ( $app, $desc ) = /^(.+?) - (.+)$/;
     next if $app =~ /^lib/;
@@ -18,7 +19,16 @@ while (<F>) {
 
 my %ranks = ();
 
-open( F, qq{wget -qqO- http://popcon.debian.org/by_inst.gz | gunzip |} );
+my $pop_file = "/tmp/apt-pop";
+
+if ( -e $pop_file ) {
+    if ( stat($pop_file)->ctime < time() - 86400 ) {
+        qx{wget -qqO- http://popcon.debian.org/by_inst.gz | gunzip > $pop_file}
+            && die $!;
+    }
+}
+
+open( F, $pop_file );
 while (<F>) {
     my ( $rank, $app ) = /^(\d+)\s+(\S+)/;
 
@@ -35,15 +45,16 @@ while (<F>) {
 my $i = 0;
 foreach my $app ( keys %apps ) {
     $i++;
-    $ranks{"_$i"} = { app => $app }
+    $ranks{"$i"} = { app => $app }
         if !exists $apps{$app}{ranked};
 }
 
 print "\n";
 
 foreach my $rank ( sort { $a <=> $b } keys %ranks ) {
-    my $app    = $ranks{$rank}{app};
+    my $app = $ranks{$rank}{app};
     my ($desc) = `apt-cache show $app` =~ /^Description.*?\:(.+?)\n\S/igsm;
+    $desc =~ s/^\s+\.$//gm;
     my $header = "### $app " . ( "#" x ( $ENV{COLUMNS} - length($app) - 5 ) );
     print "$header\n\n$desc\n\n";
 }
