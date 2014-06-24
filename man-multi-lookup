@@ -6,11 +6,16 @@ source bash-helpers
 
 set +e
 
+COLUMNS=80
+
+# format output in pipes too
+MAN_KEEP_FORMATTING=1 
+
 function _printifok() {
     local msg=$1 ; shift
     local cmd="$*"
 
-    local out=$(MANWIDTH=80 MAN_KEEP_FORMATTING=1 $cmd 2>/dev/null)
+    local out=$($cmd 2>/dev/null)
     [[ ${out[@]} ]] || return 1
     line $msg
     echo "${out[@]}"
