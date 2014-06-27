@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Discard all current changes in directory
+
+set -e
+
+source bash-helpers
+
+git checkout -- .

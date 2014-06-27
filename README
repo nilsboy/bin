@@ -89,6 +89,8 @@ find-or-grep:
     Find a file or grep stdin
 git-env-validate:
     Ensure git-scm is configured appropriately
+git-reset-head:
+    Discard all current changes in directory
 git-reset-head-to:
     Discard commits dating back to specified commit
 gnome-send-to-mail-images:
