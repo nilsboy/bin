@@ -15,7 +15,7 @@ app-knows-switch:
     Check if an app supports specified switch
 apt-hold-package:
     Prevent a deb package from beeing upgraded
-apt-pop:
+apt-popularity:
     Search for a debian package, sort by ranking, add description
 apt-unhold-package:
     Return a deb package to its default upgrade state
@@ -89,7 +89,7 @@ find-or-grep:
     Find a file or grep stdin
 git-env-validate:
     Ensure git-scm is configured appropriately
-git-reset-head:
+git-reset-head-to:
     Discard commits dating back to specified commit
 gnome-send-to-mail-images:
     Resize one or more images and add them as attachements
