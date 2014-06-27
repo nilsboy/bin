@@ -6,4 +6,5 @@ set -e
 
 source bash-helpers
 
-git checkout -- .
+git clean -df
+git checkout .
