@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Find an executable in the perl %INC and edit it
+
+set -e
+
+file=$(perldoc -lm "$@")
+
+command eval $EDITOR "$file"
