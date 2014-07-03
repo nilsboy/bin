@@ -6,5 +6,6 @@ set -e
 
 source bash-helpers
 
+git reset HEAD .
 git clean -df
 git checkout .
