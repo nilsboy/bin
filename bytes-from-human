@@ -1,0 +1,20 @@
+#!/usr/bin/env perl
+
+# Convert a size from human friendly to bytes
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+
+my $human = $ARGV[0] || die "Specify size in human friendly";
+
+my $k = 1024;
+my $m = $k * 1024;
+my $g = $m * 1024;
+my $t = $g * 1024;
+
+foreach my $unit (qw(k m g t)) {
+    $human =~ s/$unit/ * \$$unit/ig;
+}
+
+print eval $human;

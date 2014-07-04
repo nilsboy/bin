@@ -1,0 +1,39 @@
+#!/usr/bin/env perl
+
+# Convert a size of bytes to human friendly
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+
+my $bytes = $ARGV[0] || die "Specify size in bytes";
+
+my $k = 1024;
+my $m = $k * 1024;
+my $g = $m * 1024;
+my $t = $g * 1024;
+
+my $human;
+
+if ($bytes >= $t) {
+    $human = sprintf("%.1fT", $bytes / $t);
+}
+elsif ($bytes >= $g) {
+    $human = sprintf("%.1fG", $bytes / $g);
+}
+elsif ($bytes >= $m) {
+    $human = sprintf("%.1fM", $bytes / $m);
+}
+elsif ($bytes >= $k) {
+    $human = sprintf("%.1fK", $bytes / $k);
+}
+elsif ($bytes == 0) {
+    $human = $bytes;
+}
+else {
+    $human = $bytes;
+}
+
+$human =~ s/\.0//g;
+
+print $human;

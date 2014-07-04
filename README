@@ -46,6 +46,10 @@ bashrc-pack:
     Attach scripts to the bashrc skeleton
 bashrc-unpack-and-run:
     Run a script that is attached to the bashrc
+bytes-from-human:
+    Convert a size from human friendly to bytes
+bytes-to-human:
+    Convert a size of bytes to human friendly
 cp-merge-directories:
     Merge two directories on the same disk recursively by using hard
     links
