@@ -77,6 +77,8 @@ env-grep:
     Grep environment
 env-show:
     Display infos about the system
+file-compress-if-size-reaches:
+    Compress a file depending on size
 file-template-filler:
     Create a file from a template
 find-and:
