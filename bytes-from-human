@@ -6,7 +6,8 @@ use strict;
 use warnings;
 no warnings 'uninitialized';
 
-my $human = $ARGV[0] || die "Specify size in human friendly";
+my $human = $ARGV[0];
+defined $human || die "Specify size in human friendly";
 
 my $k = 1024;
 my $m = $k * 1024;

@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+# Compress a file depending on size
+
+use strict;
+use warnings;
+use File::stat;
+
+my $max_human = $ARGV[0];
+defined $max_human || die "Specify size in human size";
+shift @ARGV;
+my $file = join(" ", @ARGV);
+$file || die "Specify file";
+
+my $max_bytes = `bytes-from-human $max_human`;
+defined $max_bytes || die "Cannot convert size:" . $!;
+
+$max_bytes--;
+
+if (stat($file)->size < $max_bytes || $file =~ /.zip$/i) {
+    print $file;
+    exit 0;
+}
+
+system(qq{zip "$file.zip" "$file" >/dev/null})
+    && die "Error ziping $file: " . $!;
+
+print "$file.zip";
