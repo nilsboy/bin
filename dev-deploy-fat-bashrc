@@ -4,6 +4,9 @@
 
 set -e
 
+cd ~/src/dotfiles
+git pull || echo "Nothing to pull"
+
 cd ~/src/bashrc
 git reset --hard HEAD
 git pull || echo "Nothing to pull"
