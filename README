@@ -133,6 +133,8 @@ mysql:
     Fix mysql prompt to show real hostname - NEVER localhost
 net-find-free-port:
     Find an unused port
+net-ip2name:
+    Replace ip adresses with host names inside of text
 net-open-ports:
     List all open ports
 note:

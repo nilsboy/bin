@@ -1,0 +1,39 @@
+#!/usr/bin/env perl
+
+# Replace ip adresses with host names inside of text
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+use Socket;
+
+$| = 1;
+
+my %found = ( "0.0.0.0" => "0.0.0.0" );
+
+while (<>) {
+
+    foreach my $ip_and_port (/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?:\:\d+)*)/g)
+    {
+        my ( $ip, $port ) = split( ":", $ip_and_port );
+
+        if ( $ip =~ /\.255/ ) {
+            $found{$ip} = $ip;
+        }
+
+        my $name
+            = $found{$ip} || gethostbyaddr( inet_aton($ip), AF_INET ) || $ip;
+
+        $found{$ip} = $name;
+
+        $name = $name . ":" . $port if $port;
+
+        if ( length($name) < length($ip_and_port) ) {
+            $name = sprintf( "%-" . length($ip_and_port) . "s", $name );
+        }
+
+        s/\Q$ip_and_port\E/$name/g;
+    }
+
+    print;
+}
