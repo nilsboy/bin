@@ -6,4 +6,5 @@ ssh -A \
     -q \
     -o CheckHostIP=no \
     -o UserKnownHostsFile=/dev/null \
-    -o StrictHostKeyChecking=no
+    -o StrictHostKeyChecking=no \
+    "$@"
