@@ -11,8 +11,6 @@ alternative:
     Find an on disk executable alternative
 alternative-run:
     Find an on disk executable alternative and run it
-app-knows-switch:
-    Check if an app supports specified switch
 apt-hold-package:
     Prevent a deb package from beeing upgraded
 apt-popularity:
@@ -50,6 +48,8 @@ bytes-from-human:
     Convert a size from human friendly to bytes
 bytes-to-human:
     Convert a size of bytes to human friendly
+command-knows-switch:
+    Check if an app supports specified switch
 cp-merge-directories:
     Merge two directories on the same disk recursively by using hard
     links
