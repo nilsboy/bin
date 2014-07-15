@@ -11,8 +11,12 @@ alternative:
     Find an on disk executable alternative
 alternative-run:
     Find an on disk executable alternative and run it
+apt-dump-installed-packages:
+    Dump names of all installed packages to a file
 apt-hold-package:
     Prevent a deb package from beeing upgraded
+apt-install-packages-from-file:
+    Install packages listed in a file
 apt-popularity:
     Search for a debian package, sort by ranking, add description
 apt-unhold-package:

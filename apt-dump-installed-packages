@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Dump names of all installed packages to a file
+
+set -e
+
+dpkg --get-selections > installed_packages_on_host_$HOSTNAME

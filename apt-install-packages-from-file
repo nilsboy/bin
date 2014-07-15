@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Install packages listed in a file
+
+set -e
+
+file=${1?file name?}
+dpkg --set-selections < $file
