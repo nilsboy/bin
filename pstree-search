@@ -3,7 +3,7 @@
 search=${@:-,$PPID}
 
 switches="-apl";
-app-knows-switch pstree -g && switches=$switches"g"
+command-knows-switch pstree -g && switches=$switches"g"
 
 pstree $switches \
     | perl -ne '$x = "xxSKIPme"; print if $_ !~ /[\|`]\-\{[\w-_]+},\d+$|less.+\+\/'$1'|$x/' \
