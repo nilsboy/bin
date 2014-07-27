@@ -46,8 +46,8 @@ fi
     _printifok help help -m $cmd
     _printifok man man -a $cmd
     _printifok perldoc perldoc -f $cmd
-    _printifok "apt show" apt-cache show $cmd
     _printifok related man -k $cmd
+    _printifok "apt show" apt-cache show $cmd
     _printifok "apt search" apt-cache search $cmd
 
 ) | LESS="-inRg" less "$arg"
