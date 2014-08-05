@@ -51,8 +51,11 @@ fi
     _printifok help 0 help -m $cmd
     _printifok man 0 man -a $cmd
     _printifok perldoc 0 perldoc -f $cmd
-    _printifok related 1 man -k $cmd
-    _printifok "apt show" 1 apt-cache show $cmd
-    _printifok "apt search" 1 apt-cache search $cmd
+
+    if [[ ! $SHORT ]] ; then
+        _printifok related 1 man -k $cmd
+        _printifok "apt show" 1 apt-cache show $cmd
+        _printifok "apt search" 1 apt-cache search $cmd
+    fi
 
 ) | LESS="-inRg" less "$arg"
