@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Create tags for all source directories
+
+set -e
+
+# Save absolute path in tags file
+cd /
+
+ctags -f ~/.vim/var/tags -R ~/src
+# $(perl -e 'print join(" ",  grep(!/^\./, @INC))')

@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Save ctags configuration file
+
+# Configured file extensions
+# ctags --list-maps=perl
+
+# Configured kinds:
+# ctags --list-kinds=perl
+
+# Print tags found in file
+# ctags -x file
+
+set -e
+
+# NOTE: \w does not work here inside character classes!
+
+cat > ~/.ctags <<EOF
+
+--regex-sh=
+--regex-sh=/^\s*function\s+(\w+)/1/f,function/
+--regex-sh=/^\s*alias\s+=\s*(\w+)=/1/f,alias/
+--regex-sh=/^(### [^#]+) #/1/f,header/
+
+--regex-vim=/^("### [^#]+) #/1/f,header/
+
+--regex-perl=/^\s*(package|class|role)\s+([a-zA-Z0-9:]+)/\2/p,package,packages/
+--regex-perl=/^\s*(method|fun)\s+(\w+)/\2/s,subroutine,subroutines/
+--regex-perl=/^\s*has\W+(\w+)\W*/\1/a,attribute,attributes/
+--regex-perl=/^\s*with\s+(['"])(.+)\1/\2/w,with/
+--regex-perl=/^\s*extends\s+(['"])(.+)\1/\2/e,extends,extend/
+EOF
+
+exit 0
+
+# --langdef=perl
+# --langmap=perl:+.t
+# --regex-perl=
+
+--langmap='perl:+.pod' \
+--regex-perl='/^\s*use\s+(\w+[\w\:]*?\w*?)/\1/u,use,uses/' \
+--regex-perl='/^\s*require\s+(\w+[\w\:]*?\w*?)/\1/r,require,requires/' \
+--regex-perl='/^\s*\*(\w+)\s*?=/\1/a,alias,aliases/' \
+--regex-perl='/^\s*our\s*?[\$@%](\w+)/\1/o,our,ours/' \
+--regex-perl='/^\=head1\s+(.+)/\1/p,pod,Plain Old Documentation/' \
+--regex-perl='/^\=head2\s+(.+)/-- \1/p,pod,Plain Old Documentation/' \
+--regex-perl='/^\=head[3-5]\s+(.+)/---- \1/p,pod,Plain Old Documentation/' \

@@ -61,6 +61,10 @@ cpanm:
     Allow cpanm to install modules specified via Path/File.pm
 csvview:
     Quick way to view a csv file on the command line
+ctags-index-sources:
+    Create tags for all source directories
+ctags-setup:
+    Save ctags configuration file
 dev-bin-generate-readme:
     Generate README with descriptions for bin scripts
 dev-deploy-fat-bashrc:
@@ -241,6 +245,8 @@ unix2dos:
     Convert line endings from unix to dos
 url:
     Print absolute SSH url of a file or directory
+vi:
+    Setup and run vim
 vi-choose-file-from-list:
     Edit a file from a list on STDIN
 vi-from-find:
