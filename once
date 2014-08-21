@@ -24,5 +24,5 @@ exit 0 if $data eq $old_data;
 print $data;
 
 open(my $fileh, ">", $file)
-    or die "cannot open < input.txt: $!";
+    or die "cannot open > $file: $!";
 print $fileh $data;
