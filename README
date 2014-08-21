@@ -147,6 +147,8 @@ net-open-ports:
     List all open ports
 note:
     File of notes and a way to query them
+once:
+    Print stdin once if it has changed since last time
 path-grep:
     Find an executable in path
 perl-force-stacktrace:

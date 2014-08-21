@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+# Print stdin once if it has changed since last time
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+
+my $file = $ARGV[0] || die "Specify cache file";
+$file = "/tmp/once_" . $ENV{USER} . "_" . $file;
+
+undef $/;
+
+my $data = <STDIN>;
+my $old_data;
+
+if (-e $file) {
+    open(my $fileh, "<", $file) || die $!;
+    $old_data = <$fileh>;
+}
+
+exit 0 if $data eq $old_data;
+
+print $data;
+
+open(my $fileh, ">", $file)
+    or die "cannot open < input.txt: $!";
+print $fileh $data;
