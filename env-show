@@ -25,6 +25,7 @@ EOF
 
 SHOW Uname $(uname -a)
 SHOW Kernel $(cat /proc/version)
+SHOW "64-bit-CPU?" $(grep flags /proc/cpuinfo | perl -0777 -ne 'print /\blm\b/ ? "yes" : "no"')
 
 ubuntu_version=$(cat /etc/issue | perl -ne 'print $1 if /ubuntu (\d+\.\d+)/i')
 
