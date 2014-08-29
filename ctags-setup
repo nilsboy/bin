@@ -18,11 +18,11 @@ set -e
 cat > ~/.ctags <<EOF
 
 --regex-sh=
---regex-sh=/^\s*function\s+(\w+)/1/f,function/
---regex-sh=/^\s*alias\s+=\s*(\w+)=/1/f,alias/
---regex-sh=/^(### [^#]+) #/1/f,header/
+--regex-sh=/^\s*function\s+(\w+)/\1/f,function/
+--regex-sh=/^\s*alias\s+=\s*(\w+)=/\1/f,alias/
+--regex-sh=/^### ([^#]+) #/\1/f,function/
 
---regex-vim=/^("### [^#]+) #/1/f,header/
+--regex-vim=/^"### ([^#]+) #/\1/f,function/
 
 --regex-perl=/^\s*(package|class|role)\s+([a-zA-Z0-9:]+)/\2/p,package,packages/
 --regex-perl=/^\s*(method|fun)\s+(\w+)/\2/s,subroutine,subroutines/
