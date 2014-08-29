@@ -4,6 +4,8 @@
 
 set -e
 
+ctags-setup
+
 # Save absolute path in tags file
 cd /
 
