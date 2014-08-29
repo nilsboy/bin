@@ -43,7 +43,7 @@ echo
 echo 'eval "$(perl -I'$dst'/lib/perl5 -Mlocal::lib='$dst')"' > bashrc
 echo 'alias cpan="(echo use cpanm >&2 ; exit 1)"' >> bashrc
 echo 'alias cpanm="cpanm -nq"' >> bashrc
-echo 'PATH='$bin':$PATH' >> bashrc
+echo 'export PATH='$bin':$PATH' >> bashrc
 cat $bashrc >> bashrc
 cp bashrc $bashrc
 
