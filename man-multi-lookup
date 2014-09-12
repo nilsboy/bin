@@ -58,4 +58,4 @@ fi
         _printifok "apt search" 1 apt-cache search $cmd
     fi
 
-) | LESS="-inRgj.5" less "$arg"
+) | LESS="-inRgSj.5" less "$arg"
