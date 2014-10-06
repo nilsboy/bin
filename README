@@ -207,6 +207,10 @@ rel:
     Create a relative path from an absolute path
 replace:
     Change the contens of text files by perl expression
+run-and-capture:
+    Run a program and pretty print all its outputs
+run-or-test:
+    Run a programs tests if any exist otherwise the program itself
 shell-color-test:
     most color mappings taken from xterm-colortest
 shell-open-access-on-freeport:
