@@ -2,7 +2,13 @@
 
 # Print absolute SSH url of a file or directory
 
+use strict;
+use warnings FATAL => 'all';
+
+my $hostname = `hostname` || die "Error getting hostname";
+$hostname =~ s/\n//g;
+
 my $rel = qx{rel "@ARGV"};
 $rel =~ s/\n$//g;
 $rel = "\"$rel\"" if $rel =~ /\s|;/;
-print "$ENV{USER}\@$ENV{HOSTNAME}:$rel\n"
+print "$ENV{USER}\@" . $hostname . ":$rel\n"
