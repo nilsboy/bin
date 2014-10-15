@@ -8,8 +8,9 @@ no warnings 'uninitialized';
 use Data::Dumper;
 use Getopt::Long;
 
-my $red = "\x1b[38;5;124m";
-my $dry = 1;
+my $red      = "\x1b[38;5;124m";
+my $no_color = "\x1b[33;0m";
+my $dry      = 1;
 
 my $opts = {
     "e|eval=s"  => \my $op,
@@ -61,4 +62,4 @@ exit 1 if !$files_changed;
 
 print STDERR "$files_changed of $file_count files changed"
     . " (example: $example_file)"
-    . ( $dry ? "$red - dry run." : "" ) . "\n";
+    . ( $dry ? "$red - dry run.$no_color" : "" ) . "\n";
