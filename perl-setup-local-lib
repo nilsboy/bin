@@ -25,6 +25,7 @@ rm *tar.gz
 
 cd local*
 perl Makefile.PL --bootstrap=$dst
+echo Makefile.PL | replace -e 's/ test runtime/ runtime/g' -x
 make install
 
 echo
