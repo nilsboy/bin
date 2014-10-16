@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Setup vim environment
+
+source bash-helpers
+
+INFO "Setting up vim config..."
+
+VIM_DIR=$REMOTE_HOME/.vim/
+
+mkdir -p $VIM_DIR
+cd $VIM_DIR
+
+INFO "Cloning git dotvim repo..."
+
+git clone https://github.com/nilsboy/dotvim.git etc
+
+INFO "Starting vim to download plugins..."
+
+exec vi
