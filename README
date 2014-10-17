@@ -107,6 +107,8 @@ git-reset-head:
     Discard all current changes in directory
 git-reset-head-to:
     Discard commits dating back to specified commit
+git-reset-origin:
+    Discard all current changes in directory to origin/master
 gnome-send-to-mail-images:
     Resize one or more images and add them as attachements
 grep-and:
