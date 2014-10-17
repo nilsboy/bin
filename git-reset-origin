@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Discard all current changes in directory to origin/master
+
+set -e
+
+source bash-helpers
+
+git reset origin/master .
+git clean -df
+git checkout .
