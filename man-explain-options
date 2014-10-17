@@ -40,7 +40,26 @@ print "$command:\n";
 
 foreach my $option (@options) {
 
-    my ($desc) = $man =~ /^(?:(?:-{1,2}\w+, )*|\s+)($option\W.+?)^\s+-/ms;
+    my $option_regex = $option;
+
+    if($option =~ /^--(\w+)/) {
+        my $bare_option = $1;
+        $bare_option =~ s/^no//g;
+        $option_regex .= "|--no" . $bare_option . "|--\\[no\\]" . $bare_option . "|-no-" . $bare_option;
+    }
+
+    $option_regex = "(" . $option_regex . ")";
+
+    # TODO: support:
+    # -c, --count
+    # --color-lineno=color
+    # ack -s -H --nocolor --nogroup --column --smart-case --follow --count --flush --with-filename -c
+    # --nocolor
+    # --[no]color, --[no]colour
+    # -H, --with-filename
+
+    # print "checking option: $option / $option_regex\n";
+    my ($space, $desc) = $man =~ /^(\s+)(?:(?:-{1,2}\w+, )*|\s+)($option_regex\W.+?)^\1-/ms;
 
     if ( !$desc ) {
         push( @unknown_options, $option );
