@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+
+# Strip HTML of tags and entities
+
+use strict;
+use warnings;
+
+use HTML::Strip;
+
+undef $/;
+
+print HTML::Strip->new()->parse( <> );
