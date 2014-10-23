@@ -123,6 +123,8 @@ grep-list:
     Grep for a list of values
 grep-or:
     or-grep list matching lines
+html-strip:
+    Strip HTML of tags and entities
 java-decompile-jar:
     Recursively decompile a jar including contained jars
 json-tidy:
