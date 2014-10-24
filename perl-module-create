@@ -1,0 +1,43 @@
+#!/usr/bin/env perl
+
+# Identify a perl class name in a line of code and open or create its file
+
+use strict;
+use warnings;
+
+use Path::Tiny;
+
+my $code = join(" ", @ARGV);
+
+my ($module) = $code =~ /([\w]+\:\:[\w\:]+)/;
+
+if (!$module) {
+    $code =~ s/^\s*(use|require|package)//g;
+    ($module) = $code =~ /([\w\:]+)/;
+}
+
+$module || die "Specify module";
+$module =~ s/\n//g;
+
+my $path = `pmpath $module`;
+
+# wtf errors on stdout?
+if ($path !~ /no such/i) {
+    print $path;
+    exit 0;
+}
+
+$path = $module;
+$path =~ s/\:\:/\//g;
+$path =~ s/$/.pm/g;
+
+my $base_dir = $ENV{PERL5LIB} || die "Set PERL5LIB environment variable";
+$path = $base_dir . "/" . $path;
+
+$path = path($path);
+
+if (!$path->exists) {
+    $path->touchpath;
+}
+
+print $path;

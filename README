@@ -170,6 +170,9 @@ perl-install-modules-into-perl-version:
     into another
 perl-install-perlbrew:
     Install perlbrew
+perl-module-create:
+    Identify a perl class name in a line of code and open or create its
+    file
 perl-module-edit:
     Edit perl module that is located within perls module path
 perl-module-find:
