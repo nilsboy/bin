@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Default options for git commands
+
+source bash-helpers
+
+if [[ $1 == "status" ]] ; then
+
+    alternative-run $0 status -uall "${@:2}"
+
+elif [[ $1 == "log" ]] ; then
+
+    alternative-run $0 log --oneline --decorate --graph "${@:2}"
+
+else
+    alternative-run $0 "$@"
+fi
