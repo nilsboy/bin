@@ -129,7 +129,7 @@ EOF
 }
 
 function prefixif() {
-    
+
     if [[ "$@" ]] ; then
         echo -ne " $@"
         return
@@ -153,4 +153,5 @@ function docopt() {
 
     # save json to $docopt
     docopt=$(docopt-convert $(readlink -f $0)$docopt_files --json -- "$@")
+    eval $(docopt-convert $(readlink -f $0)$docopt_files --env -- "$@")
 }
