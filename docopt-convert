@@ -11,7 +11,7 @@ use autobox::Core;
 use Path::Tiny;
 use Try::Tiny;
 
-my $options = docopt();
+my $options  = docopt();
 my $app_argv = $options->{"<argv>"};
 
 my $doc;
@@ -44,13 +44,41 @@ sub parse_external_doc {
     $docopt_ran = 1;
 
     convert_booleans($app_options);
+    my $env_vars = generate_env_vars($app_options);
 
     my $json =
         JSON->new->pretty($options->{'--pretty'})->encode($app_options);
 
     $json =~ s/"boolean:(true|false)"/$1/gm;
 
-    print $json if $options->{'--json'};
+    print $json     if $options->{'--json'};
+    print $env_vars if $options->{'--env'};
+}
+
+sub generate_env_vars {
+    my ($app_options) = @_;
+
+    my $env_vars;
+
+    foreach my $key (keys %$app_options) {
+
+        my $value = $app_options->{$key};
+
+        next if $value =~ /^\s*$/;
+
+        $key =~ s/\W/_/g;
+        $key =~ s/^_*//g;
+        $key =~ s/_*$//g;
+
+        $key = "docopt_" . $key;
+
+        $value = 1 if $value =~ /^boolean:true$/;
+        $value = 0 if $value =~ /^boolean:false$/;
+
+        $env_vars .= "export $key='$value'; ";
+    }
+
+    return $env_vars;
 }
 
 sub convert_booleans {
@@ -86,5 +114,6 @@ docopt-convert - Convert a docopt specification
     Options: 
     -h --help     Show this screen.
     --json        Output JSON
+    --env         Output environment variables for eval
     -p --pretty   Pretty print JSON
 
