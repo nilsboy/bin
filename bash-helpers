@@ -155,3 +155,7 @@ function docopt() {
     docopt=$(docopt-convert $(readlink -f $0)$docopt_files --json -- "$@")
     eval $(docopt-convert $(readlink -f $0)$docopt_files --env -- "$@")
 }
+
+function clear-with-scrollback() {
+    printf "\33[2J"
+}
