@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Start a plack server for debugging with autoreloading of changed files
+
+source bash-helpers
+
+clear-with-scrollback
+
+# plackup -L Shotgun --port 5000 ${1?Specify psgi file}
+plackup -R ~/perldev --port 5000 ${1?Specify psgi file}
