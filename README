@@ -248,6 +248,8 @@ text-quote:
     Quote text
 text-remove-comments:
     Remove comment from text
+time-dehumanize:
+    Convert a humanized time spec into seconds
 time-humanize-seconds:
     Return a humanly comprehendable representation of an amount of
     seconds
