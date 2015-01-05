@@ -2,11 +2,12 @@
 
 # Backup a file appending a timestamp
 
-set -e
-
 source bash-helpers
 
 file=${1?filename not specified}
+
+# remove optional trailing slash
+file=${file%/}
 bak=$file"_"$(date +%Y%m%d_%H%M%S)
 
 INFO "Backing up: $file -> $bak"
