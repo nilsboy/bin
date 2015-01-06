@@ -105,6 +105,8 @@ git:
     Default options for git commands
 git-env-validate:
     Ensure git-scm is configured appropriately
+git-project:
+    Print git project root dir name
 git-reset-head:
     Discard all current changes in directory
 git-reset-head-to:
