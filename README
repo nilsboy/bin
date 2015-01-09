@@ -46,10 +46,10 @@ bashrc-helper-login-name:
     Format login for bash prompt usage
 bashrc-pack:
     Attach scripts to the bashrc skeleton
-bashrc-pack-and-upload:
-    Generate and deploy fat packed bashrc
 bashrc-unpack-and-run:
     Run a script that is attached to the bashrc
+bashrc-upload:
+    Generate and deploy fat packed bashrc
 bytes-from-human:
     Convert a size from human friendly to bytes
 bytes-to-human:
