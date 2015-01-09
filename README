@@ -46,6 +46,8 @@ bashrc-helper-login-name:
     Format login for bash prompt usage
 bashrc-pack:
     Attach scripts to the bashrc skeleton
+bashrc-pack-and-upload:
+    Generate and deploy fat packed bashrc
 bashrc-unpack-and-run:
     Run a script that is attached to the bashrc
 bytes-from-human:
@@ -67,8 +69,6 @@ ctags-setup:
     Save ctags configuration file
 dev-bin-generate-readme:
     Generate README with descriptions for bin scripts
-dev-deploy-fat-bashrc:
-    Generate and deploy fat packed bashrc
 df:
     Cleaned up df version
 dir-diff:
