@@ -261,6 +261,8 @@ time-stamp-to-date:
     Print date for a timestamp
 tmux-reattach:
     Reattach to a screen or tmux session
+top-mem:
+    View top ordered by memory usage
 tree:
     List a directory as a tree
 uniq-unsorted:
