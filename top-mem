@@ -1,0 +1,3 @@
+# View top ordered by memory usage
+
+exec top -c -o '%MEM'
