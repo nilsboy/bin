@@ -37,6 +37,11 @@ echo 'alias cpan="(echo use cpanm >&2 ; exit 1)"' >> bashrc
 
 perl -0777 -pi -e 's/$ENV{HOME}/~/g' bashrc
 
+if [[ ! -e "$bashrc" ]] ; then
+    echo "$bashrc does not exist - creating new one..."
+    touch $bashrc
+fi
+
 cat $bashrc >> bashrc
 cp bashrc $bashrc
 
