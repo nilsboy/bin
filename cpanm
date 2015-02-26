@@ -4,4 +4,4 @@
 
 map { s/\//\:\:/g ; s/\.pm$//g } @ARGV;
 
-system("alternative-run", "$0", "-nq" , @ARGV) && exit 1;
+system("alternative-run", "$0", "-nq --local-lib $REMOTE_HOME/perl5" , @ARGV) && exit 1;

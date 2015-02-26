@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Setup home directory based perl environment
+
+set -e
+
+home=${1?Specify home directory}
+
+# convert to absolute path
+home=$(perl -MCwd -e '$dir = Cwd::abs_path(<"'$home'">); print $dir')
+
+dst=$home/perl5
+lib=$dst/lib/perl5
+bin=$dst/bin
+local_lib=$home/perldev/lib
+local_bin=$home/perldev/bin
+bashrc=$home/.bashrc
+
+tmp=$(mktemp -d)
+cd $tmp
+
+echo "downloading cpanm..." >&2
+
+wget -q http://xrl.us/cpanm
+chmod +x cpanm
+mkdir -p $bin
+mv cpanm $bin/
+
+mkdir -p $local_lib $local_bin
+
+echo "updating bashrc..." >&2
+
+echo "export PERL5LIB=$local_lib:$lib:\$PERL5LIB" > bashrc
+echo "export PATH=$local_bin:$bin:\$PATH" >> bashrc
+echo "alias cpanm='cpanm -nq --local-lib $dst'" >> bashrc
+echo 'alias cpan="(echo use cpanm >&2 ; exit 1)"' >> bashrc
+
+perl -0777 -pi -e 's/$ENV{HOME}/~/g' bashrc
+
+cat $bashrc >> bashrc
+cp bashrc $bashrc
+
+echo "done." >&2
