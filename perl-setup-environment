@@ -15,6 +15,7 @@ bin=$dst/bin
 local_lib=$home/perldev/lib
 local_bin=$home/perldev/bin
 bashrc=$home/.bashrc
+bashrc_d=$home/.bashrc.d
 
 cpan_dir=$home/.cpan
 cpanm_dir=$home/.cpanm
@@ -58,18 +59,18 @@ echo 'alias cpan="(echo use cpanm >&2 ; exit 1)" '"$add_msg" >> bashrc
 
 perl -0777 -pi -e 's/$ENV{HOME}/~/g' bashrc
 
-if [[ ! -e "$bashrc" ]] ; then
-    echo "$bashrc does not exist - creating new one..."
-    touch $bashrc
+if [[ -d $bashrc_d ]] ; then
+    cp bashrc $bashrc_d/perl
+else
+
+    if [[ ! -e "$bashrc" ]] ; then
+        echo "$bashrc does not exist - creating new one..."
+        touch $bashrc
+    fi
+
+    (cat $bashrc ; echo) | grep -v "$add_msg" >> bashrc
+    cp bashrc $bashrc
 fi
-
-(cat $bashrc ; echo) | grep -v "$add_msg" >> bashrc
-cp bashrc $bashrc
-
-# (crontab -l ; echo) | grep -v "$add_msg" > crontab
-# echo "SHELL=/bin/bash $add_msg" >> crontab
-# echo "BASH_ENV=$bashrc $add_msg" >> crontab
-# crontab crontab
 
 echo
 echo "Environment setup complete - please review the changes." >&2
