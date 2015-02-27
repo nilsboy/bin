@@ -53,7 +53,7 @@ echo "updating $bashrc..." >&2
 add_msg="# added by perl-setup-environment"
 
 echo "export PERL5LIB=$local_lib:$lib $add_msg" > bashrc
-echo "export PATH=$local_bin:$bin:\$PATH $add_msg" >> bashrc
+echo "export PATH=\$PATH:$local_bin:$bin $add_msg" >> bashrc
 echo "alias cpanm='cpanm -nq --local-lib $dst' $add_msg" >> bashrc
 echo 'alias cpan="(echo use cpanm >&2 ; exit 1)" '"$add_msg" >> bashrc
 
