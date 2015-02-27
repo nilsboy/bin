@@ -2,6 +2,8 @@
 
 # Allow cpanm to install modules specified via Path/File.pm
 
-map { s/\//\:\:/g ; s/\.pm$//g } @ARGV;
+map { s/\//\:\:/g ; s/\.pm$//g } $ARGV[$#ARGV];
 
-system("alternative-run", "$0", "-nq --local-lib $REMOTE_HOME/perl5" , @ARGV) && exit 1;
+my @local_lib = ( "--local-lib", "$ENV{REMOTE_HOME}/perl5" );
+
+system("alternative-run", "$0", "-nq", @local_lib , @ARGV) && exit 1;
