@@ -4,7 +4,7 @@
 
 set -e
 
-home=${1?Specify home directory}
+home=${1:-$HOME}
 
 # convert to absolute path
 home=$(perl -MCwd -e '$dir = Cwd::abs_path(<"'$home'">); print $dir')
@@ -16,12 +16,31 @@ local_lib=$home/perldev/lib
 local_bin=$home/perldev/bin
 bashrc=$home/.bashrc
 
+cpan_dir=$home/.cpan
+cpanm_dir=$home/.cpanm
+
 tmp=$(mktemp -d)
 cd $tmp
+
+echo
+echo "Using temp dir: $tmp" >&2
+echo
 
 echo "downloading cpanm..." >&2
 
 wget -q http://xrl.us/cpanm
+ 
+if [[ -d $cpan_dir ]] ; then
+    echo "Backing up old $cpan_dir to $tmp/..."
+    mv $cpan_dir $tmp/
+fi
+
+if [[ -d $cpanm_dir ]] ; then
+    echo "Backing up old $cpanm_dir to $tmp/..."
+    mv $cpanm_dir $tmp/
+fi
+
+
 chmod +x cpanm
 mkdir -p $bin
 mv cpanm $bin/
@@ -30,10 +49,12 @@ mkdir -p $local_lib $local_bin
 
 echo "updating bashrc..." >&2
 
-echo "export PERL5LIB=$local_lib:$lib:\$PERL5LIB" > bashrc
-echo "export PATH=$local_bin:$bin:\$PATH" >> bashrc
-echo "alias cpanm='cpanm -nq --local-lib $dst'" >> bashrc
-echo 'alias cpan="(echo use cpanm >&2 ; exit 1)"' >> bashrc
+add_msg="# added by perl-setup-environment"
+
+echo "export PERL5LIB=$local_lib:$lib:\$PERL5LIB $add_msg" > bashrc
+echo "export PATH=$local_bin:$bin:\$PATH $add_msg" >> bashrc
+echo "alias cpanm='cpanm -nq --local-lib $dst' $add_msg" >> bashrc
+echo 'alias cpan="(echo use cpanm >&2 ; exit 1)" '"$add_msg" >> bashrc
 
 perl -0777 -pi -e 's/$ENV{HOME}/~/g' bashrc
 
@@ -42,7 +63,21 @@ if [[ ! -e "$bashrc" ]] ; then
     touch $bashrc
 fi
 
-cat $bashrc >> bashrc
+cat $bashrc | grep -v "$add_msg" >> bashrc
 cp bashrc $bashrc
 
-echo "done." >&2
+echo "updating crontab to use bash to find the libs..." >&2
+(crontab -l ; echo) | grep -v "$add_msg" > crontab
+echo "SHELL=/bin/bash $add_msg" >> crontab
+echo "BASH_ENV=~/.bashrc $add_msg" >> crontab
+crontab crontab
+
+echo
+echo "Environment setup complete - please review the changes." >&2
+echo
+echo "Use 'cpanm ModuleName' to install modules from cpan." >&2
+echo "Save your own modules to $local_lib." >&2
+echo "Save your own executables to $local_bin." >&2
+echo
+echo "Please logout and back in for the changes to take effect." >&2
+echo
