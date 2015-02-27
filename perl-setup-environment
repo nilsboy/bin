@@ -24,10 +24,10 @@ tmp=$(mktemp -d)
 cd $tmp
 
 echo
-echo "Using temp dir: $tmp" >&2
+echo "Using temp dir: $tmp"
 echo
 
-echo "downloading cpanm..." >&2
+echo "downloading cpanm..."
 
 wget -q http://xrl.us/cpanm
  
@@ -48,18 +48,19 @@ mv cpanm $bin/
 
 mkdir -p $local_lib $local_bin
 
-echo "updating $bashrc..." >&2
+echo "updating $bashrc..."
 
 add_msg="# added by perl-setup-environment"
 
 echo "export PERL5LIB=$local_lib:$lib $add_msg" > bashrc
 echo "export PATH=\$PATH:$local_bin:$bin $add_msg" >> bashrc
 echo "alias cpanm='cpanm -nq --local-lib $dst' $add_msg" >> bashrc
-echo 'alias cpan="(echo use cpanm >&2 ; exit 1)" '"$add_msg" >> bashrc
+echo 'alias cpan="(echo use cpanm ; exit 1)" '"$add_msg" >> bashrc
 
 perl -0777 -pi -e 's/$ENV{HOME}/~/g' bashrc
 
 if [[ -d $bashrc_d ]] ; then
+    echo "adding $bashrc_d/perl..."
     cp bashrc $bashrc_d/perl
 else
 
@@ -73,15 +74,15 @@ else
 fi
 
 echo
-echo "Environment setup complete - please review the changes." >&2
+echo "Environment setup complete - please review the changes."
 echo
-echo "Use 'cpanm ModuleName' to install modules from cpan." >&2
-echo "Save your own modules to $local_lib." >&2
-echo "Save your own executables to $local_bin." >&2
+echo "Use 'cpanm ModuleName' to install modules from cpan."
+echo "Save your own modules to $local_lib."
+echo "Save your own executables to $local_bin."
 echo
 echo "To run perl script as crons add these lines to your crontab:"
 echo "SHELL=/bin/bash"
 echo "BASH_ENV=$bashrc"
 echo
-echo "Please logout and back in for the changes to take effect." >&2
+echo "Please logout and back in for the changes to take effect."
 echo
