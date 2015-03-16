@@ -155,6 +155,8 @@ net-ip2name:
     Replace ip adresses with host names inside of text
 net-open-ports:
     List all open ports
+net-scan-private-network:
+    Scan for hosts in private network
 note:
     File of notes and a way to query them
 once:

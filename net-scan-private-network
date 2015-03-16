@@ -1,0 +1,3 @@
+# Scan for hosts in private network
+
+nmap -sn 192.168.0.0/16
