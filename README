@@ -133,6 +133,8 @@ html-strip:
     Strip HTML of tags and entities
 java-decompile-jar:
     Recursively decompile a jar including contained jars
+js-format-using-prettydiff:
+    Javascript formatter using "npm install prettydiff"
 json-tidy:
     Tidy a json file and sort hash keys to make the output diffable
 keyboard-disable-caps-lock-console:

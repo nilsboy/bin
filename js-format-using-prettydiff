@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+// Javascript formatter using "npm install prettydiff"
+
+var prettydiff = require("prettydiff");
+
+var js = "";
+
+process.stdin.on("data", receiveStdinChunk)
+	.on("end", beautifyToStdout);
+
+function receiveStdinChunk(chunk) {
+	js += chunk.toString();
+}
+
+function beautifyToStdout() {
+
+	var output = prettydiff.api({
+		source: js,
+		mode: "beautify",
+		lang: "javascript",
+		report: false,
+		preserve: true,
+		varword: "each",
+		wrap: 80,
+		correct: true,
+		quoteconvert: "double"
+	});
+
+	// remove report
+	output.pop();
+
+	process.stdout.write(output.toString());
+}
