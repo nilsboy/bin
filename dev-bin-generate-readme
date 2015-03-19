@@ -23,6 +23,7 @@ foreach my $app (sort(path(".")->children)) {
 
     my ($description) = $app->slurp =~ /^=head1 NAME\s+(.+)/m;
     ($description) = $app->slurp =~ /^# (.+?)\n/m if !$description;
+    ($description) = $app->slurp =~ /^\/\/ (.+?)\n/m if !$description;
 
     $description =~ s/^$app[\s-]*//g;
 
