@@ -1,0 +1,21 @@
+# Rip and transcode a video dvd
+
+source bash-helpers
+
+for track in $@ ; do
+    INFO "Ripping track: $track..."
+    mpv dvd://$track --stream-dump dvd-$track.vob
+    INFO "Done ripping track: $track"
+done
+
+eject /dev/dvd
+
+INFO "Encoding..."
+
+for track in $@ ; do
+    INFO "Transcoding track: $track"
+    video-transcode dvd-$track.vob
+    INFO "Done transcoding track: $track"
+done
+
+INFO "All done"

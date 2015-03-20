@@ -1,0 +1,30 @@
+# Transcode a media file to x264 preserving all video, audio and subtitle tracks
+
+# To copy a single audio track use: audio_track=3 video-transcode file
+
+source bash-helpers
+
+if [[ "$audio_track" ]] ; then
+    audio_track=":$audio_track"
+fi
+
+for file in $@ ; do
+
+    INFO "Encoding $file..."
+
+    avconv \
+        -analyzeduration 1000000k -probesize 1000000k \
+        -i $file \
+        -map 0:v \
+        -c:v libx264 \
+        -crf 23 \
+        -preset medium \
+        -map 0:a$audio_track \
+        -c:a copy \
+        -map 0:s \
+        -c:s copy \
+        $file.mkv
+
+    INFO "Done: $file"
+
+done
