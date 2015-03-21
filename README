@@ -289,6 +289,8 @@ vi-from-path:
     Find an executable in the path and edit it
 vi-from-perl-inc:
     Find an executable in the perl %INC and edit it
+video-dvd-install-decss:
+    Install decss for encrypted dvd playback
 video-dvd-rip:
     Rip and transcode a video dvd
 video-transcode:
