@@ -4,11 +4,11 @@ source bash-helpers
 
 for track in $@ ; do
     INFO "Ripping track: $track..."
-    mpv dvd://$track --stream-dump dvd-$track.vob
+    mpv dvd://$track --stream-dump dvd-$track.vob  || true
     INFO "Done ripping track: $track"
 done
 
-eject /dev/dvd
+eject /dev/dvd || WARN "Cannot eject dvd - skipping"
 
 INFO "Encoding..."
 
