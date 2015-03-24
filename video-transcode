@@ -4,25 +4,34 @@
 
 source bash-helpers
 
-if [[ "$audio_track" ]] ; then
-    audio_track=":$audio_track"
+if [[ "$audio_tracks" ]] ; then
+    for track in $audio_tracks ; do
+        audio_option=$audio_option" -map 0:a:$track"
+    done
+else
+    audio_option="-map 0:a$audio_track"
 fi
 
 for file in $@ ; do
 
     INFO "Encoding $file..."
 
+    (avconv -analyzeduration 1000000k -probesize 1000000k -i $file 2>&1 ; true) \
+        | grep -i subtitle && subtitle_option=" -map 0:s -c:s copy "
+
     avconv \
+        $_doc_check_for_subtitle_streams_that_start_later \
         -analyzeduration 1000000k -probesize 1000000k \
         -i $file \
         -map 0:v \
         -c:v libx264 \
+        $_doc_x264_quality_level \
         -crf 23 \
-        -preset medium \
-        -map 0:a$audio_track \
+        $_doc_how_much_time_to_invest \
+        -preset veryslow \
+        $audio_option \
         -c:a copy \
-        -map 0:s \
-        -c:s copy \
+        $subtitle_option \
         $file.mkv
 
     INFO "Done: $file"
