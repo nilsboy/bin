@@ -16,6 +16,8 @@ for file in $@ ; do
 
     INFO "Encoding $file..."
 
+    # only set copy subtitles option if input file contains any
+    # avconv dies otherwise
     (avconv -analyzeduration 1000000k -probesize 1000000k -i $file 2>&1 ; true) \
         | grep -i subtitle && subtitle_option=" -map 0:s -c:s copy "
 
