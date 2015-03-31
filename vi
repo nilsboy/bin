@@ -17,4 +17,4 @@ if [[ $@ ]] ; then
     export VIM_HAS_ARGS=1
 fi
 
-alternative-run $0 $args $@
+alternative-run $0 $args "$@"
