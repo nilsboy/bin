@@ -12,6 +12,7 @@ use File::Basename;
 use File::Copy qw(mv);
 use File::stat;
 
+use File::Path qw(make_path);
 use Getopt::Long;
 Getopt::Long::Configure('bundling');
 
@@ -115,6 +116,12 @@ foreach my $was ( sort keys %was ) {
 
     # system("mv", $was, $will) && die $!;
     my $stat = stat($was) || die $!;
+    my $dir = dirname($will);
+
+    if(! -d $dir) {
+        make_path($dir) || die "Error creating directory: $dir";
+    }
+
     mv( $was, $will ) || die $!;
     utime( $stat->atime, $stat->mtime, $will ) || die $!;
 }
