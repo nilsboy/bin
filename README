@@ -145,6 +145,8 @@ keyboard-disable-caps-lock-xwindows:
     Map caps lock to escape for X
 keyboard-reset:
     Reset keyboard settings
+ls-creation-time:
+    List the creation time of a file
 man-explain-options:
     Display man page infos about command line options
 man-multi-lookup:

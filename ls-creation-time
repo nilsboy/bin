@@ -1,0 +1,10 @@
+# List the creation time of a file
+
+file="$@"
+filesystem=$(df --output=source "$file" | tail -1)
+inode=$(stat --printf=%i "$file")
+date=$(sudo debugfs -R "stat <$inode>" $filesystem 2>/dev/null \
+    | perl -007 -ne 'print "$1\n" if /crtime.*--(.+)/i')
+
+formatted_date=$(date -d "$date" +"%F %T %a")
+echo $formatted_date $file
