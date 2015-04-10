@@ -1,6 +1,13 @@
 # List the creation time of a file
 
+source bash-helpers
+
 file="$@"
+
+if [[ ! "$file" ]] ; then
+    DIE "Specify file"
+fi
+
 filesystem=$(df --output=source "$file" | tail -1)
 inode=$(stat --printf=%i "$file")
 date=$(sudo debugfs -R "stat <$inode>" $filesystem 2>/dev/null \
