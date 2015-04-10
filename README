@@ -1,7 +1,12 @@
-Tools that make my shell life easier and are too big to fit into my bashrc.
+Tools that make my shell life easier.
 
-Most of the tools are implemented in core perl so they do not need additional
-modules from CPAN and thus can be used directly on most unix systems.
+See bashrc-pack for how I append them to my bashrc.
+
+Most of the tools are implemented in bash or core perl so they don't have
+additional dependencies and run directly on any current linux distro.
+
+Most bash scripts depend on my bash-helpers script - so make sure it's
+in your path.
 
 Descriptions:
 
