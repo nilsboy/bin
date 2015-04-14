@@ -134,6 +134,9 @@ grep-list:
     Grep for a list of values
 grep-or:
     or-grep list matching lines
+groups-reload-memberships:
+    Start new shell to "reload" changes to the list of groups the user
+    belongs to
 html-strip:
     Strip HTML of tags and entities
 java-decompile-jar:

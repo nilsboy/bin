@@ -1,0 +1,3 @@
+# Start new shell to "reload" changes to the list of groups the user belongs to
+
+exec su -l $USER
