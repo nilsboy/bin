@@ -1,0 +1,3 @@
+# Turn off shell line wrapping
+
+printf '\033[?7h'
