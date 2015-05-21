@@ -1,0 +1,3 @@
+# Script to run when logging into suse machine
+
+unalias crontab
