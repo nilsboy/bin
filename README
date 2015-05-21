@@ -49,6 +49,8 @@ bashrc-helper-hostname:
     Format hostname for bash prompt usage
 bashrc-helper-login-name:
     Format login for bash prompt usage
+bashrc-linux-distribution-fix-suse:
+    Script to run when logging into suse machine
 bashrc-pack:
     Attach scripts to the bashrc skeleton
 bashrc-unpack-and-run:
@@ -80,8 +82,6 @@ dir-diff:
     Diff two directory structures
 dir-name-prettifier:
     shorten prompt dir to max 15 chars
-distribution-fix:
-    Set conveniences depending on distribution
 docopt-convert:
     Convert a docopt specification
 dos2unix:
@@ -245,6 +245,10 @@ run-or-test:
     Run a programs tests if any exist otherwise the program itself
 shell-color-test:
     most color mappings taken from xterm-colortest
+shell-line-wrap-off:
+    Turn off shell line wrapping
+shell-line-wrap-on:
+    Turn off shell line wrapping
 shell-open-access-on-freeport:
     Create shell access on a free port
 ssh-agent-env-clear:
