@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Install latest node version
+
+source bash-helpers
+
+# TODO support 32 bit
+
+bits=$(uname -m | perl -ne 'print $1 if /_(32|64)$/')
+
+cd /tmp
+
+url=https://nodejs.org/dist/latest
+
+file=$(wget -q -O - $url | perl -ne 'print $1 if /(node-v[\d\.]+-linux-x64.tar.gz)/i')
+url=$url/$file
+dir=$(echo $file | perl -pe 's/\.tar.gz//g')
+
+INFO "Downloading: $url to $file"
+
+mkdir -p ~/opt/bin
+
+wget -q $url
+
+INFO "Extracting to $dir"
+tar xfz $file
+
+rm $file
+
+mv $dir ~/opt/$dir
+
+cd ~/opt
+ln -s $dir node
+
+cd ~/opt/bin
+
+ln -s ../node/bin/node .
+ln -s ../node/bin/npm .
+
+INFO "Done."
