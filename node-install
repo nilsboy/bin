@@ -37,4 +37,7 @@ cd ~/opt/bin
 ln -s ../node/bin/node .
 ln -s ../node/bin/npm .
 
+# set global modules directory
+npm config set prefix=~/node_modules
+
 INFO "Done."
