@@ -143,8 +143,6 @@ java-decompile-jar:
     Recursively decompile a jar including contained jars
 js-format-using-prettydiff:
     Javascript formatter using "npm install prettydiff"
-js-setup-environment:
-    Setup javascript environment
 json-tidy:
     Tidy a json file and sort hash keys to make the output diffable
 keyboard-disable-caps-lock-console:
@@ -175,6 +173,10 @@ node-install:
     Install latest node version
 note:
     File of notes and a way to query them
+npm-set-global-modules-dir:
+    Make npm use local dir for modules
+npm-set-proxy-from-environment:
+    Set proxy from environment
 once:
     Print stdin once if it has changed since last time
 path-grep:
