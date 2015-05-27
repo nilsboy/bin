@@ -316,6 +316,8 @@ video-transcode:
     subtitle tracks
 vim-setup:
     Setup vim environment
+vim-url:
+    Print absolute SSH url of a file or directory in vim syntax
 vnc-server-setup-upstart-script:
     Setup remote desktop access via ssh and vnc right from the login
     screen of

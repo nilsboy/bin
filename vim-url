@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+
+# Print absolute SSH url of a file or directory in vim syntax
+
+use strict;
+use warnings FATAL => 'all';
+
+my $url = qx{url "@ARGV"};
+$url =~ s/\n//g;
+
+$url =~ s/\:/\//;
+$url =~ s/^/scp:\/\//g;
+
+print "$url\n";
