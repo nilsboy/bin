@@ -156,10 +156,6 @@ function docopt() {
     eval $(docopt-convert $(readlink -f $0)$docopt_files --env -- "$@")
 }
 
-function clear-with-scrollback() {
-    printf "\33[2J"
-}
-
 # Find file name without extension
 function filename() {
     local file="$@"

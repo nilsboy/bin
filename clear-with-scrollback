@@ -1,0 +1,3 @@
+# Clear screen including scrollback buffer
+
+printf "\33[2J"
