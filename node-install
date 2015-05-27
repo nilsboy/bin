@@ -4,15 +4,14 @@
 
 source bash-helpers
 
-# TODO support 32 bit
+wd=$(mktemp -d)
+cd $wd
 
 bits=$(uname -m | perl -ne 'print $1 if /_(32|64)$/')
 
-cd /tmp
-
 url=https://nodejs.org/dist/latest
 
-file=$(wget -q -O - $url | perl -ne 'print $1 if /(node-v[\d\.]+-linux-x64.tar.gz)/i')
+file=$(wget -q -O - $url | perl -ne 'print $1 if /(node-v[\d\.]+-linux-x'$bits'.tar.gz)/i')
 url=$url/$file
 dir=$(echo $file | perl -pe 's/\.tar.gz//g')
 
