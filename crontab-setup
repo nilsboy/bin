@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Add default crontab settings to existing crontab
+
+source bash-helpers
+
+(crontab -l 2>/dev/null || echo) > ~/etc/crontab.org
+
+(
+cat <<EOF
+### Environment ################################################################
+
+SHELL=/bin/bash
+BASH_ENV=~/.bashrc
+
+0 0 * * * crontab -l > ~/etc/crontab.local
+
+### ADD JOB NAME HERE ##########################################################
+
+# MAILTO=email1,email2,...
+# m h  dom mon dow   command
+
+################################################################################
+
+EOF
+crontab -l
+) | crontab -

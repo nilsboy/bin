@@ -70,6 +70,10 @@ cp-merge-directories:
     links
 cpanm:
     Allow cpanm to install modules specified via Path/File.pm
+cpanm-install:
+    Setup home directory based perl environment
+crontab-setup:
+    Add default crontab settings to existing crontab
 csvview:
     Quick way to view a csv file on the command line
 ctags-index-sources:
@@ -213,8 +217,6 @@ perl-plack-test-server:
     files
 perl-profile:
     Profile a perl app and display the html results
-perl-setup-environment:
-    Setup home directory based perl environment
 perl-upgrade-outdated-modules:
     Upgrade installed perl modules if a new version is available
 prompt-dir:
