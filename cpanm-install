@@ -50,7 +50,7 @@ mkdir -p $local_lib $local_bin
 
 echo "updating $bashrc..."
 
-add_msg="# added by perl-setup-environment"
+add_msg="# added by cpanm-install"
 
 echo "export PERL5LIB=$local_lib:$lib $add_msg" > bashrc
 echo "export PATH=\$PATH:$local_bin:$bin $add_msg" >> bashrc
