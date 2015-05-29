@@ -18,7 +18,7 @@ else
         GRAY=$(echo -e '\x1b[38;5;243m')
         GREY=$(echo -e '\x1b[38;5;243m')
        GREEN=$(echo -e '\x1b[38;5;2m')
-      ORANGE=$(echo -e '\x1b[38;5;')
+      ORANGE=$(echo -e '\x1b[38;5;3m')
          RED=$(echo -e '\x1b[38;5;9m')
 fi
 
