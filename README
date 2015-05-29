@@ -145,6 +145,8 @@ groups-reload-memberships:
     belongs to
 html-strip:
     Strip HTML of tags and entities
+iptables-port-redirect:
+    Forward an incoming port to a different port
 java-decompile-jar:
     Recursively decompile a jar including contained jars
 js-format-using-prettydiff:
