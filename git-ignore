@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Download and save a default .gitignore for a specific environment
+
+source bash-helpers
+
+if [[ ! -d .git ]] ; then
+    DIE "You need to be in the root of a git managed directory"
+fi
+
+environment=${1?Specify environment}
+environment=$(echo $environment | perl -pe '$_ = ucfirst $_')
+
+url=https://raw.githubusercontent.com/github/gitignore/master/$environment.gitignore
+
+INFO "Fetching gitignore for $environment from $url..."
+wget -qO - $url >> .gitignore
+
+INFO "Appended to .gitignore"
