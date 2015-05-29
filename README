@@ -169,6 +169,8 @@ man-multi-lookup:
     Lookup help for a command in several places
 man-online:
     Lookup a man page on the internet
+markdown-view:
+    View markdown in the terminal
 mysql:
     Fix mysql prompt to show real hostname - NEVER localhost
 net-find-free-port:

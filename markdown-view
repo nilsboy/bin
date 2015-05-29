@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+// View markdown in the terminal
+
+var fs = require('fs');
+
+var marked = require('marked');
+var TerminalRenderer = require('marked-terminal');
+
+marked.setOptions({
+    renderer: new TerminalRenderer()
+});
+
+console.log(marked(fs.readFileSync(process.argv[2])
+    .toString()));
