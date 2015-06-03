@@ -1,14 +1,31 @@
 # Rip and transcode a video dvd
 
+# Use `lsdvd -a` to inspect dvd to choose titles and audio tracks.
+
+# TODO: title tracks need to be specified starting from 0
+# TODO: audio tracks need to be specified starting from 0
+
 source bash-helpers
 
-for track in $@ ; do
+tracks="$@"
+
+if [[ ! $tracks ]] ; then
+    tracks=x
+fi
+
+for track in $tracks ; do
+
+    if [[ $track = x ]] ; then
+        track=""
+    fi
+
     INFO "Ripping track: $track..."
-    mpv dvd://$track --stream-dump dvd-$track.vob  || true
+    mpv --dvd-device /dev/sr1 dvdnav://$track --stream-dump dvd-$track.vob || true
+    # mpv dvd://$track --stream-dump dvd-$track.vob || true
     INFO "Done ripping track: $track"
 done
 
-eject /dev/dvd || WARN "Cannot eject dvd - skipping"
+# eject /dev/dvd || WARN "Cannot eject dvd - skipping"
 
 INFO "Encoding..."
 
