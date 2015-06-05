@@ -19,6 +19,7 @@ BASH_ENV=~/.bashrc
 
 # MAILTO=email1,email2,...
 # m h  dom mon dow   command
+# @reboot my_script
 
 ################################################################################
 
