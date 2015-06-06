@@ -1,0 +1,3 @@
+# Setup default git configuration
+
+git config --global push.default simple
