@@ -343,6 +343,8 @@ webserver-serve-current-directory:
     Serve current directory files via http
 wikipedia-via-dns:
     Query wikipedia via DNS
+x2x-east:
+    Share input devices with another host
 xmv:
     Rename files by perl expression
 xtitle:

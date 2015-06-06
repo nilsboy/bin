@@ -1,0 +1,3 @@
+# Share input devices with another host
+
+ssh -X $1 x2x -east -to $DISPLAY
