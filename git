@@ -12,7 +12,14 @@ if [[ $1 == "status" ]] ; then
 elif [[ $1 == "log" ]] ; then
 
     shift
-    alternative-run $0 log --follow --decorate --graph --format='%h: %s | %ar by %an' "$@"
+
+    files="$@"
+
+    if [[ ! "$files" ]] ; then
+        files="."
+    fi
+
+    alternative-run $0 log --follow --decorate --graph --format='%h: %s | %ar by %an' "$files"
 
 else
     alternative-run $0 "$@"
