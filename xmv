@@ -35,10 +35,11 @@ if ( !@ARGV ) {
     die "Usage: xmv [-x] [-d] [-n] [-l file] [-S] [-e perlexpr] [filenames]\n";
 }
 
-my %will  = ();
-my %was   = ();
-my $abort = 0;
-my $COUNT = 0;
+my %will                  = ();
+my %was                   = ();
+my $abort                 = 0;
+my $COUNT                 = 0;
+my $empty_file_name_count = 0;
 
 for (@ARGV) {
 
@@ -65,7 +66,7 @@ for (@ARGV) {
     # vars to use in perlexpr
     $COUNT++;
     $COUNT = sprintf( "%0" . length( scalar(@ARGV) ) . "d", $COUNT );
-    my $DIR = dirname($abs);
+    my $DIR  = dirname($abs);
     my $FILE = basename($abs);
 
     if ($op) {
@@ -118,7 +119,7 @@ foreach my $was ( sort keys %was ) {
     my $stat = stat($was) || die $!;
     my $dir = dirname($will);
 
-    if(! -d $dir) {
+    if ( !-d $dir ) {
         make_path($dir) || die "Error creating directory: $dir";
     }
 
@@ -146,7 +147,11 @@ sub normalize {
     s/^[\._]+//g;
     s/[\._]+$//g;
 
-    $_ ||= "_empty_file_name";
+    if ( !$_ ) {
+        $empty_file_name_count++;
+        $_ = "_empty_file_name." . $empty_file_name_count;
+    }
 
     return $_ . lc($ext);
 }
+
