@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Convert any audio file to ogg
+
+source bash-helpers
+
+file="$@" 
+
+if [[ ! $file ]] ; then
+    DIE "Specify audio file"
+fi
+
+file=$(abs $file)
+
+file_prefix=$(filename $file)
+file_type=$(extension $file)
+
+tmp=$(mktemp -d)/transcode.flac
+
+trap 'rm -f $tmp' ERR EXIT
+
+INFO "Transcoding file: $file / type: $file_type to ogg"
+DEBUG "Using temp file: $tmp"
+
+# pipe does not save the tags
+# sox $file -t wav - | oggenc -q6 -o $x.ogg -
+
+# save to flac first to keep the tags
+if [[ $file_type = ogg ]] ; then
+    RETURN "File is already an ogg file"
+fi
+
+ogg_file="$file".ogg
+
+# cannot convert to ogg directly because I don't know 
+# how to specify the ogg quality level with avconv
+if [[ $file_type != flac ]] ; then
+    DEBUG "Transcoding $file to flac"
+    # sox $file -t flac $tmp
+    avconv -i "$file" $tmp
+else
+    ln -s "$file" $tmp
+fi
+
+# remove old extension if old format was lossless
+# if [[ $file_type = flac || $file_type = ape ]] ; then
+#   ogg_file="$file_prefix".ogg
+# fi
+
+DEBUG "Transcoding $file to ogg"
+oggenc -q6 -o "$file.ogg" "$tmp"
+rm "$file"
+rm $tmp
+
+DEBUG "Done"
