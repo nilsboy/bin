@@ -31,6 +31,9 @@ git
 
 $git = `git status 2>/dev/null` || exit;
 
+my $user = `git config user.name 2>/dev/null`;
+$user = "" if $user eq "nilsboyxx";
+
 $git =~ s/^# //gm;
 
 my ($branch)   = $git =~ /^On branch (.+)$/gm;
@@ -68,8 +71,11 @@ $untracked = $red if $git =~ /^Untracked files/m;
 $unstaged  = $red if $git =~ /^Changes not staged for commit/m;
 $staged    = $red if $git =~ /^Changes to be committed/m;
 $conflicts = $red . "!" if $git =~ /^Your branch .*have diverged/m;
+$user = $red . $user . "@" if $user;
+print "user: $user";
 
 print " "
+    . $user
     . $untracked . "g"
     . $unstaged . "i"
     . $staged . "t"
