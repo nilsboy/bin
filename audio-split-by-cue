@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Split an album audio file into several tracks using a cue file
+
+source bash-helpers
+
+audio_file_path=${1?Specify audio file}
+wd=$(dirname $audio_file_path)
+audio_file=$(basename $audio_file_path)
+
+audio_file_prefix=$(filename $audio_file)
+audio_file_type=$(extension $audio_file)
+
+cue_file=$2
+
+cd "$wd"
+
+if [[ ! "$cue_file" ]] ; then
+    cue_file=$(filename $audio_file).cue
+fi
+
+cue_file=$(abs $cue_file)
+
+INFO "Splitting file $audio_file via cue $cue_file"
+
+if [[ ! -f "$cue_file" ]] ; then
+    DIE "Cue file not found: $cue_file"
+fi
+
+if [[ $audio_file_type = ogg ]] ; then
+    oggsplt -c $cue_file $audio_file
+elif [[ $audio_file_type = mp3 ]] ; then
+    mp3splt -c $cue_file $audio_file
+else
+    DIE "Don't know how to split $audio_file_type files"
+fi
+
+rm $audio_file
+
+INFO "Done"
