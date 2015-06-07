@@ -17,6 +17,7 @@ cd "$wd"
 
 if [[ ! "$cue_file" ]] ; then
     cue_file=$(filename $audio_file).cue
+    cue_file=$(echo $cue_file | perl -pe 's/\.(ogg|flac|ape)//g')
 fi
 
 cue_file=$(abs $cue_file)
@@ -38,3 +39,4 @@ fi
 rm $audio_file
 
 INFO "Done"
+
