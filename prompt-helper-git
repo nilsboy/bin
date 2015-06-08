@@ -33,7 +33,7 @@ $git = `git status 2>/dev/null` || exit;
 
 my $user = `git config user.name 2>/dev/null`;
 $user =~ s/\s+$//g;
-$user = "" if $user eq "nilsboy";
+$user = "" if $user eq $ENV{GIT_USER};
 
 $git =~ s/^# //gm;
 
@@ -83,3 +83,4 @@ print " "
     . $conflicts
     . $no_color
     . $branch;
+
