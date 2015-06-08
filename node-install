@@ -5,14 +5,18 @@
 source bash-helpers
 
 node_dst=~/opt/node
+node_bin=~/opt/bin/node
+npm_bin=~/opt/bin/npm
+backup=$node_dst.backup.$(date +%Y%m%d_%H%M%S)
 
-if [[ -e $node_dst || -h $node_dst ]] ; then
+if [[ -e $node_dst || -h $node_dst || -e $node_bin || -h $node_bin || -e $npm_bin || -h $npm_bin ]] ; then
 
     if [[ $1 != "--force" ]] ; then
-        DIE "Directory $node_dst already exists - use --force if you are sure"
+        DIE "Found existing node in ~/opt - use --force if you are sure"
     fi
 
-    rm $node_dst
+    INFO "Backing up existing node to $backup"
+    mkdir -p $backup
 fi
 
 
@@ -27,7 +31,7 @@ file=$(wget -q -O - $url | perl -ne 'print $1 if /(node-v[\d\.]+-linux-x'$bits'.
 url=$url/$file
 dir=$(echo $file | perl -pe 's/\.tar.gz//g')
 
-INFO "Downloading: $url to $file"
+INFO "Downloading: $url"
 wget -q $url
 
 INFO "Extracting to $dir"
@@ -37,13 +41,13 @@ rm $file
 
 mkdir -p ~/opt/bin
 
+set -x
 node_dst_versioned=~/opt/$dir
 
-if [[ -e $node_dst_versioned ]] ; then
-    node_bak=${node_dst_versioned}_$(date +%Y%m%d_%H%M%S)
-    WARN "Backing up existing node to $node_bak"
-    mv $node_dst_versioned $node_bak
-fi
+mv $node_dst $backup/ || true
+mv $node_dst_versioned $backup/ || true
+mv $node_bin $backup/ || true
+mv $npm_bin $backup/ || true
 
 mv $dir $node_dst_versioned
 
@@ -51,9 +55,6 @@ cd ~/opt
 ln -s $dir node
 
 cd ~/opt/bin
-
-rm -f ~/opt/bin/node
-rm -f ~/opt/bin/npm
 ln -s ../node/bin/node .
 ln -s ../node/bin/npm .
 
