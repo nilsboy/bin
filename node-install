@@ -13,8 +13,6 @@ if [[ -e $node_dst || -h $node_dst ]] ; then
     fi
 
     rm $node_dst
-    rm ~/opt/bin/node
-    rm ~/opt/bin/npm
 fi
 
 
@@ -54,6 +52,8 @@ ln -s $dir node
 
 cd ~/opt/bin
 
+rm -f ~/opt/bin/node
+rm -f ~/opt/bin/npm
 ln -s ../node/bin/node .
 ln -s ../node/bin/npm .
 
