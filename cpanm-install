@@ -7,7 +7,8 @@ set -e
 home=${1:-$HOME}
 
 # convert to absolute path
-home=$(perl -MCwd -e '$dir = Cwd::abs_path(<"'$home'">); print $dir')
+# home=$(perl -MCwd -e '$dir = Cwd::abs_path(<"'$home'">); print $dir')
+# TODO check $home starts with a slash
 
 dst=$home/perl5
 lib=$dst/lib/perl5
@@ -29,7 +30,7 @@ echo
 
 echo "downloading cpanm..."
 
-wget -q http://xrl.us/cpanm
+wget --no-check-certificate -q http://xrl.us/cpanm
  
 if [[ -d $cpan_dir ]] ; then
     echo "Backing up old $cpan_dir to $tmp/..."
