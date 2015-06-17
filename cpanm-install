@@ -1,25 +1,33 @@
 #!/bin/bash
 
-# Setup home directory based perl environment
+# Setup home directory based perl environment and cpanm
 
 set -e
 
-home=${1:-$HOME}
+existing_cpanm=$(type -p cpanm)
+if [[ $existing_cpanm ]] ; then
 
-# convert to absolute path
-# home=$(perl -MCwd -e '$dir = Cwd::abs_path(<"'$home'">); print $dir')
-# TODO check $home starts with a slash
+    if [[ $1 != "--force" ]] ; then
+        echo "Found existing cpanm ($existing_cpanm) - use --force if you are sure" >&2
+        exit 1
+    fi
+fi
 
-dst=$home/perl5
+if [[ ! $HOME =~ ^/ ]] ; then
+    echo "Please specify a home starting with a /" >&2
+    exit 1
+fi
+
+dst=$HOME/perl5
 lib=$dst/lib/perl5
 bin=$dst/bin
-local_lib=$home/perldev/lib
-local_bin=$home/perldev/bin
-bashrc=$home/.bashrc
-bashrc_d=$home/.bashrc.d
+local_lib=$HOME/perldev/lib
+local_bin=$HOME/perldev/bin
+bashrc=$HOME/.bashrc
+bashrc_d=$HOME/.bashrc.d
 
-cpan_dir=$home/.cpan
-cpanm_dir=$home/.cpanm
+cpan_dir=$HOME/.cpan
+cpanm_dir=$HOME/.cpanm
 
 tmp=$(mktemp -d)
 cd $tmp
@@ -42,7 +50,6 @@ if [[ -d $cpanm_dir ]] ; then
     mv $cpanm_dir $tmp/
 fi
 
-
 chmod +x cpanm
 mkdir -p $bin
 mv cpanm $bin/
@@ -57,8 +64,6 @@ echo "export PERL5LIB=$local_lib:$lib $add_msg" > bashrc
 echo "export PATH=\$PATH:$local_bin:$bin $add_msg" >> bashrc
 echo "alias cpanm='cpanm -nq --local-lib $dst' $add_msg" >> bashrc
 echo 'alias cpan="(echo use cpanm ; exit 1)" '"$add_msg" >> bashrc
-
-perl -0777 -pi -e 's/$ENV{HOME}/~/g' bashrc
 
 if [[ -d $bashrc_d ]] ; then
     echo "adding $bashrc_d/perl..."
@@ -75,9 +80,11 @@ else
 fi
 
 echo
-echo "Environment setup complete - please review the changes."
+echo "Perl environment setup complete - please review the changes."
 echo
 echo "Use 'cpanm ModuleName' to install modules from cpan."
+echo "Cpan modules will be installed to your local directory: $dst."
+echo
 echo "Save your own modules to $local_lib."
 echo "Save your own executables to $local_bin."
 echo
