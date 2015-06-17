@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Add a new user to the system without hassle
+
+source bash-helpers
+
+user=${1?Specify user name}
+
+sudo adduser --disabled-password --quiet --gecos "" $user
+
+sudo mkdir -p /home/$user/.ssh/
+sudo cp ~/.ssh/authorized_keys /home/$user/.ssh/
+sudo cp ~/.bashrc /home/$user/
+sudo chown -R $user:$user /home/$user
+
+ssh $user@localhost
