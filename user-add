@@ -5,8 +5,9 @@
 source bash-helpers
 
 user=${1?Specify user name}
+shift
 
-sudo adduser --disabled-password --quiet --gecos "" $user
+sudo adduser --disabled-password --quiet --gecos "" $user "$@"
 
 sudo mkdir -p /home/$user/.ssh/
 sudo cp ~/.ssh/authorized_keys /home/$user/.ssh/
