@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Stuff to do after a new ubuntu installation
+
+source bash-helpers
+
+if [[ $USER != root ]] ; then
+    DIE "Please run as root"
+fi
+
+INFO "Turning off crash reports..."
+echo enabled=0 >> /etc/default/apport
