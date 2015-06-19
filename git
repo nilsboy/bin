@@ -19,7 +19,7 @@ if [[ $1 == "log" ]] ; then
         files="."
     fi
 
-    exec alternative-run $0 log --follow --decorate --graph --format='%h: %s | %ar by %an' "$files"
+    exec alternative-run $0 log --oneline --follow --decorate --graph "$files"
 fi
 
 if [[ $1 == "branch"  && ! "$2" ]] ; then
