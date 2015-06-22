@@ -16,5 +16,5 @@ cd ~/src/bin
 
 cd ~/src/bashrc
 git add bashrc
-git commit -m "new fat pack"
+git commit -m "repackage bashrc"
 git push
