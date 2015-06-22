@@ -10,3 +10,6 @@ fi
 
 INFO "Turning off crash reports..."
 echo enabled=0 >> /etc/default/apport
+
+INFO "Removing outdated flash plugin (flashplugin-installer)..."
+dpkg -P flashplugin-installer
