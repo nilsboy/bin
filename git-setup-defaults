@@ -1,4 +1,4 @@
 # Setup default git configuration
 
 git config --global push.default simple
-git config --global pull.rebase true
+# git config --global pull.rebase true
