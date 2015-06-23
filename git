@@ -2,6 +2,10 @@
 
 # Default options for git commands
 
+if [[ ! $PS1 ]] ; then
+    exec alternative-run $0 "$@"
+fi
+
 source bash-helpers
 
 if [[ $1 == "status" ]] ; then
