@@ -132,7 +132,7 @@ git-reset-origin:
     Discard all current changes in directory to origin/master
 git-root:
     Print git project root
-git-setup-defaults:
+git-setup:
     Setup default git configuration
 gnome-send-to-mail-images:
     Resize one or more images and add them as attachements
