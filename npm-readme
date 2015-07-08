@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+// Find and print README.md of node executable
+
+var fs = require('fs')
+var path = require('path')
+var exec = require('child_process')
+  .execSync
+var _ = require('mout')
+
+var cmd = process.argv[2]
+
+var executable = _.string.rtrim(exec('bash -c "cd / && type -p ' + cmd + '"') .toString())
+var executableDir = path.dirname(executable)
+
+var linkDst = fs.readlinkSync(executable)
+
+var abs = path.join(executableDir, linkDst)
+
+var modulePath = abs.replace(/(^.+node_modules\/.+?\/).+$/, '$1')
+var readme = modulePath + 'README.md'
+
+if (!fs.existsSync(readme)) {
+  process.exit(0)
+}
+
+fs.createReadStream(readme).pipe(process.stdout)

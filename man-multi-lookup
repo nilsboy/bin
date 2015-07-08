@@ -51,6 +51,7 @@ fi
     _printifok help 0 help -m $cmd
     _printifok man 0 man -a $cmd
     _printifok perldoc 0 perldoc -f $cmd
+    _printifok npm-readme 0 npm-readme $cmd
 
     if [[ ! $SHORT ]] ; then
         _printifok related 1 man -k $cmd
@@ -59,3 +60,4 @@ fi
     fi
 
 ) | LESS="-inRgSj.5" less "$arg"
+

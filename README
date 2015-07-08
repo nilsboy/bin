@@ -191,6 +191,8 @@ node-install:
     Install latest node version
 note:
     File of notes and a way to query them
+npm-readme:
+    Find and print README.md of node executable
 npm-set-global-modules-dir:
     Make npm use local dir for modules
 npm-set-proxy-from-environment:
