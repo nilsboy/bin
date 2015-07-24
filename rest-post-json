@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Send a POST request to a website
+
+source bash-helpers
+
+file=${1?Specify file}
+url=${2?Specify url}
+
+curl -H "Content-Type: application/json" -X POST -d "@${file}" "$url"

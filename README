@@ -261,6 +261,8 @@ rel:
     Create a relative path from an absolute path
 replace:
     Change the contens of text files by perl expression
+rest-post-json:
+    Send a POST request to a website
 run-and-capture:
     Run a program and pretty print all its outputs
 run-or-test:
