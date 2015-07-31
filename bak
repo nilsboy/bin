@@ -5,10 +5,15 @@
 source bash-helpers
 
 file=${1?filename not specified}
+info=$2
+
+if [[ $info ]] ; then
+    info=".$info"
+fi
 
 # remove optional trailing slash
 file=${file%/}
-bak=$file"_"$(date +%Y%m%d_%H%M%S)
+bak=$file"_"$(date +%Y%m%d_%H%M%S)$info
 
 INFO "Backing up: $file -> $bak"
 
