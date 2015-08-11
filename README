@@ -136,6 +136,8 @@ git-setup:
     Setup default git configuration
 gnome-send-to-mail-images:
     Resize one or more images and add them as attachements
+gnome-send-to-mail-images-setup:
+    Download and setup gnome-send-to-mail-images
 grep-and:
     Search for lines matching one or more perl regex patterns
 grep-before:

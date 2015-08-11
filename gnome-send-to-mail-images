@@ -15,7 +15,10 @@ Needs imagemagick
 
 =over
 
-=item - copy script to ~/.gnome2/nautilus-scripts
+=item - wget https://raw.githubusercontent.com/nilsboy/bin/master/gnome-send-to-mail-images-setup | bash
+        or
+
+=item - copy script to ~/.local/share/nautilus/scripts/
 
 =item - rename the script to match what you want to see in the gnome file
 context menu

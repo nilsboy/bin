@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Download and setup gnome-send-to-mail-images
+
+set -e
+
+sudo apt-get install imagemagick
+
+dir="~/.local/share/nautilus/scripts/"
+
+mkdir -p $dir
+cd $dir
+
+wget https://raw.githubusercontent.com/nilsboy/bin/master/gnome-send-to-mail-images
+chmod +x gnome-send-to-mail-images
+
+if [[ $LANG =~ de ]] ; then
+    mv gnome-send-to-mail-images Bild_per_Email_verschicken
+fi
