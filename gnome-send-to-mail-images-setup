@@ -4,16 +4,19 @@
 
 set -e
 
-sudo apt-get install imagemagick
+# Does not seem to work in a pipe...
+# (sudo apt-get install imagemagick)
 
-dir="~/.local/share/nautilus/scripts/"
+dir=~/.local/share/nautilus/scripts
 
 mkdir -p $dir
 cd $dir
 
-wget https://raw.githubusercontent.com/nilsboy/bin/master/gnome-send-to-mail-images
+wget -q https://raw.githubusercontent.com/nilsboy/bin/master/gnome-send-to-mail-images
 chmod +x gnome-send-to-mail-images
 
 if [[ $LANG =~ de ]] ; then
     mv gnome-send-to-mail-images Bild_per_Email_verschicken
 fi
+
+echo "OK - script installed"
