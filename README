@@ -49,6 +49,8 @@ bash-setup-multi-user-environment:
     environment
 bashrc-eternal-history-add:
     Add entry to the eternal bash history
+bashrc-eternal-history-add-simple:
+    Add an entry to the eternal history
 bashrc-helper-hostname:
     Format hostname for bash prompt usage
 bashrc-helper-login-name:

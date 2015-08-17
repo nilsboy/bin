@@ -6,9 +6,7 @@ $HISTFILE_ETERNAL || DIE "Set HISTFILE_ETERNAL"
 $history1 || DIE "Specify history 1"
 $history2 || DIE "Specify history 2"
 
-if [[ $BASHRC_NO_HISTORY ]] ; then
-    exit 0
-fi
+$PRIVATE_SHELL && exit 0
 
 # TODO remove history position (by splitting)
 # history1=$(history 1)
@@ -33,3 +31,4 @@ line="$line \"$quoted_pwd\""
 line="$line \"$bashrc_last_return_values\""
 line="$line $cmd"
 echo "$line" >> $HISTFILE_ETERNAL
+
