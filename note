@@ -15,7 +15,6 @@ perl -0777 -ne \
     $0
 
 # NOTES ON ssh
-# * prevent timeouts: /etc/ssh/ssh_config + ServerAliveInterval 5
 # * tunnel (reverse/port forwarding):
 #     * forward: ssh -v -L 3333:localhost:443 host
 #     * reverse:  ssh -nNT [via host] -R [local src port]:[dst host]:[dst port]
