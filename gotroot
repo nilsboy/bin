@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Make sure we're running as root
+
+source bash-helpers
+
+if [[ $USER != root ]] ; then
+    DIE "Please run as root"
+fi

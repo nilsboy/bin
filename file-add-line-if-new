@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+# Add a line to a file if a line matching regex is not found
+
+use autodie;
+
+my $file  = $ARGV[0] || die "Specify file";
+my $regex = $ARGV[1] || die "Specify regex";
+my $line  = $ARGV[2] || die "Specify line";
+
+$line .= "\n";
+
+my @out;
+open( F, "<", $file );
+while (<F>) {
+    if (/$regex/) {
+        exit 0;
+    }
+    push( @out, $_ );
+}
+close( F );
+
+push(@out, $line) if ! $found;
+
+local $/;
+open(F, ">", $file);
+print F join("", @out);
+close(F);

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Make sure update and backports soures are activated
+
+# Updates - should be activated otherwise regular updates might fail because
+#    of missing/outdated dependencies
+# Backports - should be activated - by default only installed manually
+# Proposed - don't activate - aproved packages move to updates anyway
+
+source bash-helpers
+
+INFO "Including updates and backports in sources list..."
+
+gotroot
+
+bak /etc/apt/sources.list
+
+file-add-line-if-new /etc/apt/sources.list '^deb http://\S+\s+'$DISTRIB_CODENAME'-updates.*$'   'deb http://archive.ubuntu.com/ubuntu '$DISTRIB_CODENAME'-updates   main restricted universe multiverse'
+file-add-line-if-new /etc/apt/sources.list '^deb http://\S+\s+'$DISTRIB_CODENAME'-backports.*$' 'deb http://archive.ubuntu.com/ubuntu '$DISTRIB_CODENAME'-backports main restricted universe multiverse'
+
+apt-get update
