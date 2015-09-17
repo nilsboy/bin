@@ -13,14 +13,12 @@ ssh-agent-env-grab
 (
     xtitle tmux@$HOSTNAME
     if tmux has-session -t $session ; then
-        tmux -2 att -d -t $session
-        exit 0
+        exec tmux -2 att -d -t $session
     fi
 
 
     if tmux has-session ; then
-        tmux -2 att -d
-        exit 0
+        exec tmux -2 att -d
     fi
 
     xtitle screen@$HOSTNAME
