@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Find largest directories recursively from current directory
+
+find . -mount -type d \
+    | xargs -I {} du -sh {} \
+    | sort -rh \
+    | less
+

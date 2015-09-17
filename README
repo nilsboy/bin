@@ -112,6 +112,8 @@ find-and:
     Find files excluding dotfiles optional matching several strings
 find-from-date:
     Find files newer than date
+find-largest-directories:
+    Find largest directories recursively from current directory
 find-largest-files:
     Find largest files recursively from current directory
 find-newest:
