@@ -273,6 +273,8 @@ replace:
     Change the contens of text files by perl expression
 rest-post-json:
     Send a POST request to a website
+rest-server:
+    JSON backed rest server
 run-and-capture:
     Run a program and pretty print all its outputs
 run-or-test:
