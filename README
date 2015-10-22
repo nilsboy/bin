@@ -128,6 +128,8 @@ git-env-validate:
     Ensure git-scm is configured appropriately
 git-ignore:
     Download and save a default .gitignore for a specific environment
+git-modified:
+    List all modified files since last git commit
 git-project:
     Print git project root dir name
 git-reset-head:
