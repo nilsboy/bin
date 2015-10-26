@@ -1,0 +1,4 @@
+#!/bin/bash
+# find-and with a limit
+
+find-and "$@" | head -100

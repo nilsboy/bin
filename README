@@ -110,6 +110,8 @@ file-template-filler:
     Create a file from a template
 find-and:
     Find files excluding dotfiles optional matching several strings
+find-and-limit:
+    find-and with a limit
 find-from-date:
     Find files newer than date
 find-largest-directories:
