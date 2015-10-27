@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Sort input by depth of path
+
+perl -n -e '$x = $_; $x =~ tr%/%%cd; print length($x), " $_";' \
+    | sort -k 1n -k 2 \
+    | perl -pe 's/^\S+ //' 
