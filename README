@@ -28,6 +28,8 @@ apt-unhold-package:
     Return a deb package to its default upgrade state
 archive:
     Archive a file appending a timestamp
+audio-file-prefix-track-number:
+    Add a leading two digit track number to the file name
 audio-ogg-from-any:
     Convert any audio file to ogg
 audio-split-by-cue:
