@@ -74,6 +74,18 @@ $staged    = $red       if $git =~ /^Changes to be committed/m;
 $conflicts = $red . "!" if $git =~ /^Your branch .*have diverged/m;
 $branch_status = $red . $branch_status if $branch_status;
 
+my $branch_max_length = 14;
+if(length($branch) > $branch_max_length) {
+
+    $branch =~ s/^.+?\///g;
+
+    if(length($branch) > $branch_max_length ) {
+        $branch = substr($branch, 0, $branch_max_length - 4)
+            . "$red*$branch_color"
+            . substr($branch, length($branch)-3, 3);
+    }
+}
+
 $branch = " " . $branch_color . $branch if $branch || $remote;
 $remote = "@" . $red . $remote if $remote;
 
@@ -86,3 +98,4 @@ print " "
     . $branch
     . $remote
     . $no_color;
+
