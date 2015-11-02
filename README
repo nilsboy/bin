@@ -325,6 +325,8 @@ time-stamp-to-date:
     Print date for a timestamp
 tmux-reattach:
     Reattach to a screen or tmux session
+tmux-session:
+    Start a named tmux session with 10 tabs
 top-mem:
     View top ordered by memory usage
 tree:
