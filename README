@@ -344,7 +344,7 @@ url:
 user-add:
     Add a new user to the system without hassle
 vi:
-    Setup and run vim
+    alias for vim
 vi-choose-file-from-list:
     Edit a file from a list on STDIN
 vi-from-find:
@@ -362,6 +362,8 @@ video-dvd-rip:
 video-transcode:
     Transcode a media file to x264 preserving all video, audio and
     subtitle tracks
+vim:
+    Setup and run vim
 vim-setup:
     Setup vim environment
 vim-url:
