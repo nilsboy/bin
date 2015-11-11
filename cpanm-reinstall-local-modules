@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Reinstall all cpanm installed perl modules (i.e. to recompile after server move)
+
+source bash-helpers
+
+INFO "Reinstalling local modules..."
+cpanm-list-locally-installed-modules |
+    sort |
+    cpanm -nq --reinstall
+
+INFO "Done"

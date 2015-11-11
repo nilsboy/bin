@@ -1,0 +1,9 @@
+#!/usr/bin/env perl
+
+# List all cpanm installed perl modules
+
+use ExtUtils::Installed;
+my $instmod = ExtUtils::Installed->new();
+foreach my $module ($instmod->modules()) {
+    print "$module\n";
+}
