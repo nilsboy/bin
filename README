@@ -311,6 +311,9 @@ ssh-no-check:
     SSH without host key checks
 ssh-persistent-reverse-tunnel-setup:
     Setup a persistent reverse tunnel
+ssh-server-turn-off-password-authentication:
+    Change local sshd config to disallow password authentication and
+    restart sshd
 ssh-with-reverse-proxy:
     Proxy traffic of a remote host through localhost
 ssl-create-self-signed-certificate:
