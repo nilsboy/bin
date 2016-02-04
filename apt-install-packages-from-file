@@ -7,5 +7,19 @@ source bash-helpers
 INFO "FYI - this will install outstanding upgrades too."
 
 file=${1?file name?}
-perl -pe 's/^(.+)$/$1 install/g' $file | dpkg --set-selections
-apt-get dselect-upgrade
+# perl -pe 's/^(.+)$/$1 install/g' $file | dpkg --set-selections
+# apt-get -u dselect-upgrade
+
+xargs -a $file apt-get -qq -y install
+
+exit 0
+
+# apt-get within while breaks while after the first package was installed
+
+set +e
+while read package ; do
+    INFO "Installing package: $package..."
+    (apt-get install -y $package) || ERROR "Cannot install $package"
+done <<-EOF
+    $(cat $file)
+EOF
