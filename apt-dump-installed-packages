@@ -1,7 +1,12 @@
 #!/bin/bash
-
 # Dump names of all installed packages to a file
+# from http://askubuntu.com/a/492343
 
-set -e
+source bash-helpers
 
-dpkg --get-selections > installed_packages_on_host_$HOSTNAME
+comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u) \
+    | grep -v '^lib' \
+    | grep -v '^linux-' \
+    > installed_packages_on_host_$HOSTNAME
+
+WARN 'This list may contain some extra packages - please recheck!'
