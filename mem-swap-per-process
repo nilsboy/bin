@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Show swap usage per process
+# see also http://www.cyberciti.biz/faq/linux-which-process-is-using-swap/
+
+smem "$@"

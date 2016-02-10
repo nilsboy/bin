@@ -200,6 +200,8 @@ markdown-view:
     View markdown in the terminal
 mem-empty-swap-to-ram:
     Empty swap back to ram if possible
+mem-swap-per-process:
+    Show swap usage per process
 mysql:
     Fix mysql prompt to show real hostname - NEVER localhost
 net-find-free-port:
