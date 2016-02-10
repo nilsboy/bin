@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Empty swap back to ram if possible
+
+# based on https://help.ubuntu.com/community/SwapFaq
+
+source bash-helpers
+
+gotroot
+
+mem=$(LC_ALL=C free  | awk '/Mem:/ {print $4}')
+swap=$(LC_ALL=C free | awk '/Swap:/ {print $3}')
+
+if [ $mem -lt $swap ]; then
+    DIE "Not enough RAM to write swap back, nothing done."
+fi
+
+swapoff -a && 
+swapon -a
+
+INFO "Done"
