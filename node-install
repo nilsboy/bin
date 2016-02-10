@@ -7,7 +7,7 @@ source bash-helpers
 node_dst=~/opt/node
 node_bin=~/opt/bin/node
 npm_bin=~/opt/bin/npm
-backup=$node_dst.backup.$(date +%Y%m%d_%H%M%S)
+backup=~/opt/node-install.backup.$(date +%Y%m%d_%H%M%S)
 
 if [[ -e $node_dst || -h $node_dst || -e $node_bin || -h $node_bin || -e $npm_bin || -h $npm_bin ]] ; then
 
@@ -43,10 +43,12 @@ mkdir -p ~/opt/bin
 
 node_dst_versioned=~/opt/$dir
 
-mv $node_dst $backup/ || true
-mv $node_dst_versioned $backup/ || true
-mv $node_bin $backup/ || true
-mv $npm_bin $backup/ || true
+for file in $node_dst $node_dst_versioned $node_bin $npm_bin ; do
+    if [ -e $file ] || [ -d $file ] || [ -L $file ] ; then
+        INFO "Backing up $file to $backup/..."
+        mv $file $backup/
+    fi
+done
 
 mv $dir $node_dst_versioned
 
@@ -55,8 +57,10 @@ ln -s $dir node
 
 cd ~/opt/bin
 ln -s ../node/bin/node .
-ln -s ../node/bin/npm .
 
 npm-set-global-modules-dir
+
+INFO "Installing newest npm via npm"
+../node/bin/npm install -g npm >/dev/null
 
 INFO "Done."
