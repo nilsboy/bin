@@ -21,4 +21,5 @@ if [[ $1 =~ @ ]] && [[ $1 =~ : ]] ; then
     args="$args "$(vim-url $1)
 fi
 
-alternative-run $0 $args "$@"
+exec alternative-run $0 $args "$@"
+
