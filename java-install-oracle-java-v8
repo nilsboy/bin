@@ -1,0 +1,13 @@
+#!/bin/bash
+# Install oracle java 8
+
+source bash-helpers
+
+gotroot
+
+INFO "For more info see: http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html"
+
+add-apt-repository ppa:webupd8team/java
+apt-get update
+
+apt-get install oracle-java8-installer
