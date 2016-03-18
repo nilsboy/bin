@@ -1,0 +1,40 @@
+#!/bin/bash
+# Convert any file to text
+
+source bash-helpers
+
+file="$@"
+
+INFO "Converting file $file"
+
+extension=$(extension $file)
+
+if [[ "$extension" = "txt" ]] ; then
+    RETURN
+fi
+
+if [[ "$extension" = "csv" ]] ; then
+    RETURN
+fi
+
+if [[ "$extension" = "pdf" ]] ; then
+    pdftotext "$file" "$file".txt
+    RETURN
+fi
+
+if [[ "$extension" = "xlsx" ]] ; then
+    xlsx2csv -s 0 "$file" "$file".csv
+    RETURN
+fi
+
+if [[ "$extension" = "docx" ]] ; then
+    docx2txt "$file" "$file".txt
+    RETURN
+fi
+
+if [[ "$extension" = "doc" ]] ; then
+    catdoc "$file" > "$file".txt
+    RETURN
+fi
+
+DIE "Unknown file extension: $extension for $file"

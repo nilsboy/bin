@@ -326,6 +326,8 @@ ssl-create-self-signed-certificate:
     Create a self signed certificate
 ssl-strip:
     Remove ssl encryption from https and other protocols
+text-from-any:
+    Convert any file to text
 text-quote:
     Quote text
 text-remove-comments:
