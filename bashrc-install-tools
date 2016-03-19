@@ -1,0 +1,13 @@
+#!/bin/bash
+# Install tools via npm
+
+source bash-helpers
+
+for module in \
+    diff-so-fancy
+do
+    INFO "Installing $module..."
+    npm install -g $module
+done
+
+INFO "Done"
