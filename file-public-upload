@@ -1,0 +1,33 @@
+#!/bin/bash
+# Share a file on a public space
+
+source bash-helpers
+
+file="$@"
+
+tmpfile=$( mktemp -t transferXXX )
+
+if ! [[ $file ]] ; then
+    if tty -s ; then
+        DIE Specify file}
+    else
+        file=$tmpfile
+        cat - > $tmpfile
+        dst="file.txt"
+    fi
+else
+    dst=$(basename "$file" | perl -pe 's/[^a-zA-Z0-9._-]+/_/g ; s/_+/_/g ; s/_+$//g')
+fi
+
+client="wget -q -O - --method PUT --body-file="
+if [[ $(type -t curl) ]] ; then
+    client="curl --progress-bar --upload-file "
+fi
+
+dst=https://transfer.sh/$dst
+
+INFO "Uploading using: $client$file $dst (5GB max)..."
+$client"${file}" $dst
+INFO "Done"
+
+trap 'rm $tmpfile' ERR EXIT

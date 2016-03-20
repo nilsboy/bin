@@ -115,6 +115,8 @@ file-add-line-if-new:
     Add a line to a file if a line matching regex is not found
 file-compress-if-size-reaches:
     Compress a file depending on size
+file-public-upload:
+    Share a file on a public space
 file-template-filler:
     Create a file from a template
 find-and:
