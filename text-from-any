@@ -8,33 +8,48 @@ file="$@"
 INFO "Converting file $file"
 
 extension=$(extension $file)
+type=$(file -b --mime-type "$file")
+out="$file.text-from-any"
 
-if [[ "$extension" = "txt" ]] ; then
+DEBUG "type: $type"
+
+if [[ "$type" =~ "text" ]] ; then
     RETURN
 fi
 
-if [[ "$extension" = "csv" ]] ; then
+if [[ "$type" =~ "xml" ]] ; then
+    RETURN
+fi
+
+if [[ "$type" =~ "x-msaccess" ]] ; then
+
+    for table in $(mdb-tables "$file") ; do
+        INFO "Exporting database table $table..."
+        mdb-export -D '%F %T' "$file" "$table" > "$out.table-$table.csv"
+    done
+
     RETURN
 fi
 
 if [[ "$extension" = "pdf" ]] ; then
-    pdftotext "$file" "$file".txt
+    pdftotext "$file" "$out.txt"
     RETURN
 fi
 
 if [[ "$extension" = "xlsx" ]] ; then
-    xlsx2csv -s 0 "$file" "$file".csv
+    xlsx2csv -s 0 "$file" "$out.csv"
     RETURN
 fi
 
 if [[ "$extension" = "docx" ]] ; then
-    docx2txt "$file" "$file".txt
+    docx2txt "$file" "$out.txt"
     RETURN
 fi
 
 if [[ "$extension" = "doc" ]] ; then
-    catdoc "$file" > "$file".txt
+    catdoc "$file" > "$out.txt"
     RETURN
 fi
 
 DIE "Unknown file extension: $extension for $file"
+
