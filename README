@@ -330,6 +330,8 @@ ssl-create-self-signed-certificate:
     Create a self signed certificate
 ssl-strip:
     Remove ssl encryption from https and other protocols
+text-context-grep:
+    Grep for a regex and display matches with context
 text-from-any:
     Convert any file to text
 text-quote:
