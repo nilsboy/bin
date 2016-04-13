@@ -363,6 +363,10 @@ unix2dos:
     Convert line endings from unix to dos
 url:
     Print absolute SSH url of a file or directory
+url-decode:
+    Decode a string from URL notation
+url-encode:
+    Encode a string to URL notation
 user-add:
     Add a new user to the system without hassle
 vi:

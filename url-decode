@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Decode a string from URL notation
+# https://stackoverflow.com/questions/296536/how-to-urlencode-data-for-curl-command
+
+echo -n "$@" | perl -pe 's/\%(\w\w)/chr hex $1/ge'
