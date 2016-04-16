@@ -351,6 +351,8 @@ tmux-session:
     Start a named tmux session with 10 tabs
 top-mem:
     View top ordered by memory usage
+trash:
+    Move a file to a trash dir at the files location
 tree:
     List a directory as a tree
 ubuntu-setup:

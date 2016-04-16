@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Move a file to a trash dir at the files location
+
+source bash-helpers
+
+file="$@"
+
+if [[ ! "$file" ]] ; then
+    DIE "Specify file"
+fi
+
+dir=$(dirname "$file")
+trash="$dir/.trash"
+mkdir -p "$trash"
+
+mv "$file" "$trash/"
