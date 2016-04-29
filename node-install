@@ -45,7 +45,9 @@ node_dst_versioned=~/opt/$dir
 for file in $node_dst $node_dst_versioned $node_bin $npm_bin ; do
     if [ -e $file ] || [ -d $file ] || [ -L $file ] ; then
         INFO "Backing up $file to $backup/..."
-        mv $file $backup/
+        if [[ -e $file ]] ; then
+            mv $file $backup/
+        fi
     fi
 done
 
