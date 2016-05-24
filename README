@@ -176,6 +176,9 @@ grep-or:
 groups-reload-memberships:
     Start new shell to "reload" changes to the list of groups the user
     belongs to
+hd-set-spin-timout:
+    Activate spindown and set spindown timeout on (buggy - i.e.
+    Seagate) hard drives that don't do it themselfes
 html-strip:
     Strip HTML of tags and entities
 iptables-port-redirect:
