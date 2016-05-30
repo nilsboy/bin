@@ -197,6 +197,9 @@ keyboard-disable-caps-lock-xwindows:
     Map caps lock to escape for X
 keyboard-reset:
     Reset keyboard settings
+line-print:
+    Draw a line on the terminal spanning the whole width optionally
+    including a message
 ls-creation-time:
     List the creation time of a file
 man-explain-options:

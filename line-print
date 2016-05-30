@@ -1,0 +1,11 @@
+#!/usr/bin/env perl
+# Draw a line on the terminal spanning the whole width optionally including a message
+
+use strict;
+no warnings 'uninitialized';
+
+my $msg;
+if(@ARGV) {
+    $msg = " " . join(" ", @ARGV) . " ";
+}
+print "---", $msg , q{-} x ($ENV{COLUMNS} - 3 - length($msg)), "\n\n";
