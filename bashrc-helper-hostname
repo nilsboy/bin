@@ -2,4 +2,9 @@
 
 source bash-helpers
 
-echo -n $GREEN${HOSTNAME}$NO_COLOR
+COLOR=$GREEN
+if [[ $BASHRC_INSIDE_DOCKER ]] ; then
+    COLOR=$DARKRED
+fi
+
+echo -n $COLOR${HOSTNAME}$NO_COLOR
