@@ -1,0 +1,17 @@
+#!/bin/bash
+# List some docker information
+
+echo
+
+line-print Containers
+sudo docker ps -a
+echo
+
+line-print Images
+sudo docker images
+echo
+
+line-print Volumes
+sudo docker volume ls
+echo
+line-print

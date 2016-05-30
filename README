@@ -103,6 +103,8 @@ dir-diff:
     Diff two directory structures
 dir-name-prettifier:
     shorten prompt dir to max 15 chars
+docker-ls:
+    List some docker information
 docopt-convert:
     Convert a docopt specification
 dos2unix:
