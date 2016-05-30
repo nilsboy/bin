@@ -4,7 +4,6 @@
 
 use warnings;
 no warnings qw{uninitialized};
-use Data::Dumper;
 
 use Getopt::Long;
 use Encode;

@@ -5,7 +5,6 @@
 use strict;
 use warnings;
 no warnings 'uninitialized';
-use Data::Dumper;
 use Getopt::Long;
 
 my $red      = "\x1b[38;5;124m";
