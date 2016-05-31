@@ -1,0 +1,33 @@
+#!/bin/bash
+# Start a volatile ubuntu docker container
+
+source bash-helpers
+
+cmd="$@"
+
+if ! [[ $1 ]] ; then
+  cmd=bash
+fi
+
+image=ubuntu:16.04
+container=ubuntu-test
+remove=--rm
+
+if [[ $IMAGE ]] ; then
+    image=$IMAGE
+fi
+
+if [[ $CONTAINER ]] ; then
+    container=$CONTAINER
+    unset remove
+fi
+
+mount=~/tmp/docker-home
+mkdir -p $mount
+
+docker_home=/root/
+
+sudo docker run $remove --name $container \
+    -v $HOME/.bashrc:$docker_home/.bashrc \
+    -v $mount:$docker_home \
+    -ti $image "$cmd"

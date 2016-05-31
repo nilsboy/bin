@@ -105,6 +105,10 @@ dir-name-prettifier:
     shorten prompt dir to max 15 chars
 docker-ls:
     List some docker information
+docker-ubuntu:
+    Start a volatile ubuntu docker container
+docker-ubuntu-persistent:
+    Start a persistent ubuntu docker container
 docopt-convert:
     Convert a docopt specification
 dos2unix:

@@ -1,0 +1,29 @@
+#!/bin/bash
+# Start a persistent ubuntu docker container
+
+source bash-helpers
+
+cmd="$@"
+
+if ! [[ $1 ]] ; then
+  cmd=bash
+fi
+
+container=ubuntu-test-persistent
+
+set +e
+sudo docker ps -a -f name=$container 2> /dev/null | grep $container &>/dev/null && found=1
+set -e
+
+if [[ $found ]] ; then
+    INFO "Commiting and reusing existing container with name $container."
+    INFO "Commiting may be limited to 127 times by docker."
+
+    sudo docker commit $container $container > /dev/null
+    sudo docker rm $container > /dev/null
+
+    image=$container
+fi
+
+sudo PATH=$PATH IMAGE=$image CONTAINER=$container $(type -p docker-ubuntu) "$cmd"
+
