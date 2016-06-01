@@ -179,6 +179,8 @@ grep-list:
     Grep for a list of values
 grep-or:
     or-grep list matching lines
+grep-or-with-header:
+    or-grep and print paragraph headers
 groups-reload-memberships:
     Start new shell to "reload" changes to the list of groups the user
     belongs to
