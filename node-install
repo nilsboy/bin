@@ -19,7 +19,7 @@ if [[ -e $node_dst || -h $node_dst || -e $node_bin || -h $node_bin || -e $npm_bi
     mkdir -p $backup
 fi
 
-wd=$(mktemp -d)
+wd=$(mktemp -d --suffix=.node-install)
 cd $wd
 
 bits=$(uname -m | perl -ne 'print $1 if /_(32|64)$/')
@@ -45,9 +45,7 @@ node_dst_versioned=~/opt/$dir
 for file in $node_dst $node_dst_versioned $node_bin $npm_bin ; do
     if [ -e $file ] || [ -d $file ] || [ -L $file ] ; then
         INFO "Backing up $file to $backup/..."
-        if [[ -e $file ]] ; then
-            mv $file $backup/
-        fi
+        mv $file $backup/
     fi
 done
 
@@ -61,9 +59,11 @@ ln -s ../node/bin/node .
 
 PATH=$PATH:~/opt/$dir/bin
 npm-set-global-modules-dir
+npm-set-proxy-from-environment
 
 INFO "Installing newest npm via npm"
 npm install -g npm@latest >/dev/null
 
 INFO "Done."
+
 
