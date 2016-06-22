@@ -1,0 +1,32 @@
+#!/bin/bash
+# Replace files with content from environment variables
+#
+# Example:
+# OVERLAY_FILE_1_NAME="la/le/lu.conf"
+# OVERLAY_FILE_1_DATA=$(<settings_local.py)
+#
+# OVERLAY_FILE_2_NAME="la/le li/lu.conf"
+# OVERLAY_FILE_2_DATA="my new data"
+
+set -e
+
+IFS='<newline>'
+
+for file_env in ${!OVERLAY_FILE_*} ; do
+
+    if [[ ! $file_env =~ _NAME$ ]] ; then
+        continue;
+    fi
+
+    data_env=${file_env%%_NAME}_DATA
+
+    file=${!file_env}
+    data=${!data_env}
+
+    echo "Replacing $file with \$$data_env" >&2
+    dirname=$(dirname "$file")
+
+    mkdir -p "$dirname"
+    echo "$data" > "$file"
+done
+

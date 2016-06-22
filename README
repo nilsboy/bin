@@ -125,6 +125,8 @@ file-public-upload:
     Share a file on a public space
 file-template-filler:
     Create a file from a template
+files-replace-from-env:
+    Replace files with content from environment variables
 find-and:
     Find files excluding dotfiles optional matching several strings
 find-and-limit:
