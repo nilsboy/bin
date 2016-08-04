@@ -3,12 +3,13 @@
 # Find files excluding dotfiles optional matching several strings
 
 if [[ $abs ]] ; then
-    abs=$(abs)
+    export abs=$(abs)
 fi
 
-find -H $abs* -mount \
+find -H * -mount \
     -type f \
     | perl -ne 'print if ! m#/\.#' \
+    | perl -pe 's#^#$ENV{abs}# if $ENV{abs}' \
     | perl -ne 'print if ! m#(^|/)node_modules/#' \
     | perl -ne 'print if ! m#(^|/)bower_components/#' \
     | perl -ne 'print if ! m#(^|/)classes/#' \
