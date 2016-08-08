@@ -1,0 +1,17 @@
+#/usr/bin/env bash
+# Setup fully working change root
+
+source bash-helpers
+
+root=${1?Specify new root dir}
+
+for dir in dev proc sys ; do
+    sudo mount --bind /$dir $root/$dir
+done
+
+chroot $root
+
+INFO "Possible next steps:"
+INFO "Setup networking (i.e. dhclient eth1)"
+INFO "Update grub (i.e. fdisk -l ; grub-install /dev/sda)"
+INFO "Update grub2 (i.e. update-grub)"

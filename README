@@ -71,6 +71,8 @@ bytes-from-human:
     Convert a size from human friendly to bytes
 bytes-to-human:
     Convert a size of bytes to human friendly
+chroot-fully-working:
+    Setup fully working change root
 clear-with-scrollback:
     Clear screen including scrollback buffer
 command-knows-switch:
