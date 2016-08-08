@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Emulate a pipe for a program that does not support one itself like eslint
+
+source bash-helpers
+
+file=$(tempfile)
+
+trap 'test -e $file && rm $file' ERR EXIT
+
+cat > $file
+"$@" $file
+cat $file
