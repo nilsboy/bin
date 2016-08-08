@@ -5,9 +5,19 @@
 source bash-helpers
 
 file=$(tempfile)
+original=$file.org
 
-trap 'test -e $file && rm $file' ERR EXIT
+trap 'test -e $file && rm $file ; rm $original' ERR EXIT
 
-cat > $file
-"$@" $file
+tee -a $original > $file
+
+set +e
+"$@" $file &>/dev/null || error=1
+set -e
+
+if [[ $error ]]; then
+    cat $original
+    exit 1
+fi
+
 cat $file
