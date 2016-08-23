@@ -2,9 +2,27 @@
 
 # Find files excluding dotfiles optional matching several strings
 
+source bash-helpers
+
+if [[ $1 = '--abs' ]] ; then
+    abs=1
+    shift
+fi
+
 if [[ $abs ]] ; then
     export abs=$(abs)
 fi
+
+if [[ $1 = '--project' ]] ; then
+    gitroot=$(git-root)
+    if [[ $gitroot ]] ; then
+        cd $gitroot
+    else
+        DIE No project root found
+    fi
+    shift
+fi
+
 
 find -H * -mount \
     -type f \
@@ -14,4 +32,5 @@ find -H * -mount \
     | perl -ne 'print if ! m#(^|/)bower_components/#' \
     | perl -ne 'print if ! m#(^|/)classes/#' \
     | grep-and -e $@
+
 
