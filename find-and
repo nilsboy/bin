@@ -5,21 +5,8 @@
 source bash-helpers
 
 if [[ $1 = '--fallback-to-cwd' ]] ; then
+    shift
     fallback=1
-    shift
-fi
-
-if [[ $1 = '--project' ]] ; then
-
-    gitroot=$(git-root &>/dev/null || true)
-    if [[ $gitroot ]] ; then
-        cd $gitroot
-    else
-      if [[ ! $fallback ]] ; then
-        DIE No project root found
-      fi
-    fi
-    shift
 fi
 
 if [[ $1 = '--dir' ]] ; then
@@ -28,14 +15,31 @@ if [[ $1 = '--dir' ]] ; then
     shift
 fi
 
-if [[ $1 = '--abs' ]] ; then
-    abs=1
+if [[ $1 = '--project' ]] ; then
     shift
+
+    set +e
+    gitroot=$(git-root)
+    set -e
+
+    if [[ $gitroot ]] ; then
+        cd $gitroot
+    else
+      if [[ ! $fallback ]] ; then
+        DIE No project root found
+      fi
+    fi
+fi
+
+if [[ $1 = '--abs' ]] ; then
+    shift
+    abs=1
 fi
 
 if [[ $abs ]] ; then
     export abs=$(abs)
 fi
+
 
 find -H * -mount \
     -type f \
