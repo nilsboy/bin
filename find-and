@@ -4,15 +4,6 @@
 
 source bash-helpers
 
-if [[ $1 = '--abs' ]] ; then
-    abs=1
-    shift
-fi
-
-if [[ $abs ]] ; then
-    export abs=$(abs)
-fi
-
 if [[ $1 = '--project' ]] ; then
     gitroot=$(git-root)
     if [[ $gitroot ]] ; then
@@ -23,6 +14,20 @@ if [[ $1 = '--project' ]] ; then
     shift
 fi
 
+if [[ $1 = '--dir' ]] ; then
+    shift
+    cd $1
+    shift
+fi
+
+if [[ $1 = '--abs' ]] ; then
+    abs=1
+    shift
+fi
+
+if [[ $abs ]] ; then
+    export abs=$(abs)
+fi
 
 find -H * -mount \
     -type f \
