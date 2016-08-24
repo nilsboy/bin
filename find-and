@@ -4,12 +4,20 @@
 
 source bash-helpers
 
+if [[ $1 = '--fallback-to-cwd' ]] ; then
+    fallback=1
+    shift
+fi
+
 if [[ $1 = '--project' ]] ; then
-    gitroot=$(git-root)
+
+    gitroot=$(git-root &>/dev/null || true)
     if [[ $gitroot ]] ; then
         cd $gitroot
     else
+      if [[ ! $fallback ]] ; then
         DIE No project root found
+      fi
     fi
     shift
 fi
