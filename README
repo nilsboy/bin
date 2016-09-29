@@ -103,6 +103,8 @@ dev-bin-generate-readme:
     Generate README with descriptions for bin scripts
 df:
     Cleaned up df version
+diff-so-fancy:
+    Install diff-so-fancy
 dir-diff:
     Diff two directory structures
 dir-name-prettifier:
