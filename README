@@ -59,8 +59,6 @@ bashrc-helper-login-name:
     Format login for bash prompt usage
 bashrc-install:
     Install and run specified installer_command
-bashrc-install-tools:
-    Install tools via npm
 bashrc-linux-distribution-fix-suse:
     Script to run when logging into suse machine
 bashrc-pack:
