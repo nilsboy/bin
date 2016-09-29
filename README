@@ -57,6 +57,8 @@ bashrc-helper-hostname:
     Format hostname for bash prompt usage
 bashrc-helper-login-name:
     Format login for bash prompt usage
+bashrc-install:
+    Install and run specified installer_command
 bashrc-install-tools:
     Install tools via npm
 bashrc-linux-distribution-fix-suse:
@@ -203,6 +205,8 @@ js-format-using-prettydiff:
     Javascript formatter using "npm install prettydiff"
 json-tidy:
     Tidy a json file and sort hash keys to make the output diffable
+json2yaml:
+    Install json2yaml
 keyboard-disable-caps-lock-console:
     Map caps lock to escape for consoles
 keyboard-disable-caps-lock-xwindows:
