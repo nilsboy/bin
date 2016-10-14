@@ -209,8 +209,8 @@ json2yaml:
     Install json2yaml
 keyboard-disable-caps-lock-console:
     Map caps lock to escape for consoles
-keyboard-disable-caps-lock-xwindows:
-    Map caps lock to escape for X
+keyboard-remap-keys-xwindows:
+    Map caps lock to escape etc for X
 keyboard-reset:
     Reset keyboard settings
 line-print:
