@@ -1,13 +1,20 @@
 #!/bin/bash
+# Map caps lock to escape etc for X
 
-# Map caps lock to escape for X
+# See also
+# man xkeyboard-config
+# man setxkbmap
 
-dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape','altwin:ctrl_alt_win']"
+
+# dconf write /org/gnome/desktop/input-sources/xkb-options "['ctrl:ctrl_ralt']"
+# dconf write /org/gnome/desktop/input-sources/xkb-options "['ctrl:swap_lalt_lctl']"
 
 exit
 
-" Deprecated since Ubuntu 14.04:
+# Deprecated since Ubuntu 14.04:
 
 if [[ $(xmodmap -pke | grep -i caps) ]] ; then
     xmodmap -e "remove lock = Caps_Lock" -e "keysym Caps_Lock = Escape"
 fi
+
