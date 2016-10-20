@@ -193,6 +193,8 @@ groups-reload-memberships:
 hd-set-spin-timeout:
     Activate spindown and set spindown timeout on (buggy - i.e.
     Seagate) hard drives that don't do it themselfes
+head-warn:
+    Limit input lines and warn if more lines are left
 html-strip:
     Strip HTML of tags and entities
 iptables-port-redirect:
