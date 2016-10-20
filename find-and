@@ -1,17 +1,16 @@
 #!/bin/bash 
 
-# Find files excluding dotfiles optional matching several strings
+# Find files excluding dotfiles optionally matching several strings
 
 source bash-helpers
 
-if [[ $1 = '--fallback-to-cwd' ]] ; then
-    shift
-    fallback=1
-fi
+head_warn="head-warn"
+
+path=$(abs .)
 
 if [[ $1 = '--dir' ]] ; then
     shift
-    cd $1
+    path=$1
     shift
 fi
 
@@ -19,35 +18,31 @@ if [[ $1 = '--project' ]] ; then
     shift
 
     set +e
-    gitroot=$(git-root)
+    git_root=$(git-root)
     set -e
 
-    if [[ $gitroot ]] ; then
-        cd $gitroot
-    else
-      if [[ ! $fallback ]] ; then
-        DIE No project root found
-      fi
+    if [[ $git_root ]] ; then
+        path=$git_root
     fi
 fi
 
-if [[ $1 = '--abs' ]] ; then
+if [[ $1 = '--no-limit' ]] ; then
     shift
-    abs=1
-fi
-
-if [[ $abs ]] ; then
-    export abs=$(abs)
+    head_warn=cat
 fi
 
 
-find -H * -mount \
+cd /
+
+find \
+    -H \
+    $path \
+    -mount \
     -type f \
-    | perl -ne 'print if ! m#/\.#' \
-    | perl -pe 's#^#$ENV{abs}# if $ENV{abs}' \
+    | perl -ne 'print if ! m#'$path'/*\.#' \
     | perl -ne 'print if ! m#(^|/)node_modules/#' \
     | perl -ne 'print if ! m#(^|/)bower_components/#' \
     | perl -ne 'print if ! m#(^|/)classes/#' \
-    | grep-and -e $@
-
-
+    | grep-and -e $@ \
+    | sort-by-path-depth \
+    | $head_warn
