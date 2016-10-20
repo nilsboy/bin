@@ -3,7 +3,8 @@
 # Find a file or grep stdin
 
 if [[ -t 0 ]] ; then
-    find-and | while read i; do grep-and -epf "$i" "$@" ; done
+    find-and --no-limit | while read i; do grep-and -epf "$i" "$@" ; done
 else
     grep-and -e $@
 fi
+
