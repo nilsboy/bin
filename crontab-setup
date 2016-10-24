@@ -8,14 +8,14 @@ source bash-helpers
 
 (
 cat <<EOF
-### Environment ################################################################
+## Environment #################################################################
 
 SHELL=/bin/bash
 BASH_ENV=~/.bashrc
 
 0 0 * * * crontab -l > ~/etc/crontab.local
 
-### ADD JOB NAME HERE ##########################################################
+## ADD JOB NAME HERE ###########################################################
 
 # MAILTO=email1,email2,...
 # m h  dom mon dow   command
