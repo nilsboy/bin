@@ -31,6 +31,6 @@ foreach my $bin (sort (path(".")->children)) {
     $apps_count++;
 }
 
-$bashrc_phat->append("### END fatpacked apps ", "#" x 57, "\n");
+$bashrc_phat->append("### fatpacked apps END", "#" x 57, "\n");
 
 print "Done - apps packed: $apps_count\n";
