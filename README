@@ -379,7 +379,7 @@ time-humanize-seconds:
 time-stamp-to-date:
     Print date for a timestamp
 tmux-reattach:
-    Reattach to a screen or tmux session
+    Reattach or create a new tmux session
 tmux-session:
     Start a named tmux session with 10 tabs
 tmux-synchronized-panes-toggle:

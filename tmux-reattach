@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Reattach to a screen or tmux session
+# Reattach or create a new tmux session
 
 wanted_session=$1
 session=$wanted_session
