@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Toggle synchronized tmux panes
+
+tmux set-window-option synchronize-panes

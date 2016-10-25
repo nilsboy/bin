@@ -132,7 +132,7 @@ file-template-filler:
 files-replace-from-env:
     Replace files with content from environment variables
 find-and:
-    Find files excluding dotfiles optional matching several strings
+    Find files excluding dotfiles optionally matching several strings
 find-and-limit:
     find-and with a limit
 find-from-date:
@@ -376,6 +376,8 @@ tmux-reattach:
     Reattach to a screen or tmux session
 tmux-session:
     Start a named tmux session with 10 tabs
+tmux-synchronized-panes-toggle:
+    Toggle synchronized tmux panes
 top-mem:
     View top ordered by memory usage
 trash:
