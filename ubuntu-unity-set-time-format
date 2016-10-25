@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Set time format of ubuntu unity desktop clock
+
+dconf write /com/canonical/indicator/datetime/time-format "'custom'"
+dconf write /com/canonical/indicator/datetime/custom-time-format "'KW%V | %a | %F | %R'"

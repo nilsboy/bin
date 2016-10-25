@@ -394,6 +394,8 @@ ubuntu-setup:
     Stuff to do after a new ubuntu installation
 ubuntu-setup-automatic-updates:
     Make sure update and backports soures are activated
+ubuntu-unity-set-time-format:
+    Set time format of ubuntu unity desktop clock
 uniq-unsorted:
     uniq replacement without the need for sorted input
 unix2dos:
