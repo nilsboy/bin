@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Show complete changes to a file in git
+
+git log --follow -p -- "$@"
