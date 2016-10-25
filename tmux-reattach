@@ -2,7 +2,8 @@
 
 # Reattach to a screen or tmux session
 
-session=$1
+wanted_session=$1
+session=$wanted_session
 
 if [[ ! $session ]] ; then
     session=main
@@ -17,16 +18,18 @@ ssh-agent-env-grab
     fi
 
 
-    if tmux has-session ; then
-        exec tmux -2 att -d
+    if [[ ! $wanted_session ]] ; then
+        if tmux has-session ; then
+            exec tmux -2 att -d
+        fi
     fi
 
-    xtitle screen@$HOSTNAME
-    screen -rd $session && exit
-    screen -rd && exit
+    tmux-session $session
+    exec tmux -2 att -d -t $session
 
     xtitle "Terminal"
 
     exit 1
 
 ) && clear
+
