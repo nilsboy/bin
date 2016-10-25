@@ -331,6 +331,8 @@ run-and-capture:
     Run a program and pretty print all its outputs
 run-or-test:
     Run a programs tests if any exist otherwise the program itself
+screen-reattach:
+    Reattach to a screen session
 shell-color-test:
     most color mappings taken from xterm-colortest
 shell-line-wrap-off:

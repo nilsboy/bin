@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Reattach to a screen session
+
+ssh-agent-env-grab
+
+(
+    xtitle screen@$HOSTNAME
+    screen -rd $session && exit
+    screen -rd && exit
+
+    xtitle "Terminal"
+
+    exit 1
+
+) && clear
