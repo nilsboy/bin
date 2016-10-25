@@ -17,8 +17,6 @@ tmux new-window -n ""
 tmux new-window -n ""
 tmux new-window -n ""
 tmux new-window -n ""
-tmux new-window -n ""
-tmux new-window -n ""
 
 # tmux split-window -d -v -t $session:1 'ssh workflow@qualle3'
 # tmux split-window -d -v -t $session:1 'ssh workflow@qualle2'
