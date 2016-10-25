@@ -153,6 +153,8 @@ git-env-validate:
     Ensure git-scm is configured appropriately
 git-ignore:
     Download and save a default .gitignore for a specific environment
+git-log-compact:
+    Show compact git log
 git-modified:
     List all modified files since last git commit
 git-project:
