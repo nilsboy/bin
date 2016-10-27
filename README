@@ -238,6 +238,8 @@ mem-swap-per-process:
     Show swap usage per process
 mysql:
     Fix mysql prompt to show real hostname - NEVER localhost
+neovim-setup:
+    Setup neovim
 net-find-free-port:
     Find an unused port
 net-ip2name:
