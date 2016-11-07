@@ -1,0 +1,6 @@
+#!/bin/bash
+# Vim to use from firefox addon its-all-text
+
+export REMOTE_HOME=$HOME
+
+exec gnome-terminal -x ~/.bin/vi "$@"
