@@ -4,23 +4,9 @@
 
 use Cwd;
 
-abss(@ARGV) if @ARGV;
-
-if(!-t STDIN) {
-  while(<STDIN>) {
-    s/\n$//g;
-    abss($_);
-  }
-}
-else {
-  abss('.') if !@ARGV;
-}
-
-sub abss {
-  my $file = join(" ", @_);
-  my $abs = Cwd::abs_path($file);
-  $abs .= "/" if -d $file;
-  $abs = "'$abs'" if $abs =~ /\s/;
-  $abs =~ s/;/\\;/g;
-  print "$abs\n";
-}
+my $file = join(" ", @_);
+my $abs = Cwd::abs_path($file);
+$abs .= "/" if -d $file;
+$abs = "'$abs'" if $abs =~ /\s/;
+$abs =~ s/;/\\;/g;
+print "$abs\n";
