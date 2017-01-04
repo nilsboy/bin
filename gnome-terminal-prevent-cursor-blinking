@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Prevent the gnome-terminal cursor from blinking
+
+source bash-helpers
+
+gconftool-2 --set /apps/gnome-terminal/profiles/Default/cursor_blink_mode --type string off
+
