@@ -42,9 +42,9 @@ find \
     -type f \
     | perl -ne 'print if ! m#/\.git/#' \
     | perl -ne 'print if ! m#'$path'/*\.#' \
-    | perl -ne 'print if ! m#(^|/)node_modules/#' \
-    | perl -ne 'print if ! m#(^|/)bower_components/#' \
-    | perl -ne 'print if ! m#(^|/)classes/#' \
+    | perl -ne 'print if ! m#'$path'node_modules/.*#' \
+    | perl -ne 'print if ! m#'$path'bower_components/.*#' \
+    | perl -ne 'print if ! m#'$path'classes/.*#' \
     | grep-and -e $@ \
     | head -101 \
     | sort-by-path-depth \
