@@ -452,6 +452,8 @@ wcat:
     Easily dump a web site
 webserver-serve-current-directory:
     Serve current directory files via http
+webserver-serve-current-directory.pl:
+    Serve current directory files via http - perl version
 wikipedia-via-dns:
     Query wikipedia via DNS
 x2x-east:

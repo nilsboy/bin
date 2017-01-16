@@ -1,6 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Serve current directory files via http
 
-perl-install-module App::HTTPThis
-http_this
+source bash-helpers
+
+npm install -g serve
+serve .
