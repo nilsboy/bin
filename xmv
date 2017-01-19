@@ -138,13 +138,12 @@ sub normalize {
 
     $_ = $file;
 
-    s/www\.[^\.]+\.[[:alnum:]]+//g;
     s/&/and/g;
     s/['`´]+//g;
-    s/[^\w\.]+/_/g;
     s/[\._]+/_/g;
-    s/^[\._]+//g;
-    s/[\._]+$//g;
+    s/^_*//g;
+    s/_*$//g;
+    s/.*?www_[^_]+_[^_]+_//gi;
 
     if ( !$_ ) {
         $empty_file_name_count++;
