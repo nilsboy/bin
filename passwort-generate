@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Generate a list of random and secure passwords
+
+source bash-helpers
+
+apg -M SN -n 20

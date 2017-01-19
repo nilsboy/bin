@@ -264,6 +264,8 @@ npm-set-proxy-from-environment:
     Set proxy from environment
 once:
     Print stdin once if it has changed since last time
+passwort-generate:
+    Generate a list of random and secure passwords
 path-grep:
     Find an executable in path
 perl-force-stacktrace:
