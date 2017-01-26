@@ -40,11 +40,8 @@ find \
     $path \
     -mount \
     -type f \
-    | perl -ne 'print if ! m#/\.git/#' \
-    | perl -ne 'print if ! m#'$path'/*\.#' \
-    | perl -ne 'print if ! m#'$path'node_modules/.*#' \
-    | perl -ne 'print if ! m#'$path'bower_components/.*#' \
-    | perl -ne 'print if ! m#'$path'classes/.*#' \
+    | perl -ne 'print if ! m#'$path'.*/\..*#' \
+    | perl -ne 'print if ! m#'$path'.*/(node_modules|bower_components|classes)/.*#' \
     | grep-and -e $@ \
     | head -101 \
     | sort-by-path-depth \
