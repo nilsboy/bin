@@ -460,6 +460,8 @@ wikipedia-via-dns:
     Query wikipedia via DNS
 x2x-east:
     Share input devices with another host
+xdg-cache-home:
+    Return xdg cache home
 xmv:
     Rename files by perl expression
 xtitle:

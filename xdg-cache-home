@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Return xdg cache home
+
+source bash-helpers
+
+subdir="$1"
+subdir=$(echo $subdir | perl -pe 's/^.*\/(.+)/$1/')
+
+if [[ ! $XDG_CACHE_HOME ]] ; then
+  XDG_CACHE_HOME=$REMOTE_HOME/.cache
+fi
+
+if [[ $subdir ]] ; then
+  XDG_CACHE_HOME=$XDG_CACHE_HOME/$subdir/
+fi
+
+mkdir -p $XDG_CACHE_HOME
+
+RETURN $XDG_CACHE_HOME
