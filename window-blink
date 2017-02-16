@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Blink current window
+
+source bash-helpers
+
+[[ ! "$DISPLAY" ]] || exit 0
+[[ ! "$WINDOWID" ]] || exit 0
+
+wmctrl -i -r $WINDOWID -b "add,DEMANDS_ATTENTION"
