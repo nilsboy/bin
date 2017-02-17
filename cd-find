@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Search for file or dir in current dir and go there
+
+# source bash-helpers
+
+search="$@"
+
+dir=$(find-and "$search" | head -1)
+
+if ! [[ "$dir" ]] ; then
+  pwd
+  exit
+fi
+
+if [[ -f "$dir" ]] ; then
+    dir=$(dirname "$dir")
+fi
+
+echo "$dir"
+
+if [[ "$dir" != $(pwd) ]] ; then
+  echo "$dir" >&2
+fi
+

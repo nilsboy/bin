@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Search history for an existing directory containing string and go there
+
+# source bash-helpers
+
+search="$@"
+
+if ! [[ "$search" ]] ; then
+    echo $REMOTE_HOME
+    exit
+fi
+
+dir=$(bash-eternal-history-search -d --skip-current-dir \
+    --existing-only -c 1 "\/[^\/]*$search[^\/]*$"
+)
+
+if ! [[ "$dir" ]] ; then
+  pwd
+  exit
+fi
+
+echo "$dir"
+
+if [[ "$dir" != $(pwd) ]] ; then
+  echo "$dir" >&2
+fi
+

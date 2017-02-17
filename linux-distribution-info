@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# List linux distribution variables
+
+source bash-helpers
+
+if [[ -e /etc/lsb-release ]] ; then
+    cat /etc/lsb-release
+    exit
+fi
+
+if [[ -e /etc/debian_version ]] ; then
+    echo DISTRIB_ID=debian
+    exit
+fi
+
+echo DISTRIB_ID=$(cat /etc/*{version,release} 2>/dev/null \
+        | perl -0777 -ne 'print lc $1 if /(debian|suse|redhat)/igm')
