@@ -268,6 +268,8 @@ passwort-generate:
     Generate a list of random and secure passwords
 path-grep:
     Find an executable in path
+path-list:
+    List PATH enties one per line
 perl-force-stacktrace:
     Force stracktrace output from a perl script
 perl-install-deps-for-module:

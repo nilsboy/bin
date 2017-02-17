@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# List PATH enties one per line
+
+source bash-helpers
+
+echo $PATH | perl -pe 's/:/\n/g' | uniq-unsorted
