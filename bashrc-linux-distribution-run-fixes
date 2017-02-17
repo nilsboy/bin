@@ -6,7 +6,7 @@ source bash-helpers
 
 [[ $DISTRIB_ID = "" ]] && exit
 
-local fix_file=bashrc-linux-distribution-fix-$DISTRIB_ID
+fix_file=bashrc-linux-distribution-fix-$DISTRIB_ID
 if [[ $(type -t $fix_file) ]] ; then
     . $fix_file
 fi
