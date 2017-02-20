@@ -140,10 +140,10 @@ sub normalize {
 
     s/&/and/g;
     s/['`´]+//g;
-    s/[\._]+/_/g;
+    s/[\._\W]+/_/g;
+    s/.*?www_[^_]+_[^_]+_//gi;
     s/^_*//g;
     s/_*$//g;
-    s/.*?www_[^_]+_[^_]+_//gi;
 
     if ( !$_ ) {
         $empty_file_name_count++;
