@@ -6,7 +6,7 @@
 source bash-helpers
 
 src=${1?specify source directory}
-dst=${2?specify destination directory}
+dst=${2?specify destination base directory}
 
 if [[ $dst = . ]] ; then
     dst=$(basename $(abs $src))
@@ -17,14 +17,19 @@ mkdir -p "$dst"
 test -d "$src" || DIE "Not a directory: $src"
 test -d "$dst" || DIE "Not a directory: $dst"
 
-INFO "copying $src -> $dst"
-
 src_device=$(stat --format "%d" "$src")
 dst_device=$(stat --format "%d" "$dst")
 
 if [[ $src_device != $dst_device ]] ; then
     DIE "$src and $dst have to reside on the same device for hard links to work"
 fi
+
+src_base=$(basename "$src")
+dst="$dst/$src_base"
+
+INFO "copying $src -> $dst"
+
+mkdir -p "$dst"
 
 cp -rnl "$src"/* "$dst"/
 
