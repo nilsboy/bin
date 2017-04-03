@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Remove comments from a bash script and run it
+
+# This allows comments like this:
+# app \
+#   # description of option
+#   -w   \
+#   -x   \ # description of option
+#   # -y \ # deactivated option
+#   -z
+
+script=$1
+shift
+
+(
+  echo "set -- $*"
+  tail -n +2 $script
+) \
+  | perl -007pe 's/^\s*#.*\n//gm ; s/^\s*#.*\s+//gm' | exec -a "$script" bash

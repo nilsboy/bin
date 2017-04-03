@@ -51,8 +51,8 @@ bash-print-on-error:
 bash-setup-multi-user-environment:
     Share one account with serveral users but create their own
     environment
-bashrc-eternal-history-add:
-    Add entry to the eternal bash history
+bash-with-comments:
+    Remove comments from a bash script and run it
 bashrc-eternal-history-add-simple:
     Add an entry to the eternal history
 bashrc-helper-hostname:
@@ -62,7 +62,9 @@ bashrc-helper-login-name:
 bashrc-install:
     Install and run specified installer_command
 bashrc-linux-distribution-fix-suse:
-    Script to run when logging into suse machine
+    Script to run when logging into a suse machine
+bashrc-linux-distribution-run-fixes:
+    Environment fixes to run on specific linux distributions
 bashrc-pack:
     Attach scripts to the bashrc skeleton
 bashrc-unpack-and-run:
@@ -73,6 +75,11 @@ bytes-from-human:
     Convert a size from human friendly to bytes
 bytes-to-human:
     Convert a size of bytes to human friendly
+cd-find:
+    Search for file or dir in current dir and go there
+cd-history:
+    Search history for an existing directory containing string and go
+    there
 chroot-fully-working:
     Setup fully working change root
 clear-with-scrollback:
@@ -226,6 +233,8 @@ keyboard-reset:
 line-print:
     Draw a line on the terminal spanning the whole width optionally
     including a message
+linux-distribution-info:
+    List linux distribution variables
 ls-creation-time:
     List the creation time of a file
 man-explain-options:
