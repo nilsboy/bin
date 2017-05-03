@@ -4,7 +4,9 @@ source bash-helpers
 
 COLOR=$GREEN
 if [[ $BASHRC_INSIDE_DOCKER ]] ; then
-    COLOR=$DARKRED
+  DOCKER="${RED}docker${NO_COLOR}(${HOSTNAME})"
+else
+  DOCKER=$HOSTNAME
 fi
 
-echo -n $COLOR${HOSTNAME}$NO_COLOR
+echo -n $COLOR$DOCKER$NO_COLOR
