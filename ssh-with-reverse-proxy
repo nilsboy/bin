@@ -10,7 +10,7 @@ host=${1?specify host}
 port=${2:-59347}
 
 # proxyserver $port
-nproxy start -p $port
+nproxy start -p $port &
 
 ssh -A -t $host -R $port:localhost:$port \
     http_proxy=http://localhost:$port \
