@@ -4,6 +4,8 @@
 
 source bash-helpers
 
+DIE 'Use nvm-setup instead'
+
 node_dst=~/opt/node
 node_bin=~/opt/bin/node
 npm_bin=~/opt/bin/npm
