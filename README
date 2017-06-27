@@ -271,6 +271,8 @@ npm-set-global-modules-dir:
     Make npm use local dir for modules
 npm-set-proxy-from-environment:
     Set proxy from environment
+nvm-setup:
+    Setup nvm (node version manager)
 once:
     Print stdin once if it has changed since last time
 passwort-generate:
@@ -314,6 +316,8 @@ perl-upgrade-outdated-modules:
 pipe-wrapper:
     Emulate a pipe for a program that does not support one itself like
     eslint
+pm2-activate-log-rotation:
+    Setup log rotation for pm2
 prompt-dir:
     Prompt containing only the prettified current directory
 prompt-dir-full:
