@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Display the config of the logrotate module of pm2
+
+source bash-helpers
+
+pm2 get pm2-logrotate
