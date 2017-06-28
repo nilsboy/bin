@@ -13,12 +13,12 @@ pm2 install pm2-logrotate
 #
 # Every new chunk will overwrite any already rotated data for the day.
 # The last chunk of the day may contain much less that max_size.
-pm2 set pm2-logrotate:rotateInterval '* * */1 * *'
+pm2 set pm2-logrotate:rotateInterval '0 0 */1 * *'
 pm2 set pm2-logrotate:retain 31
 pm2 set pm2-logrotate:dateFormat 'DD'
-pm2 set pm2-logrotate:max_size '3M'
+pm2 set pm2-logrotate:max_size 3M
 pm2 set pm2-logrotate:compress true
 
 # Check every 10 minutes for max file size.
-pm2 set pm2-logrotate:workerInterval '600'
+pm2 set pm2-logrotate:workerInterval 600
 
