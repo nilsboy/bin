@@ -63,8 +63,6 @@ bashrc-install:
     Install and run specified installer_command
 bashrc-linux-distribution-fix-suse:
     Script to run when logging into a suse machine
-bashrc-linux-distribution-run-fixes:
-    Environment fixes to run on specific linux distributions
 bashrc-pack:
     Attach scripts to the bashrc skeleton
 bashrc-unpack-and-run:
