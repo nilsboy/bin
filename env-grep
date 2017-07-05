@@ -1,3 +1,9 @@
 # Grep environment
 
-env | grep -i "$@" | grep -v LS_COLORS
+var="$@"
+
+if [[ -z var ]] ; then
+  var=.
+fi
+
+env --null | perl -pe 's/\n/\\n/g ; s/\0/\n/g' | grep -i "$var" | grep -v LS_COLORS
