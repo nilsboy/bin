@@ -1,3 +1,3 @@
 # Grep environment
 
-env | grep -i "$@"
+env | grep -i "$@" | grep -v LS_COLORS
