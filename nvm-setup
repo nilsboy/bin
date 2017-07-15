@@ -16,6 +16,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 EOF
 
+WARN "Make sure 'prefix' is not set in ~/.npmrc"
 INFO "Now logout and in again to update your environment."
 INFO "Then to install node run:"
 INFO "nvm install node"
