@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Serve a file manager for the current directory via http
+
+source bash-helpers
+
+dir=$(pwd)
+INFO "Serving current directory: $dir"
+npm install -g node-file-manager
+npx node-file-manager -p 5002 -d $dir

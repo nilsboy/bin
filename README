@@ -467,6 +467,8 @@ vncviewer:
     preconfigured to use ssh
 wcat:
     Easily dump a web site
+webserver-file-manager:
+    Serve a file manager for the current directory via http
 webserver-serve-current-directory:
     Serve current directory files via http
 webserver-serve-current-directory.pl:
