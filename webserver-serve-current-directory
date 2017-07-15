@@ -5,4 +5,4 @@
 source bash-helpers
 
 npm install -g serve
-serve .
+serve --port 5001 .
