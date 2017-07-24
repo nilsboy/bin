@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Diff 2 directories recursively comparing file contents and not file attributes
+# (timestamp etc)
+
+source bash-helpers
+
+src=$1
+dst=$2
+
+rsync -nvrclD --delete $src/ $dst/
