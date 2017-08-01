@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copy a file to ~/backups/ appending a timestamp
+# Move a file to ~/backups/ appending a timestamp
 
 set -e
 
@@ -13,4 +13,4 @@ bak=$REMOTE_HOME/backup/"$bak""_"$(date +%Y%m%d_%H%M%S)
 
 INFO "Archiving to: $file -> $bak"
 
-cp "$file" "$bak"
+mv "$file" "$bak"
