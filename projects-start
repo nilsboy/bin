@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Start all local projects that have a start script
+
+source bash-helpers
+
+for dir in ~/projects/* ; do
+  project=$(basename $dir)
+  INFO "Found project: $project"
+  cd $dir
+  exe=$dir/bin/project-start
+  
+  if [ -x $exe ] ; then
+    INFO "Starting $project via $exe"
+    ./bin/project-start || ERROR "Could not start: $exe"
+  else
+    WARN "Cannot start project: $project - no start file: $exe"
+  fi
+done
