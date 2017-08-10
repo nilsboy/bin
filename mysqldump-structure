@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Dump the structure without the data of a mysql database
+
+source bash-helpers
+
+host=${1:?Specify host}
+database=${2:?Specify database}
+user=${3:?Specify user}
+password=${4:?Specify password}
+
+mysqldump \
+  --protocol=TCP \
+  --single-transaction \
+  --skip-comments \
+  --skip-set-charset \
+  -d \
+  -u $user \
+  --password="$password" \
+  --host $host \
+  $database
+

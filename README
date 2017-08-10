@@ -254,6 +254,8 @@ mem-swap-per-process:
     Show swap usage per process
 mysql:
     Fix mysql prompt to show real hostname - NEVER localhost
+mysqldump-structure:
+    Dump the structure without the data of a mysql database
 neovim-setup:
     Setup neovim
 net-find-free-port:
