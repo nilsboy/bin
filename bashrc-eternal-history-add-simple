@@ -19,7 +19,8 @@ fi
 quoted_pwd=${PWD//\"/\\\"}
 
 # update cleanup_eternal_history if changed:
-line="$USER"
+# use LOGNAME when coming from CGI
+line="$USER""$LOGNAME"
 line="$line $(date +'%F %T')"
 line="$line $BASHPID"
 line="$line \"$quoted_pwd\""
