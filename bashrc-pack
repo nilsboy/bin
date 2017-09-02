@@ -1,36 +1,50 @@
-#!/usr/bin/env perl
+#!/usr/bin/env node
 
-# Attach scripts to the bashrc skeleton
+// Attach scripts to the bashrc skeleton
 
-use strict;
-use warnings;
-use Path::Tiny;
+const LogDwim = require(`log-dwim`)
+const logger = new LogDwim()
+const { TRACE, DEBUG, INFO, WARN, ERROR, DIE, DUMP } = logger
 
-die "Not in bin dir." if path(".")->absolute->basename ne "bin";
+const path = require(`path`)
+const fs = require(`fs-extra`)
+const glob = require(`glob`).sync
+const _ = require(`lodash`)
 
-my $bashrc_skel = path("../dotfiles/bashrc");
-my $bashrc_phat = path("../bashrc/bashrc");
+const wd = path.join(process.env.HOME, `src`, `bin`)
+process.chdir(wd)
 
-$bashrc_skel->copy($bashrc_phat);
+let bashrc = fs.readFileSync("../dotfiles/bashrc").toString()
+let bashrcFileName = path.resolve("../bashrc/bashrc")
 
-my $apps_count = 0;
+let appsCount = 0
 
-foreach my $bin (sort (path(".")->children)) {
+let skipToSkip = [
+  `README`,
+  `package-lock.json`,
+]
 
-    next if $bin->is_dir;
+INFO(`Packing bin...`)
+for (const binFileName of glob(path.join(wd, '*'))) {
+  if(fs.lstatSync(binFileName).isDirectory()) {
+    continue
+  }
+  if(skipToSkip.includes(path.basename(binFileName))) {
+    continue
+  }
 
-    # say STDERR "Packing $bin...";
+  DEBUG(`binFileName:`, binFileName)
 
-    my $description = "fatpacked app $bin";
+  const bin = fs.readFileSync(binFileName).toString()
 
-    $bashrc_phat->append("### ", $description, " ",
-        "#" x (80 - length($description) - 5) . "\n\n");
-
-    $bashrc_phat->append($bin->slurp, "\n");
-
-    $apps_count++;
+  let description = `fatpacked app ${path.basename(binFileName)}`
+  bashrc += _.padEnd("### " + description + " ", 80, `#`) + "\n\n"
+  bashrc += bin + "\n"
+  appsCount++;
 }
 
-$bashrc_phat->append("### fatpacked apps END ", "#" x 57, "\n\n");
+bashrc += _.padEnd("### fatpacked apps END ", 80, "#") + "\n\n"
 
-print "Done - apps packed: $apps_count\n";
+fs.writeFileSync(bashrcFileName, bashrc)
+
+INFO(`Done - apps packed: ${appsCount}`)
