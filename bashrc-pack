@@ -19,7 +19,7 @@ let bashrcFileName = path.resolve("../bashrc/bashrc")
 
 let appsCount = 0
 
-let skipToSkip = [
+let filesToSkip = [
   `README`,
   `package-lock.json`,
 ]
@@ -29,14 +29,12 @@ for (const binFileName of glob(path.join(wd, '*'))) {
   if(fs.lstatSync(binFileName).isDirectory()) {
     continue
   }
-  if(skipToSkip.includes(path.basename(binFileName))) {
+  if(filesToSkip.includes(path.basename(binFileName))) {
     continue
   }
 
   DEBUG(`binFileName:`, binFileName)
-
   const bin = fs.readFileSync(binFileName).toString()
-
   let description = `fatpacked app ${path.basename(binFileName)}`
   bashrc += _.padEnd("### " + description + " ", 80, `#`) + "\n\n"
   bashrc += bin + "\n"
@@ -44,7 +42,6 @@ for (const binFileName of glob(path.join(wd, '*'))) {
 }
 
 bashrc += _.padEnd("### fatpacked apps END ", 80, "#") + "\n\n"
-
 fs.writeFileSync(bashrcFileName, bashrc)
 
 INFO(`Done - apps packed: ${appsCount}`)
