@@ -280,10 +280,6 @@ nvm-setup:
     Setup nvm (node version manager)
 once:
     Print stdin once if it has changed since last time
-package-lock.json:
-    TODO
-package.json:
-    TODO
 password-generate:
     Generate a list of random and secure passwords
 path-grep:
