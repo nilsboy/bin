@@ -112,11 +112,11 @@ dev-bin-generate-readme:
     Generate README with descriptions for bin scripts
 df:
     Cleaned up df version
-diff-so-fancy:
-    Install diff-so-fancy
-dir-diff-by-contents:
+diff-dir:
     Diff 2 directories recursively comparing file contents and not file
     attributes
+diff-so-fancy:
+    Install diff-so-fancy
 dir-name-prettifier:
     shorten prompt dir to max 15 chars
 docker-ls:
