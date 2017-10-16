@@ -88,7 +88,7 @@ clear-with-scrollback:
     Clear screen including scrollback buffer
 command-knows-switch:
     Check if an app supports specified switch
-cp-merge-directories:
+cp-merge-directories-by-hardlinks:
     Merge two directories on the same disk recursively by using hard
     links
 cpanm:
@@ -280,6 +280,8 @@ nvm-setup:
     Setup nvm (node version manager)
 once:
     Print stdin once if it has changed since last time
+package-lock.json:
+    TODO
 package.json:
     TODO
 password-generate:
