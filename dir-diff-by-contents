@@ -5,7 +5,7 @@
 
 source bash-helpers
 
-src=$1
-dst=$2
+src=${1:?Specify src}
+dst=${2:-.}
 
-rsync -nvrclD --delete $src/ $dst/
+rsync -nrclD --delete --exclude /.git --info COPY,DEL,NAME,SYMSAFE $src/ $dst/
