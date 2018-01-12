@@ -373,6 +373,8 @@ shell-line-wrap-on:
     Turn off shell line wrapping
 shell-open-access-on-freeport:
     Create shell access on a free port
+sort-by-file-modification:
+    Sort a list of file names by their modification time
 sort-by-path-depth:
     Sort input by depth of path
 ssh-agent-env-clear:

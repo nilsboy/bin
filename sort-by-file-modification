@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Sort a list of file names by their modification time
+
+perl -e 'map { print "$_"; } sort { -M $a <=> -M $b } <>'
