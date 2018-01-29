@@ -35,3 +35,9 @@ if [[ $ubuntu_version ]] ; then
 else
     SHOW Linux $(cat /etc/issue.net)
 fi
+
+if [[ -e /var/run/reboot-required ]] ; then
+  echo
+  echo 'REBOOT REQUIRED'
+  echo
+fi
