@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Fix wrong antenna problem of rtl8723be wlan adaptor
+
+source bash-helpers
+
+gotroot
+
+echo "options rtl8723be ant_sel=1" > /etc/modprobe.d/rtl8723be.conf

@@ -266,6 +266,8 @@ net-open-ports:
     List all open ports
 net-scan-private-network:
     Scan for hosts in private network
+net-wlan-rtl8723be-wrong-antenna-fix:
+    Fix wrong antenna problem of rtl8723be wlan adaptor
 node-install:
     Install latest node version
 note:
