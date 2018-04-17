@@ -37,7 +37,7 @@ my $wd     = cwd;
 
 # user 2011-08-20 21:02:47 19202 "dir" "0 1" cmd with options ...
 #                  usr  date time  pid   dir   exit codes  cmd
-my $hist_regex = '^(.+) (.+) (.+) (\d*) "(.+)" "([\d ]+)" (.+)$';
+my $hist_regex = '^(.+?) (.+?) (.+?) (\d*?) "(.+?)" "([\d ]+?)" (.+)$';
 
 my $h = $ENV{HISTFILE_ETERNAL};
 open( F, "tac $h |" ) || die $!;
@@ -47,9 +47,6 @@ $count ||= 100;
 my @to_show = ();
 
 ENTRY: while (<F>) {
-    if(length($_) > 10000) {
-      $_ = substr($_, 0, 10000);
-    }
     my (@all) = $_ =~ /$hist_regex/g;
     my ( $user, $date, $time, $pid, $dir, $result, $cmd ) = @all;
     my $was_successful = $result =~ /[0 ]+/g;
