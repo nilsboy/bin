@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Grep bash history
+
+source bash-helpers
+
+tac $HISTFILE_ETERNAL | grep -ai "$@" | less

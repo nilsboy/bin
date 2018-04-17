@@ -47,6 +47,9 @@ $count ||= 100;
 my @to_show = ();
 
 ENTRY: while (<F>) {
+    if(length($_) > 10000) {
+      $_ = substr($_, 0, 10000);
+    }
     my (@all) = $_ =~ /$hist_regex/g;
     my ( $user, $date, $time, $pid, $dir, $result, $cmd ) = @all;
     my $was_successful = $result =~ /[0 ]+/g;

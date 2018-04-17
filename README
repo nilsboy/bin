@@ -44,6 +44,8 @@ bak:
     Backup a file appending a timestamp
 bash-background-jobs-count:
     Display one colored count for background jobs running and stopped
+bash-eternal-history-grep:
+    Grep bash history
 bash-eternal-history-search:
     Search specially formatted bash history
 bash-helpers:
