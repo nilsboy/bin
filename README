@@ -242,6 +242,8 @@ linux-distribution-info:
     List linux distribution variables
 ls-creation-time:
     List the creation time of a file
+man-cheatsh:
+    the only cheat sheet you need
 man-explain-options:
     Display man page infos about command line options
 man-multi-lookup:

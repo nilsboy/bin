@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# the only cheat sheet you need
+
+curl https://cheat.sh/"$@"?style=autumn
