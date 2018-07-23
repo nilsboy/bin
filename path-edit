@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Edit $PATH
+# Usage: eval `path-edit`
+
+echo export PATH=${PATH} | vipe

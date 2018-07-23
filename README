@@ -288,6 +288,8 @@ once:
     Print stdin once if it has changed since last time
 password-generate:
     Generate a list of random and secure passwords
+path-edit:
+    Edit $PATH
 path-grep:
     Find an executable in path
 path-list:
@@ -475,6 +477,8 @@ vim-setup:
     Setup vim environment
 vim-url:
     Print absolute SSH url of a file or directory in vim syntax
+vipe:
+    Edit stdin in a pipe using vim
 vnc-server-setup-upstart-script:
     Setup remote desktop access via ssh and vnc right from the login
     screen of

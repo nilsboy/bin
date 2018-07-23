@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Edit stdin in a pipe using vim
+# Based on https://old.reddit.com/r/vim/comments/3oo156/whats_your_best_vim_related_shell_script/
+
+function cleanup() { test -e "$TOVIMTMP" && rm "$TOVIMTMP" ; }
+trap cleanup ERR EXIT
+
+set -e
+
+TOVIMTMP=/tmp/tovim_tmp_`date +%Y-%m-%d_%H-%M-%S`.`uuid`.txt
+cat > $TOVIMTMP 
+vi $TOVIMTMP < /dev/tty > /dev/tty
+cat $TOVIMTMP 
+
