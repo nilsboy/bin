@@ -217,6 +217,8 @@ head-warn:
     Limit input lines and warn if more lines are left
 html-strip:
     Strip HTML of tags and entities
+http-echo-server:
+    Test HTTP server that response with the request
 iptables-port-redirect:
     Forward an incoming port to a different port
 java-decompile-jar:
