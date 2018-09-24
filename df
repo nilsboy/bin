@@ -10,6 +10,7 @@ if [[ $@ ]] ; then
 fi
 
 alternative-run $0 -h \
+    | perl -ne 'print if $_ !~ /\/snap\//' \
     | perl -0777 -pe 's/Mounted on/Mounted_on/gm' \
     | perl -0777 -pe 's/^(\S+)\n/$1/gm' \
     | csvview \
