@@ -219,6 +219,8 @@ html-strip:
     Strip HTML of tags and entities
 http-echo-server:
     Test HTTP server that response with the request
+internalip:
+    get internal IP address
 iptables-port-redirect:
     Forward an incoming port to a different port
 java-decompile-jar:
