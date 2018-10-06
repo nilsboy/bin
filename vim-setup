@@ -7,25 +7,17 @@ source bash-helpers
 INFO "Setting up vim config..."
 
 VIM_DIR=$REMOTE_HOME/.vim/
-VIM_ETC=$VIM_DIR/
-
 mkdir -p $VIM_DIR
 cd $VIM_DIR
 
-if [[ -e $VIM_ETC ]] ; then
-
-    INFO "Updating existing setup..."
-
-    cd $VIM_ETC
-    git-reset-origin
-    git pull
-
-    exit 0
+if [[ -e .git ]] ; then
+  INFO "Updating existing setup..."
+  git-reset-origin
+  git pull
+else
+  INFO "Cloning git dotvim repo..."
+  git clone --depth 1 https://github.com/nilsboy/dotvim.git .
 fi
-
-INFO "Cloning git dotvim repo..."
-
-git clone --depth 1 https://github.com/nilsboy/dotvim.git etc
 
 INFO "Starting vim to download plugins..."
 
