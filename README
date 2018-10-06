@@ -430,6 +430,8 @@ tmux-reattach:
     Reattach or create a new tmux session
 tmux-session:
     Start a named tmux session with 10 tabs
+tmux-setup:
+    Setup tmux config
 tmux-synchronized-panes-toggle:
     Toggle synchronized tmux panes
 top-mem:

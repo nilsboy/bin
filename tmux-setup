@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Setup tmux config
+
+source bash-helpers
+
+wcat https://raw.githubusercontent.com/nilsboy/dotfiles/master/tmux.conf > ~/.tmux.conf
