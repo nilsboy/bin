@@ -400,6 +400,8 @@ ssh-no-check:
     SSH without host key checks
 ssh-persistent-reverse-tunnel-setup:
     Setup a persistent reverse tunnel
+ssh-register-my-key:
+    Register my ssh key
 ssh-server-turn-off-password-authentication:
     Change local sshd config to disallow password authentication and
     restart sshd

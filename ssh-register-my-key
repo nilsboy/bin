@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Register my ssh key
+
+source bash-helpers
+
+mkdir -p $REMOTE_HOME/.ssh
+cat $REMOTE_HOME/.bin/authorized_keys >> ~/.ssh/authorized_keys
