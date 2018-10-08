@@ -7,9 +7,15 @@ file="$@"
 
 INFO "Converting file $file"
 
+if [[ -e txt ]] ; then
+  DIE 'txt directory exists'
+fi
+
 extension=$(extension $file)
 type=$(file -b --mime-type "$file")
-out=`basename "$file"`
+out="txt/$file"
+dir="txt/"`dirname "$file"`
+mkdir -p "$dir"
 
 DEBUG "type: $type"
 
@@ -22,12 +28,10 @@ if [[ "$type" =~ "xml" ]] ; then
 fi
 
 if [[ "$type" =~ "x-msaccess" ]] ; then
-
     for table in $(mdb-tables "$file") ; do
         INFO "Exporting database table $table..."
         mdb-export -D '%F %T' "$file" "$table" > "$out.table-$table.csv"
     done
-
     RETURN
 fi
 
