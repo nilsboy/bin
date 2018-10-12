@@ -4,13 +4,13 @@
 
 const express = require(`express`)
 const app = express()
-const basicAuth = require(`express-basic-auth`)
+// const basicAuth = require(`express-basic-auth`)
 
-app.use(
-  basicAuth({
-    authorizer: myAuthorizer
-  })
-)
+// app.use(
+//   basicAuth({
+//     authorizer: myAuthorizer
+//   })
+// )
 
 let gusername
 let gpassword
@@ -39,6 +39,7 @@ app.get(`/*`, (req, res) => {
   })
 })
 
-app.listen(6666, () => {
-  return console.log(`Example app listening on port 3000!`)
+const port = 6666
+app.listen(port, () => {
+  return console.log(`Example app listening on port ${port}!`)
 })
