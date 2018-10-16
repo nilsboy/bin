@@ -22,5 +22,12 @@ if [[ $1 == "commit" ]] ; then
     alternative-run $0 config --global user.email 2>/dev/null && DIE "Global git user.email is set"
 fi
 
+if [[ $1 == "diff" ]] ; then
+  if [[ $2 == '' ]] ; then
+    exec alternative-run $0 diff -- ':(exclude)package-lock.json' .
+  fi
+  exec alternative-run $0 diff -- ':(exclude)package-lock.json' "$@"
+fi
+
 exec alternative-run $0 "$@"
 
