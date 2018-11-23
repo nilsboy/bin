@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Copy one public key instead of all.
+
+source bash-helpers
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub "$@"

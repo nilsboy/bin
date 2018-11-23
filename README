@@ -396,6 +396,8 @@ ssh-agent-env-grab:
     session or on
 ssh-agent-env-restore:
     Dump ssh-agent vars stored by ssh-agent-env-grab
+ssh-copy-id-my:
+    Copy one public key instead of all.
 ssh-no-check:
     SSH without host key checks
 ssh-persistent-reverse-tunnel-setup:
