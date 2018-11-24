@@ -12,5 +12,5 @@ remote_host=$(echo $opts | perl -ne 'print $3 if /(-\S+\s+|\S+=\S+\s+)*(\w+@)*(\
 # GSSAPIAuthentication=no - usually not used - speeds up connection time
 
 LC_BASHRC_REMOTE_HOST_ALIAS=$remote_host \
-  ssh -AC -o GSSAPIAuthentication=no -o ServerAliveInterval=5" \
+  ssh -AC -o GSSAPIAuthentication=no -o ServerAliveInterval=5 \
   "$opts"
