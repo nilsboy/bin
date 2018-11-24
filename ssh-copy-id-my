@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copy one public key instead of all.
+# Copy one public key instead of all
 
 source bash-helpers
 

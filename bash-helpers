@@ -155,15 +155,3 @@ function docopt() {
     docopt=$(docopt-convert $(readlink -f $0)$docopt_files --json -- "$@")
     eval $(docopt-convert $(readlink -f $0)$docopt_files --env -- "$@")
 }
-
-# Find file name without extension
-function filename() {
-    local file="$@"
-    echo ${file%.*}
-}
-
-# Find extension of a file name
-function extension() {
-    local file="$@"
-    echo ${file##*.}
-}

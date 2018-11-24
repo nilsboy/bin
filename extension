@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Find the extension of a filename
+
+source bash-helpers
+
+file="$@"
+
+if [[ ! "$file" ]] ; then
+  DIE "Specify filename"
+fi
+
+# remove optional trailing slash
+file=${file%/}
+
+filename=$(basename -- "$file")
+extension="${filename##*.}"
+
+if [[ $extension = $filename ]] ; then
+  exit 0
+fi
+
+extension=.$extension
+
+if [[ $file = $extension ]] ; then
+  exit 0
+fi
+
+echo $extension
