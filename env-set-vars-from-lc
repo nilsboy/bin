@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Set env vars prefixed with LC_BASHRC_ without the prefix
+# This file has to be sourced to affect the running shell.
+
+source bash-helpers
+
+for prefixed_var in $(compgen -e LC_BASHRC_) ; do
+  [[ $prefixed_var =~ ^LC_BASHRC_(.+)$ ]]
+  var=${BASH_REMATCH[1]}
+  export $var=${!prefixed_var}
+done

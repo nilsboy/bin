@@ -133,6 +133,8 @@ dos2unix:
     Convert line endings from dos to unix
 env-grep:
     Grep environment
+env-set-vars-from-lc:
+    Set env vars prefixed with LC_BASHRC_ without the prefix
 env-show:
     Display infos about the system
 extension:
@@ -396,6 +398,8 @@ sort-by-file-modification:
     Sort a list of file names by their modification time
 sort-by-path-depth:
     Sort input by depth of path
+ssh:
+    Send remote host alias to remote host to display in prompt etc
 ssh-agent-env-clear:
     Remove connection to ssh-agent
 ssh-agent-env-grab:
