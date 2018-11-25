@@ -7,8 +7,10 @@ source bash-helpers
 file="$@"
 bak=$(filestamp $file)
 
-if [ -d $file ] ; then
-    cp -va $file $bak
+if [[ -d $file ]] ; then
+  cp -a "$file" "$bak"
 else
-    cp -v $file $bak
+  cp "$file" "$bak"
 fi
+
+echo $bak
