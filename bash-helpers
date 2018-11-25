@@ -13,6 +13,10 @@ if [[ $BASHRC_PROMPT_COLORS ]] ; then
        GREEN='\[\e[38;5;2m\]'
       ORANGE='\[\e[38;5;3m\]'
          RED='\[\e[38;5;1m\]'
+      PURPLE='\[\e[38;5;5m\]'
+        BLUE='\[\e[38;5;21m\]'
+      YELLOW='\[\e[38;5;226m\]'
+        PINK='\[\e[38;5;13m\]'
 else
     NO_COLOR=$(echo -e '\x1b[33;0;m')
         GRAY=$(echo -e '\x1b[38;5;243m')
