@@ -15,14 +15,14 @@ filename=$(filename $file)
 basename=$(basename $filename)
 extension=$(extension $file)
 
-if [[ $filename =~ (.+)(_v[[:digit:]]{8}_[[:digit:]]{6}$) ]] ; then
+if [[ $filename =~ (.+)(_copy_[[:digit:]]{8}_[[:digit:]]{6}$) ]] ; then
   filename=${BASH_REMATCH[1]}
   filename=$(filename $filename)
 fi
 
 # echo ${BASH_REMATCH[*]}
 
-postfix=_v$(date +%Y%m%d_%H%M%S)
+postfix=_copy_$(date +%Y%m%d_%H%M%S)
 
 bak=$dirname$filename$extension$postfix$extension
 
