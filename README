@@ -10,8 +10,6 @@ in your path.
 
 Descriptions:
 
-.gitignore:
-    Logs
 H:
     Open --help output in vi
 abs:
