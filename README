@@ -168,8 +168,6 @@ find-older-than-days:
     Recursively find files oder than days
 find-or-grep:
     Find a file or grep stdin
-git:
-    Default options for git commands
 git-env-validate:
     Ensure git-scm is configured appropriately
 git-ignore:
@@ -192,6 +190,12 @@ git-root:
     Print git project root
 git-setup:
     Setup default git configuration
+git.branch:
+    Default options for git branch
+git.status:
+    Default options for git status
+git.user.check:
+    Check if global user is set
 gnome-send-to-mail-images:
     Resize one or more images and add them as attachements
 gnome-send-to-mail-images-setup:

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Default options for git branch
+
+exec git branch --list -vva
