@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Find the filename without the extension of a filename
+
+source bash-helpers
+
+file="$@"
+
+if [[ ! "$file" ]] ; then
+  DIE "Specify filename"
+fi
+
+# remove optional trailing slash
+file=${file%/}
+
+basename=$(basename -- "$file")
+filename=${basename%.*}
+
+if [[ $filename = '' ]] ; then
+  echo $basename
+  exit 0
+fi
+
+echo $filename

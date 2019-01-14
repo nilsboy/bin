@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Send remote host alias to remote host to display in prompt etc
+
+source bash-helpers
+opts="$@"
+
+remote_host=$(echo $opts | perl -ne 'print $3 if /(-\S+\s+|\S+=\S+\s+)*(\w+@)*(\S+)/i')
+
+# ServerAliveInterval=5 make sure there is ssh traffic so no firewall closes
+#     the connection
+# GSSAPIAuthentication=no - usually not used - speeds up connection time
+
+LC_BASHRC_REMOTE_HOST_ALIAS=$remote_host \
+  ssh -AC -o GSSAPIAuthentication=no -o ServerAliveInterval=5 \
+  "$opts"

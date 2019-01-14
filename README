@@ -10,8 +10,6 @@ in your path.
 
 Descriptions:
 
-.gitignore:
-    Logs
 H:
     Open --help output in vi
 abs:
@@ -133,8 +131,12 @@ dos2unix:
     Convert line endings from dos to unix
 env-grep:
     Grep environment
+env-set-vars-from-lc:
+    Set env vars prefixed with LC_BASHRC_ without the prefix
 env-show:
     Display infos about the system
+extension:
+    Find the extension of a filename
 file-add-line-if-new:
     Add a line to a file if a line matching regex is not found
 file-compress-if-size-reaches:
@@ -143,8 +145,13 @@ file-public-upload:
     Share a file on a public space
 file-template-filler:
     Create a file from a template
+filename:
+    Find the filename without the extension of a filename
 files-replace-from-env:
     Replace files with content from environment variables
+filestamp:
+    Create a new backup filename with a timestamp; replace an existing
+    timestamp
 find-and:
     Find files excluding dotfiles optionally matching several strings
 find-and-limit:
@@ -396,8 +403,10 @@ ssh-agent-env-grab:
     session or on
 ssh-agent-env-restore:
     Dump ssh-agent vars stored by ssh-agent-env-grab
+ssh-alias:
+    Send remote host alias to remote host to display in prompt etc
 ssh-copy-id-my:
-    Copy one public key instead of all.
+    Copy one public key instead of all
 ssh-no-check:
     SSH without host key checks
 ssh-persistent-reverse-tunnel-setup:

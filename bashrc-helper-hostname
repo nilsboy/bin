@@ -2,11 +2,26 @@
 
 source bash-helpers
 
-COLOR=$GREEN
 if [[ $BASHRC_INSIDE_DOCKER ]] ; then
-  DOCKER="${RED}docker${NO_COLOR}(${HOSTNAME})"
+  host="docker($HOSTNAME)"
+elif [[ "$REMOTE_HOST_ALIAS" ]] ; then
+  host=$REMOTE_HOST_ALIAS
 else
-  DOCKER=$HOSTNAME
+  host=$HOSTNAME
 fi
 
-echo -n $COLOR$DOCKER$NO_COLOR
+color=$GREEN
+
+if [[ "$host" =~ (dev|test|git|pet|prod) ]] ; then
+  pattern=${BASH_REMATCH[1]}
+  case $pattern in
+    dev)    color=$GREY ;;
+    test)   color=$BLUE ;;
+    git)    color=$ORANGE ;;
+    pet)    color=$PURPLE ;;
+    prod)   color=$RED ;;
+    docker) color=$PINK ;;
+  esac
+fi
+
+echo -n $color$host$NO_COLOR

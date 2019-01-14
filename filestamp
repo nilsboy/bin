@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Create a new backup filename with a timestamp; replace an existing timestamp
+
+source bash-helpers
+
+file="$@"
+
+if [[ ! "$file" ]] ; then
+  DIE "Specify filename"
+fi
+
+dirname=$(dirname $file)/
+filename=$(filename $file)
+basename=$(basename $filename)
+extension=$(extension $file)
+
+if [[ $filename =~ (.+)(_copy_[[:digit:]]{8}_[[:digit:]]{6}$) ]] ; then
+  filename=${BASH_REMATCH[1]}
+  filename=$(filename $filename)
+fi
+
+# echo ${BASH_REMATCH[*]}
+
+postfix=_copy_$(date +%Y%m%d_%H%M%S)
+
+bak=$dirname$filename$extension$postfix$extension
+
+echo $bak
