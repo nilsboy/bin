@@ -152,5 +152,3 @@ sub normalize {
 
     return $_ . lc($ext);
 }
-
-haha
