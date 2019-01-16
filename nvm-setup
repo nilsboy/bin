@@ -4,7 +4,7 @@
 
 source bash-helpers
 
-INFO "Make sure you don't have a fake git-cli setup."
+node_version=${1:?Specify node_version e.g. v8.1.3 or stable}
 
 wget --no-check-certificate -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 
@@ -19,7 +19,16 @@ export NVM_DIR="$HOME/.nvm"
 # fi
 EOF
 
-WARN "Make sure 'prefix' is not set in ~/.npmrc"
-INFO "Now logout and in again to update your environment."
-INFO "Then to install node run:"
-INFO "nvm install node"
+unset npm_config_prefix
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+nvm install $node_version
+npm install -g npm@latest >/dev/null
+npm config delete prefix
+
+echo "Installed node version: `node --version`."
+
+INFO "Starting new shell with ready to use node environment."
+exec bash
