@@ -2,7 +2,7 @@
 
 # Install and run specified installer_command
 
-# Can not be run from within ~/.bin!?!
+# Can not be run from within ~/.bin...
 
 source bash-helpers
 

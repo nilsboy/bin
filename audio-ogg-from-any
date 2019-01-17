@@ -80,7 +80,7 @@ else
     # lame -h "$tmp" "$file.$dst_type"
 
     # avconv -i "$file" -c:a libmp3lame -b:a 192k -id3v2_version 3 -write_id3v1 1 "$file.$dst_type"
-    # the -map_metadata is used to copy the tag!?!:
+    # the -map_metadata is used to copy the tag...:
     # https://stackoverflow.com/questions/21489719/avconv-flac-to-ogg-conversion-with-metadata-kept
     avconv -loglevel quiet -i "$file" -vn -c:a libmp3lame -b:a 192k -map_metadata 0:s:0 "$out_file"
 fi
