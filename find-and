@@ -40,9 +40,9 @@ find \
     $path \
     -mount \
     -type f \
-    | perl -ne 'print if ! m#'$path'.*/\..*#' \
-    | perl -ne 'print if ! m#'$path'.*/(node_modules|bower_components|classes)/.*#' \
-    | grep-and -e $@ \
+    | perl -ne 'print if ! m#'$path'\..*#' \
+    | perl -ne 'print if ! m#'$path'(node_modules|bower_components|classes|coverage)/.*#' \
+    | grep-and -i "$path" -e $@ \
     | head -101 \
     | sort-by-path-depth \
     | $head_warn
