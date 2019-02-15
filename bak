@@ -1,16 +1,13 @@
 #!/bin/bash
 
-# Backup a file appending a timestamp
+# Copy a file to ~/backups/ appending a timestamp
+
+set -e
 
 source bash-helpers
 
 file="$@"
-bak=$(filestamp $file)
+bak=$(filename $(filestamp $file))
+bak=$REMOTE_HOME/backup/"$bak"
 
-if [[ -d $file ]] ; then
-  cp -a "$file" "$bak"
-else
-  cp "$file" "$bak"
-fi
-
-echo $bak
+cp -va "$file" "$bak"

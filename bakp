@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Backup a file appending a timestamp
+
+source bash-helpers
+
+file="$@"
+bak=$(filestamp $file)
+
+if [[ -d $file ]] ; then
+  cp -a "$file" "$bak"
+else
+  cp "$file" "$bak"
+fi
+
+echo $bak

@@ -28,10 +28,6 @@ apt-popularity:
     Search for a debian package, sort by ranking, add description
 apt-unhold-package:
     Return a deb package to its default upgrade state
-archive:
-    Copy a file to ~/backups/ appending a timestamp
-archive-mv-to:
-    Move a file to ~/backups/ appending a timestamp
 audio-file-prefix-track-number:
     Add a leading two digit track number to the file name
 audio-ogg-from-any:
@@ -39,6 +35,10 @@ audio-ogg-from-any:
 audio-split-by-cue:
     Split an album audio file into several tracks using a cue file
 bak:
+    Copy a file to ~/backups/ appending a timestamp
+bakm:
+    Move a file to ~/backups/ appending a timestamp
+bakp:
     Backup a file appending a timestamp
 bash-background-jobs-count:
     Display one colored count for background jobs running and stopped
