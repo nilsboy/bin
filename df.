@@ -4,12 +4,7 @@
 
 source bash-helpers
 
-if [[ $@ ]] ; then
-    alternative-run $0 "$@"
-    EXIT
-fi
-
-alternative-run $0 -h \
+df -h "$@" \
     | perl -ne 'print if $_ !~ /\/snap\//' \
     | perl -0777 -pe 's/Mounted on/Mounted_on/gm' \
     | perl -0777 -pe 's/^(\S+)\n/$1/gm' \
