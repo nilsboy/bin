@@ -4,9 +4,9 @@
   "description": "bin",
   "main": "index.js",
   "dependencies": {
+    "@nilsboy/log-dwim": "^1.0.0",
     "glob": "^7.1.2",
-    "lodash": "^4.17.4",
-    "log-dwim": "github:nilsboy/log-dwim"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {},
   "scripts": {

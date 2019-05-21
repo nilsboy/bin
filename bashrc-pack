@@ -2,7 +2,7 @@
 
 // Attach scripts to the bashrc skeleton
 
-const LogDwim = require(`log-dwim`)
+const LogDwim = require(`@nilsboy/log-dwim`)
 const logger = new LogDwim()
 const { TRACE, DEBUG, INFO, WARN, ERROR, DIE, DUMP } = logger
 
