@@ -2,5 +2,5 @@
 
 # Install diff-so-fancy
 
-exec bashrc-install "$0" npm install -g diff-so-fancy
+exec npx diff-so-fancy
 

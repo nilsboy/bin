@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-# Install json2yaml
+# Install and run json2yaml
 
-exec bashrc-install "$0" npm install -g json2yaml
+exec npx json2yaml
