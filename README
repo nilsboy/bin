@@ -110,7 +110,7 @@ ctags-setup:
     Save ctags configuration file
 dev-bin-generate-readme:
     Generate README with descriptions for bin scripts
-df:
+df.:
     Cleaned up df version
 diff-dir:
     Diff 2 directories recursively comparing file contents and not file
@@ -243,7 +243,9 @@ js-format-using-prettydiff:
 json-tidy:
     Tidy a json file and sort hash keys to make the output diffable
 json2yaml:
-    Install json2yaml
+    Install and run json2yaml
+keyboard-backlight-permanently-off:
+    Turn keyboard backlight off permanently
 keyboard-disable-caps-lock-console:
     Map caps lock to escape for consoles
 keyboard-remap-keys-xwindows:
@@ -475,8 +477,6 @@ url-encode:
     Encode a string to URL notation
 user-add:
     Add a new user to the system without hassle
-vi:
-    Setup and run vim
 vi-choose-file-from-list:
     Edit a file from a list on STDIN
 vi-from-find:
