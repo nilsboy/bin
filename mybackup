@@ -56,3 +56,6 @@ rsync \
   --exclude /.Xauthority \
   --exclude /tmp \
   $src/ $dst_current/
+
+INFO "Backup done."
+
