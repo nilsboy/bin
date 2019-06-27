@@ -21,24 +21,38 @@ fi
 drive=$(ls -d $mount_dirs)
 
 src=${1:?Specify directory to backup}
-src=$(basename "$src")
-timestamp=$(date +%Y%m%d_%H%M%S)
-base_dir=$drive/${src}_backup
-dst=${base_dir}/current
-history=../history/${src}_${timestamp}
+basename=$(basename "$src")
 
-INFO "Backing up to: $base_dir"
+dst=$drive/${basename}_backup
+dst_current=$dst/current
+
+timestamp=$(date +%Y%m%d_%H%M%S)
+history=../history/${basename}_${timestamp}
+
+INFO "Backing up to: $dst"
 
 app_id="5774adbf-d22e-48dc-b0ed-6fb0a8abc901"
-id_file=$base_dir/.$app_id
+id_file=$dst/.$app_id
 
-if [[ -d "$base_dir" ]] ; then
+if [[ -d "$dst" ]] ; then
   if [[ ! -e "$id_file" ]] ; then
-    DIE "Directory already extists: $base_dir"
+    DIE "Directory already extists: $dst"
   fi
 fi
 
-mkdir -p $dst
+mkdir -p $dst_current
 touch $id_file
 
-rsync -ab --delete --backup-dir $history $src/ $dst/
+set -x
+rsync \
+  -a \
+  --delete \
+  --delete-excluded \
+  -b --backup-dir $history \
+  --exclude /.cache \
+  --exclude /.thumbnails \
+  --exclude /.Trash \
+  --exclude /.local/share/Trash \
+  --exclude /.Xauthority \
+  --exclude /tmp \
+  $src/ $dst_current/
