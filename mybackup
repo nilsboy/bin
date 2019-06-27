@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# create a backup
+
+source bash-helpers
+
+mount_dirs=/media/$USER/*backup*
+
+set +e
+mounts=$(ls -d $mount_dirs 2>/dev/null | wc -l) 
+set -e
+
+if [[ $mounts == 0 ]] ; then
+  DIE "No backup drive found - please connect drive."
+fi
+
+if [[ $mounts > 1 ]] ; then
+  DIE "Too many backup drives found - please disconnect all but one."
+fi
+
+drive=$(ls -d $mount_dirs)
+
+src=${1:?Specify directory to backup}
+src=$(basename "$src")
+timestamp=$(date +%Y%m%d_%H%M%S)
+base_dir=$drive/${src}_backup
+dst=${base_dir}/current
+history=../history/${src}_${timestamp}
+
+INFO "Backing up to: $base_dir"
+
+app_id="5774adbf-d22e-48dc-b0ed-6fb0a8abc901"
+id_file=$base_dir/.$app_id
+
+if [[ -d "$base_dir" ]] ; then
+  if [[ ! -e "$id_file" ]] ; then
+    DIE "Directory already extists: $base_dir"
+  fi
+fi
+
+mkdir -p $dst
+touch $id_file
+
+rsync -ab --delete --backup-dir $history $src/ $dst/
