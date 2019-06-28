@@ -4,10 +4,10 @@
 
 source bash-helpers
 
-mount_dirs=/media/$USER/*backup*
+drives=/media/$USER/*backup*
 
 set +e
-mounts=$(ls -d $mount_dirs 2>/dev/null | wc -l) 
+mounts=$(ls -d $drives 2>/dev/null | wc -l)
 set -e
 
 if [[ $mounts == 0 ]] ; then
@@ -18,25 +18,34 @@ if [[ $mounts > 1 ]] ; then
   DIE "Too many backup drives found - please disconnect all but one."
 fi
 
-drive=$(ls -d $mount_dirs)
+drive=$(ls -d $drives)
 
 src=${1:?Specify directory to backup}
 basename=$(basename "$src")
+basename=${basename/\//}
+
+if [[ -z "$basename" ]] ; then
+  DIE "Specify directory to backup"
+fi
+
+if ! [[ -d "$src" ]] ; then
+  DIE "No such directory: $src"
+fi
 
 dst=$drive/${basename}_backup
-dst_current=$dst/current
+dst_current=$dst/$basename
+
+INFO "Backing up $src -> $dst"
 
 timestamp=$(date +%Y%m%d_%H%M%S)
 history=../history/${basename}_${timestamp}
-
-INFO "Backing up to: $dst"
 
 app_id="5774adbf-d22e-48dc-b0ed-6fb0a8abc901"
 id_file=$dst/.$app_id
 
 if [[ -d "$dst" ]] ; then
   if [[ ! -e "$id_file" ]] ; then
-    DIE "Directory already extists: $dst"
+    DIE "Directory already exists: $dst"
   fi
 fi
 
@@ -44,8 +53,10 @@ mkdir -p $dst_current
 touch $id_file
 
 set -x
+
 rsync \
-  -a \
+  --archive \
+  --partial --partial-dir=rsync-partial \
   --delete \
   --delete-excluded \
   -b --backup-dir $history \
@@ -54,8 +65,9 @@ rsync \
   --exclude /.Trash \
   --exclude /.local/share/Trash \
   --exclude /.Xauthority \
-  --exclude /tmp \
   $src/ $dst_current/
+
+set +x
 
 INFO "Backup done."
 
