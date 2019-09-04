@@ -9,11 +9,7 @@ set -e
 host=${1?specify host}
 port=${2:-59347}
 
-# proxyserver $port
-# nproxy start -p $port &
-
-# npm install -g proxy
-pidof proxy > /dev/null || proxy -p $port &
+pidof proxy > /dev/null || npx proxy -p $port &
 
 ssh -A -t $host -R $port:localhost:$port \
     http_proxy=http://localhost:$port \
