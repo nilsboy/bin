@@ -400,6 +400,8 @@ shell-line-wrap-on:
     Turn off shell line wrapping
 shell-open-access-on-freeport:
     Create shell access on a free port
+sleepuntil:
+    Sleep until a specific date and time
 sort-by-file-modification:
     Sort a list of file names by their modification time
 sort-by-path-depth:
