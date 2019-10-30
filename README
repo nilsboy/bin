@@ -352,7 +352,7 @@ pm2-logrotate-config:
     Display the config of the logrotate module of pm2
 pm2-setup:
     Setup pm2 including log rotation
-projects-start:
+projects-start.:
     Start all local projects that have a start script
 prompt-dir:
     Prompt containing only the prettified current directory
