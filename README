@@ -533,5 +533,7 @@ xdg-cache-home:
     Return xdg cache home
 xmv:
     Rename files by perl expression
+xpanes:
+    @Author Yamada, Yasuhiro
 xtitle:
     Change the title of a x window
