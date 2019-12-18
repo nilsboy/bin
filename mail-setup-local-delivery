@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Setup local mail delivery on ubuntu 18.04
+
+source bash-helpers
+
+gotroot
+
+forwardRootTo=${1:?Specify username to forward root mail to.}
+
+apt-get install postfix
+
+bak /etc/aliases
+
+cat << EOF > /etc/aliases
+# See man 5 aliases for format
+postmaster:    root
+root: $forwardRootTo@localhost
+EOF
+
+newaliases
+service postfix restart
+
+if [[ -e /root/.forward ]] ; then
+  bakm /root/.forward
+fi
+
+if [[ -e /$forwardRootTo/.forward ]] ; then
+  bakm /$forwardRootTo/.forward
+fi

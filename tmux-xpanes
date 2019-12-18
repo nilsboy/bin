@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# Awesome tmux-based terminal divider
+
 readonly XP_SHELL="/usr/bin/env bash"
 
 # @Author Yamada, Yasuhiro

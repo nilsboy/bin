@@ -259,6 +259,8 @@ linux-distribution-info:
     List linux distribution variables
 ls-creation-time:
     List the creation time of a file
+mail-setup-local-delivery:
+    Setup local mail delivery on ubuntu 18.04
 man-cheatsh:
     the only cheat sheet you need
 man-explain-options:
@@ -455,6 +457,8 @@ tmux-setup:
     Setup tmux config
 tmux-synchronized-panes-toggle:
     Toggle synchronized tmux panes
+tmux-xpanes:
+    Awesome tmux-based terminal divider
 top-mem:
     View top ordered by memory usage
 trash:
@@ -533,7 +537,5 @@ xdg-cache-home:
     Return xdg cache home
 xmv:
     Rename files by perl expression
-xpanes:
-    @Author Yamada, Yasuhiro
 xtitle:
     Change the title of a x window
