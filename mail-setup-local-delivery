@@ -8,7 +8,7 @@ gotroot
 
 forwardRootTo=${1:?Specify username to forward root mail to.}
 
-apt-get install postfix
+apt-get install postfix mailutils mutt
 
 bak /etc/aliases
 
