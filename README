@@ -38,6 +38,8 @@ bak:
     Copy a file to ~/backups/ appending a timestamp
 bakm:
     Move a file to ~/backups/ appending a timestamp
+bakmp:
+    Move a file appending a timestamp
 bakp:
     Backup a file appending a timestamp
 bash-background-jobs-count:

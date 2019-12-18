@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Move a file appending a timestamp
+
+source bash-helpers
+
+file="$@"
+bak=$(filestamp $file)
+
+mv -v "$file" "$bak"
