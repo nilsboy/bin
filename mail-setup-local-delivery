@@ -22,9 +22,9 @@ newaliases
 service postfix restart
 
 if [[ -e /root/.forward ]] ; then
-  bakm /root/.forward
+  bakmp /root/.forward
 fi
 
 if [[ -e /$forwardRootTo/.forward ]] ; then
-  bakm /$forwardRootTo/.forward
+  bakmp /$forwardRootTo/.forward
 fi
