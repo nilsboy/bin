@@ -4,6 +4,11 @@
 
 source bash-helpers
 
+# if run from cron
+if [[ -z $USER ]] ; then
+  USER=$LOGNAME
+fi
+
 drives=/media/$USER/*backup*
 
 set +e
