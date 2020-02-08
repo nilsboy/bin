@@ -1,14 +1,32 @@
 # Ubuntu Setup
 
+Stuff to do when setting up a fresh ubuntu installation.
+
+## Checkout setup scripts
+
+`path-grep setup`
+
 ## Setup Firewall
 
 `ubuntu-setup-firewall`
+
+## Setup SSH
+
+`ssh-server-turn-off-password-authentication`
 
 ## Turn off crash reports
 
 ```sh
 echo enabled=0 >> /etc/default/apport
 ```
+
+## Setup local mail delivery
+
+`mail-setup-local-delivery`
+
+## Setup crontab
+
+`crontab-setup`
 
 # SSH
 
