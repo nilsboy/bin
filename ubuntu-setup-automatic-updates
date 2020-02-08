@@ -9,6 +9,8 @@
 
 source bash-helpers
 
+DIE "Deprecated"
+
 INFO "Including updates and backports in sources list..."
 
 gotroot

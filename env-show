@@ -30,8 +30,7 @@ SHOW "64-bit-CPU?" $(grep flags /proc/cpuinfo | perl -0777 -ne 'print /\blm\b/ ?
 ubuntu_version=$(cat /etc/issue | perl -ne 'print $1 if /ubuntu (\d+\.\d+)/i')
 
 if [[ $ubuntu_version ]] ; then
-    release=$(note ubuntu | perl -ne 'print $_ if /^\s+'$ubuntu_version'\s+(.+?)\s+\d+/')
-    SHOW Ubuntu $release
+    SHOW Ubuntu $ubuntu_version
 else
     SHOW Linux $(cat /etc/issue.net)
 fi
