@@ -2,7 +2,7 @@
 
 ## Setup Firewall
 
-`ufw-setup`
+`ubuntu-setup-firewall`
 
 ## Turn off crash reports
 
