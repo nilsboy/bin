@@ -7,9 +7,9 @@ file="$@"
 
 INFO "Converting file $file"
 
-if [[ -e txt ]] ; then
-  DIE 'txt directory exists'
-fi
+# if [[ -e txt ]] ; then
+#   DIE 'txt directory exists'
+# fi
 
 extension=$(extension $file)
 type=$(file -b --mime-type "$file")
@@ -35,22 +35,22 @@ if [[ "$type" =~ "x-msaccess" ]] ; then
     RETURN
 fi
 
-if [[ "$extension" = "pdf" ]] ; then
+if [[ "$extension" = ".pdf" ]] ; then
     pdftotext "$file" "$out.txt"
     RETURN
 fi
 
-if [[ "$extension" = "xlsx" ]] ; then
+if [[ "$extension" = ".xlsx" ]] ; then
     xlsx2csv -s 0 "$file" "$out.csv"
     RETURN
 fi
 
-if [[ "$extension" = "docx" ]] ; then
+if [[ "$extension" = ".docx" ]] ; then
     docx2txt "$file" "$out.txt"
     RETURN
 fi
 
-if [[ "$extension" = "doc" ]] ; then
+if [[ "$extension" = ".doc" ]] ; then
     catdoc "$file" > "$out.txt"
     RETURN
 fi
