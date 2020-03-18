@@ -2,4 +2,4 @@
 
 # Install and run json2yaml
 
-exec npx json2yaml
+exec npx json2yaml "$@"
