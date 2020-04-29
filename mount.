@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Show mounts without snap etc
+
+source bash-helpers
+
+mount "$@" | grep -v 'appimage' | grep -v 'snap'

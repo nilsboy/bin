@@ -279,6 +279,8 @@ mem-empty-swap-to-ram:
     Empty swap back to ram if possible
 mem-swap-per-process:
     Show swap usage per process
+mount.:
+    Show mounts without snap etc
 mybackup:
     create a backup
 mysql:
