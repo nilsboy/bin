@@ -194,6 +194,8 @@ git-setup:
     Setup default git configuration
 git.branch:
     Default options for git branch
+git.push.all.branches:
+    Push all git branches
 git.status:
     Default options for git status
 git.user.check:
