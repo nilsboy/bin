@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Mount a directory over another
+
+source bash-helpers
+
+gotroot
+
+lower=${1:?Specify lower directory}
+upper=${2:?Specify upper directory}
+merged=$upper
+merged=${merged/\//}
+workdir=.$merged.overlay-work
+
+INFO "Mounting $lower + $merged -> $merged"
+
+INFO "Creating temp workdir for overlayfs: $workdir"
+mkdir -p $workdir
+
+sudo mount \
+  -t overlay none \
+  -o "lowerdir=$lower,upperdir=$upper,workdir=$workdir" \
+  $upper

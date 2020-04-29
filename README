@@ -281,6 +281,8 @@ mem-swap-per-process:
     Show swap usage per process
 mount.:
     Show mounts without snap etc
+mount.overlay:
+    Mount a directory over another
 mybackup:
     create a backup
 mysql:
