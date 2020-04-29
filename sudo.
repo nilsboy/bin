@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Keep path with sudo
+
+cmd=${1:?Specify cmd}
+
+exec sudo env PATH=$PATH "$@"
