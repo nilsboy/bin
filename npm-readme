@@ -22,8 +22,7 @@ try {
 }
 
 var abs = path.join(executableDir, linkDst)
-
-var modulePath = abs.replace(/(^.+node_modules\/.+?\/).+$/, "$1")
+var modulePath = abs.replace(/(^.+node_modules\/(@.+?\/)*.+?\/).+$/, "$1")
 var readme = modulePath + "README.md"
 
 if (!fs.existsSync(readme)) {
