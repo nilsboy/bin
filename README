@@ -10,8 +10,6 @@ in your path.
 
 Descriptions:
 
-H:
-    Open --help output in vi
 abs:
     Print the absolute path of a file or dir
 alternative:

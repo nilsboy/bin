@@ -2,23 +2,29 @@
 
 // Find and print README.md of node executable
 
-var fs = require('fs')
-var path = require('path')
-var exec = require('child_process')
-  .execSync
-var _ = require('mout')
+var fs = require("fs")
+var path = require("path")
+var exec = require("child_process").execSync
 
-var cmd = process.argv[2]
+const [, , cmd] = process.argv
 
-var executable = _.string.rtrim(exec('bash -c "cd / && type -p ' + cmd + '"') .toString())
+var executable = exec(`bash -c "cd / && type -p '${cmd}'"`)
+  .toString()
+  .trim()
+
 var executableDir = path.dirname(executable)
+var linkDst = executable
 
-var linkDst = fs.readlinkSync(executable)
+try {
+  linkDst = fs.readlinkSync(executable)
+} catch (e) {
+  // might not be a link
+}
 
 var abs = path.join(executableDir, linkDst)
 
-var modulePath = abs.replace(/(^.+node_modules\/.+?\/).+$/, '$1')
-var readme = modulePath + 'README.md'
+var modulePath = abs.replace(/(^.+node_modules\/.+?\/).+$/, "$1")
+var readme = modulePath + "README.md"
 
 if (!fs.existsSync(readme)) {
   process.exit(0)

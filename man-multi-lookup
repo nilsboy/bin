@@ -12,28 +12,35 @@ COLUMNS=80
 MAN_KEEP_FORMATTING=1 
 
 function _printifok() {
-    local msg=$1 ; shift
-    local quote=$1 ; shift
-    local cmd="$*"
+  local msg=$1 ; shift
+  local cmd="$*"
 
-    local out=$($cmd 2>/dev/null)
-    [[ ${out[@]} ]] || return 1
-    line $msg
-    if [[ $quote = 1 ]] ; then
-        echo "${out[@]}" | perl -pe 's/^/#   /g'
-    else
-        echo "${out[@]}"
-    fi
-    echo
+  local out=$($cmd 2>/dev/null)
+  if [[ -z $out ]] ; then
+    return 1
+  fi
+  line $msg
+  echo "${out[@]}"
+  echo
+}
+
+function _printifany() {
+  local msg=$1
+  local cmd=$2
+  type $cmd &>/dev/null || return
+
+  local out=$($cmd --help 2>&1)
+  # perldoc
+  if [[ -z $out ]] ; then
+    return
+  fi
+
+  line $msg
+  echo "${out[@]}"
+  echo
 }
 
 cmd=$1 ; shift
-
-if [[ $cmd = git ]] ; then
-    cmd=$cmd-$1
-    shift
-fi
-
 arg="$1"
 
 if [[ $arg =~ ^-- ]] ; then
@@ -47,17 +54,16 @@ else
 fi
 
 (
-    _printifok options 0 man-explain-options $cmd "$@"
-    _printifok help 0 help -m $cmd
-    _printifok man 0 man -a $cmd
-    _printifok perldoc 0 perldoc -f $cmd
-    _printifok npm-readme 0 npm-readme $cmd
+_printifok options man-explain-options $cmd "$@"
+_printifok help help -m $cmd
+_printifok man man -a $cmd
+_printifany "--help" $cmd
+_printifok README npm-readme $cmd
+_printifok perldoc perldoc -f $cmd
 
-    if [[ ! $SHORT ]] ; then
-        _printifok related 1 man -k $cmd
-        _printifok "apt show" 1 apt-cache show $cmd
-        _printifok "apt search" 1 apt-cache search $cmd
-    fi
-
+if [[ $ALL ]] ; then
+  _printifok related man -k $cmd
+  _printifok "apt show" apt-cache show $cmd
+  _printifok "apt search" apt-cache search $cmd
+fi
 ) | LESS="-inRgSj.5" less "$arg"
-
