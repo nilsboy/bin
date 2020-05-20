@@ -200,6 +200,8 @@ git.status:
     Default options for git status
 git.user.check:
     Check if global user is set
+github.clone.user:
+    Download all github repos of a user
 gnome-send-to-mail-images:
     Resize one or more images and add them as attachements
 gnome-send-to-mail-images-setup:

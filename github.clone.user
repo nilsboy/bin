@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Download all github repos of a user
+
+source bash-helpers
+
+type curl &>/dev/null || pkexec apt install curl
+type jq &>/dev/null || pkexec apt install jq
+
+user=${1:?Specify user}
+
+curl -s "https://api.github.com/users/$user/repos?per_page=1000" \
+  | jq -r ".[].ssh_url" \
+  | xargs -L1 git clone
