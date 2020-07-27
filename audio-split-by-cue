@@ -28,9 +28,9 @@ if [[ ! -f "$cue_file" ]] ; then
     DIE "Cue file not found: $cue_file"
 fi
 
-if [[ $audio_file_type = ogg ]] ; then
+if [[ $audio_file_type = .ogg ]] ; then
     oggsplt -c $cue_file $audio_file
-elif [[ $audio_file_type = mp3 ]] ; then
+elif [[ $audio_file_type = .mp3 ]] ; then
     mp3splt -c $cue_file $audio_file
 else
     DIE "Don't know how to split $audio_file_type files"
