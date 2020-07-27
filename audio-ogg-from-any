@@ -27,10 +27,12 @@ perl -e 'exit 1 if "'$file_type'" !~ /(ogg|mp3|flac|wav|mp4|m4a)$/i' \
 
 INFO "Converting to $dst_type"
 
-tmp=$(mktemp -d)/transcode.flac
+# NOTE: not possible with snaps?: uses /tmp/snap.ffmpeg/tmp when specifying /tmp
+# tmp=$(mktemp -d)/transcode.flac
 
-trap 'rm -f "$out_file"' ERR
-# trap 'rm -f "$tmp"' ERR EXIT
+tmp=temp-audio-ogg-from-any.flac 
+
+trap 'echo "ERROR - running CLEANUP..." ; test -e "$out_file" && rm -f "$out_file"' ERR
 
 INFO "Transcoding file: $file / type: $file_type to $dst_type"
 DEBUG "Using temp file: $tmp"
@@ -47,8 +49,6 @@ out_file="$file".$dst_type
 # save to flac first to keep the tags
 # cannot convert to ogg directly because I don't know 
 # how to specify the ogg quality level with avconv
-
-
 
 if [[ $dst_type = ogg ]] ; then
     if [[ $file_type != flac ]] ; then
