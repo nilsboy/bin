@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Firewall setup example
+# Copy this to ~/bin/firewall.setup and adapt it.
+
+source bash-helpers
+
+sudo ufw --force reset
+
+## from external
+sudo ufw limit ssh/tcp comment 'ssh'
+# sudo ufw allow in on tun0 to any port 4662 comment 'rtorrent'
+
+## from internal
+# sudo ufw allow in on eno1 from 192.168.0.0/16 to any port 5000 comment 'webserver'
+# sudo ufw allow in on eno1 from 192.168.0.0/16 to any port 8000 comment 'webserver-file-manager'
+# sudo ufw allow in on eno1 proto udp from 192.168.0.0/16 to any port 1714:1764 comment 'kde connect'
+# sudo ufw allow in on eno1 proto tcp from 192.168.0.0/16 to any port 1714:1764 comment 'kde connect'
+
+sudo ufw reload
+sudo ufw enable
+sudo ufw status

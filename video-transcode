@@ -1,6 +1,6 @@
 #!/usr/bin/env bash-with-comments
 
-# Transcode a media file to x264 preserving all video, audio and subtitle tracks.
+# Transcode a media file to x264 preserving all video, audio and subtitle tracks
 #
 # For deinterlacing set DEINTERLACE env var.
 

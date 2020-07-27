@@ -168,6 +168,8 @@ find-older-than-days:
     Recursively find files oder than days
 find-or-grep:
     Find a file or grep stdin
+firewall.setup.example:
+    Firewall setup example
 git-env-validate:
     Ensure git-scm is configured appropriately
 git-ignore:
@@ -481,8 +483,6 @@ tree-diff:
     Diff two directory structures
 ubuntu-setup-automatic-updates:
     Make sure update and backports soures are activated
-ubuntu-setup-firewall:
-    Setup default firewall and rules
 ubuntu-unity-set-time-format:
     Set time format of ubuntu unity desktop clock
 uniq-unsorted:
