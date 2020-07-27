@@ -1,88 +1,117 @@
-# Transcode a media file to x264 preserving all video, audio and subtitle tracks
+#!/usr/bin/env bash-with-comments
 
-# To copy a single audio track use: audio_track=3 video-transcode file
+# Transcode a media file to x264 preserving all video, audio and subtitle tracks.
 #
-# Codec options:
-# https://www.ffmpeg.org/ffmpeg-codecs.html
-# ac3 is the best quality audio encoder directly included in libav - see:
-# https://trac.ffmpeg.org/wiki/Encode/HighQualityAudio
+# For deinterlacing set DEINTERLACE env var.
+
+# NOTE: for libfdk_aac on Ubuntu 18.04 use snap:
+# sudo snap install ffmpeg --devmode
+
+source bash-helpers
 
 # fix aspect "flag" - make 4:3 to display as 16:9 for NTSC:
 # mkvpropedit *.mkv --edit track:v1 --set display-width=853
 
-source bash-helpers
+for infile in $* ; do
+  INFO "Encoding $infile..."
 
-if [[ "$audio_tracks" ]] ; then
-    for track in $audio_tracks ; do
-        audio_option=$audio_option" -map 0:a:$track"
-    done
-else
-    audio_option="-map 0:a$audio_track"
-fi
+  # video quality - crf:
+  # A change of ±6 should result in about half/double the file size, although your results might vary.
+  # lower values would result in better quality (at the expense of higher file sizes).
+  # http://slhck.info/articles/crf
+  # default crf: 23
+  # less is better
+  # DVD needs 23? / the lower the res the higher quality neede?
+  crf=29
 
-for file in $@ ; do
+  # Even though apparently all dvds are interlaced - usually results seem to be better without deinterlacing.
+  # deinterlace
+  if [[ $DEINTERLACE ]] ; then
+    deinterlacer="-vf yadif"
+    deinterlaced_name="-deinterlaced"
+    WARN '#################################### Deinterlacing!'
+  fi
 
-    INFO "Encoding $file..."
+  ## AUDIO
+  # -cutoff: default is 14000Hz for audio
+  #
+  # 224 kbit 6-ch AAC seems to be the current standard (2020-06-28).
+  audio="-c:a libfdk_aac -b:a 224k -cutoff 20000"
 
-    # only set copy subtitles option if input file contains any
-    # avconv dies otherwise
-    (avconv -analyzeduration 1000000k -probesize 1000000k -i $file 2>&1 ; true) \
-        | grep -i subtitle && subtitle_option=" -map 0:s -c:s copy "
+  if [[ $STEREO ]] ; then
+    audio="-c:a libfdk_aac -vbr 5 -cutoff 20000 -ac 2"
+    stereo_name="-stereo"
+    WARN '#################################### Forcing stereo!'
+  fi
 
-# TODO copy meta data:
-#   avconv -i in.ogg -map_metadata 0:s:0 out.mp3
-# TODO extra option to convert all audio to ogg
-#   avconv -i INPUT -map 0 -c copy -c:v:1 libx264 -c:a:137 libvorbis OUTPUT
-#       will copy all the streams except the second video, which will be
-#       encoded with libx264, and the 138th audio, which will be encoded
-#       with libvorbis.
-# -acodec libvorbis \
+  # Audio "hi-fi transparency demands data rates of at least 128 kbit/s CBR. The
+  # MPEG-2 audio tests showed that AAC meets the requirements referred to as
+  # "transparent" for the ITU at 128 kbit/s for stereo, and 320 kbit/s for 5.1 audio."
+  # (https://en.wikipedia.org/wiki/Advanced_Audio_Coding)
+  #
+  # Audio codec options:
+  # https://www.ffmpeg.org/ffmpeg-codecs.html
+  # ac3 is the best quality audio encoder directly included in libav - see:
+  # https://trac.ffmpeg.org/wiki/Encode/HighQualityAudio
+  # libfdk_aac is the best aac encoder.
 
-# "hi-fi transparency demands data rates of at least 128 kbit/s (VBR). The
-# MPEG-2 audio tests showed that AAC meets the requirements referred to as
-# "transparent" for the ITU at 128 kbit/s for stereo, and 320 kbit/s for 5.1 audio."
-# (https://en.wikipedia.org/wiki/Advanced_Audio_Coding)
-#
-# vbr 3 = ~50kbit/channel should be fine
-#        -c:a libfdk_aac -vbr 3 -cutoff 20000 \
-#        -cutoff 20000 # needs to be set to turn off the default cutoff at 14000Hz (libfdk_aac only)
-#
-# crf: 
-# A change of ±6 should result in about half/double the file size, although your results might vary.
-# lower values would result in better quality (at the expense of higher file sizes).
-# http://slhck.info/articles/crf
-# default crf: 23
+  outfile=$(basename "$infile").crf${crf}-aac${deinterlaced_name}${stereo_name}.mkv
 
-# even though apparently all dvds are interlaced - results seem to be better without deinterlacing
+  if [[ -e $outfile ]] ; then
+    DIE "Outfile: $outfile exists."
+  fi
 
-    # deinterlacer="-vf yadif"
+  # prevent ffmpeg from reading stdin (problem with bash-with-comments)
+  < /dev/null \
+  ffmpeg \
+    # shows -vf option like yadif etc.
+    -loglevel verbose \
+    #
+    -i $infile \
+    #
+    # include all video streams
+    -map 0:v \
+    #
+    -c:v libx264 \
+    -crf $crf \
+    $deinterlacer \
+    #
+    # May prevent "Too many packets buffered for output stream":
+    # Had this problem with a DVD ISO.
+    -max_muxing_queue_size 9999 \
+    #
+    # TODO: Only reencode if not aac etc already.
+    #
+    # NOTE: -vbr reports an error but that message is supposably wrong (http://www.ffmpeg-archive.org/FDK-AAC-OUTPUTS-CBR-AUDIO-STREAM-ONLY-td4670348.html)
+    # The bitrate does seam to fluctuate.
+    # "the VBR setting is unsupported and only works with some parameter combinations"
+    #
+    # include all audio streams
+    -map 0:a \
+    #
+    $audio \
+    #
+    # passthrou
+    # -c:a copy \
+    #
+    # downmix to 2 channels (ignores the subwoofer channel)
+    $stereo \
+    #
+    # include all subtitle streams
+    -map 0:s? \
+    # copy subtitles as is
+    -c:s copy \
+    #
+    $outfile
 
-    if [[ "$deinterlacer" ]] ; then
-        WARN '#################################### Deinterlacing!'
-    fi
-
-    avconv \
-        $_doc_check_for_subtitle_streams_that_start_later \
-        -analyzeduration 1000000k -probesize 1000000k \
-        -i $file \
-        -map 0:v \
-        $deinterlacer \
-        -c:v libx264 \
-        $_doc_x264_quality_level \
-        -crf 23 \
-        $_doc_how_much_time_to_invest \
-        $audio_option \
-        -c:a copy \
-        $subtitle_option \
-        $file.mkv
-
-    INFO "Done: $file"
-
+  INFO "Done: $infile"
 done
 
-if [[ "$deinterlacer" ]] ; then
-    WARN '#################################### Deinterlacing!'
+if [[ $DEINTERLACE ]] ; then
+  WARN '#################################### Deinterlacing!'
 fi
 
-exit
-        -c:a ac3 -b:a 448k \
+if [[ $STEREO ]] ; then
+  WARN '#################################### Forcing stereo!'
+fi
+
