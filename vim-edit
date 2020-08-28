@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Edit input fields with vim
+
+# Make sure vims exit code is 0 - otherwise nothing will be saved.
+# Edited files are kept in /tmp - see below.
+
+# Setup:
+# - Put script in you path.
+# - Add custom shortcut (i.e. ctrl+e) in gnome settings and set command to:
+#   bash -l -c vim-edit
+
+# NOTE: to fix messed up keyboard: click acitivties, esc, esc, gedit, ctrl-c
+
+source bash-helpers
+
+xdotool key ctrl+a
+xdotool key ctrl+c
+# xdotool key Left
+
+tmp=/tmp/vim-edit.$USER.$(date +%Y%m%d_%H%M%S).txt
+
+xclip -o > $tmp
+
+gnome-terminal --maximize --wait -- vi $tmp
+
+cat $tmp
+
+cat $tmp | xclip -selection clip
+
+xdotool key ctrl+v
