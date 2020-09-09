@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Keep mouse moving to prevent system idle
+# Jiggle mouse to prevent system idle
 
 source bash-helpers
 

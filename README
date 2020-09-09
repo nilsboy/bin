@@ -285,8 +285,8 @@ mount.:
     Show mounts without snap etc
 mount.overlay:
     Mount a directory over another
-mouse-busy:
-    Keep mouse moving to prevent system idle
+mouse.jiggle:
+    Jiggle mouse to prevent system idle
 mybackup:
     create a backup
 mysql:
