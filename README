@@ -516,6 +516,8 @@ video-dvd-rip:
 video-transcode:
     Transcode a media file to x264 preserving all video, audio and
     subtitle tracks
+vidir.:
+    more save vidir
 vim-edit:
     Edit input fields with vim
 vim-firefox:

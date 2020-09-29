@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# more save vidir
+
+source bash-helpers
+
+qmv -R -f do "$@"
