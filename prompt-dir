@@ -1,4 +1,4 @@
 # Prompt containing only the prettified current directory
 
 dir-name-prettifier $PWD
-echo -n "> "
+echo -n "$GREY> $NO_COLOR"

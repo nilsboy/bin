@@ -6,7 +6,7 @@ time-humanize-seconds $elapsed
 eval $BASHRC_PROMPT_HELPERS
 echo -n " "
 bashrc-helper-login-name
-echo -n "@"
+echo -n "$GREY@$NO_COLOR"
 bashrc-helper-hostname
 echo -n "$GREY:$NO_COLOR"
 dir-name-prettifier $PWD

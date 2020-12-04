@@ -1,3 +1,3 @@
 # Prompt containing the current directory ony
 
-echo -n "$PWD> "
+echo -n "$PWD$GREY> $NO_COLOR"
