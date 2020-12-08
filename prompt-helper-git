@@ -34,22 +34,24 @@ my ($remote, $remote_branch) = $upstream =~ /(.+)\/(.+)/;
 my ($ahead, $behind)   = $git =~ /^# branch.ab (\+.+) (\-.+)$/gm;
 my ($changes) = $git =~ /^[12\?]/m;
 
-my $project = `git rev-parse --show-toplevel 2>/dev/null`;
-($project) = $project =~ /.*\/([^\/]+)\n/;
+# my $project = `git rev-parse --show-toplevel 2>/dev/null`;
+# ($project) = $project =~ /.*\/([^\/]+)\n/;
 
 my $branch_color = $red if $branch eq '(detached)';
 my $branch_info =  ($remote_branch . $ahead . $behind ne '' || $branch eq '(detached)' ? '@' . $branch_color . $branch . $no_color : '' );
 $branch_info = '' if $branch eq $remote_branch;
 
+my ($branch_prefix) = $branch =~ /^(.{1,4})/;
+
 print ""
   . $grey
-  . "| "
-  . $project
+  # . "| "
+  # . $project
+  . "@" . $branch_color . $branch_prefix . $grey
   . ($changes ? $red . '*' . $grey : '')
-  . $branch_info
   . ($ahead ne '+0' ? $red . $ahead . $grey : '')
   . ($behind ne '-0' ? $red . $behind . $grey : '' )
   . ($remote_branch && $remote_branch ne $branch ? '=>' . $red . $remote_branch . $grey : '' )
-  . " |"
+  # . " |"
   . $no_color
 ;
