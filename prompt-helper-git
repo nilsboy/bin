@@ -47,8 +47,8 @@ print ""
   . $grey
   # . "| "
   # . $project
-  . "@" . $branch_color . $branch_prefix . $grey
-  . ($changes ? $red . '*' . $grey : '')
+  . ($changes ? $red . '@' . $grey : '@')
+  . $branch_color . $branch_prefix . $grey
   . ($ahead ne '+0' ? $red . $ahead . $grey : '')
   . ($behind ne '-0' ? $red . $behind . $grey : '' )
   . ($remote_branch && $remote_branch ne $branch ? '=>' . $red . $remote_branch . $grey : '' )
