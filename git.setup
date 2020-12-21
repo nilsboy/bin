@@ -1,0 +1,44 @@
+# Setup git configuration
+
+source bash-helpers
+
+bak ~/.gitconfig
+
+cat > ~/.gitconfig <<''EOF
+[core]
+  color = false
+  ; pager = vi
+[pager]
+  branch = cat
+[color]
+  ; log = false
+  ; ui = auto
+  ; diff = auto
+  ; status = auto
+  ; branch = auto
+[pack]
+  threads = 0
+[alias]
+  a = add -A .
+  co = checkout
+  c = commit
+  s = status -uall
+  r = remote -v
+  fetch-all = fetch --all
+  l = "log --graph --decorate --all --date=format:'%F %T' --pretty='%C(auto) %h %d %s %C(#BCBCBC) | %cr | %cd | %an'"
+  ll = "log --graph --decorate --date=format:'%F %T' --pretty='%C(auto) %h %d %s %C(#BCBCBC) | %cr | %cd | %an'"
+  log-patches = log -p
+  log-date-relative = log --date=relative
+  b = branch --list -vva --sort=committerdate
+  d = diff -- ':(exclude)package-lock.json' .
+[push]
+  default = simple
+[commit]
+	verbose = true
+  template = ~/.gitmessage 
+[diff "nodiff"]
+  command = /bin/true
+[user]
+	email = you@example.com
+	name = Your Name
+EOF
