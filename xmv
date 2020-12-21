@@ -128,27 +128,19 @@ foreach my $was ( sort keys %was ) {
 
 sub normalize {
     my ($abs) = @_;
+    $_ = basename($abs);
 
-    my $file = basename($abs);
-    my $ext  = "";
-
-    if ( !-d $abs && $file =~ /^(.+)(\..+?)$/ ) {
-        ( $file, $ext ) = ( $1, $2 );
-    }
-
-    $_ = $file;
-
-    s/&/and/g;
-    s/['`´]+//g;
-    s/[\._\W]+/_/g;
+    s/&/_and_/g;
+    s/[^\w.-]+/_/g;
+    s/_\././g;
+    s/\._/./g;
+    s/_+/_/g;
     s/.*?www_[^_]+_[^_]+_//gi;
-    s/^_*//g;
-    s/_*$//g;
 
     if ( !$_ ) {
         $empty_file_name_count++;
         $_ = "_empty_file_name." . $empty_file_name_count;
     }
 
-    return $_ . lc($ext);
+    return $_
 }
