@@ -174,8 +174,6 @@ git-env-validate:
     Ensure git-scm is configured appropriately
 git-ignore:
     Download and save a default .gitignore for a specific environment
-git-log-compact:
-    Show compact git log
 git-log-file:
     Show complete changes to a file in git
 git-modified:
@@ -190,18 +188,16 @@ git-reset-origin:
     Discard all current changes in directory to origin/master
 git-root:
     Print git project root
-git-setup:
-    Setup default git configuration
-git.branch:
-    Default options for git branch
+git.all:
+    Add, commit and push in one step
 git.push.all.branches:
     Push all git branches
-git.status:
-    Default options for git status
+git.setup:
+    Setup git configuration
 git.user.check:
     Check if global user is set
 github.clone.user:
-    Download all github repos of a user
+    Clone all github repos of a user
 gnome-send-to-mail-images:
     Resize one or more images and add them as attachements
 gnome-send-to-mail-images-setup:

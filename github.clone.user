@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Download all github repos of a user
+# Clone all github repos of a user
 
 source bash-helpers
 

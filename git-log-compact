@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Show compact git log
-
-exec git log --oneline --decorate --graph "$@"
