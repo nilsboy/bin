@@ -19,6 +19,7 @@ cat > ~/.gitconfig <<''EOF
 [pack]
   threads = 0
 [alias]
+  all = !git.all
   a = add -A .
   co = checkout
   c = commit
@@ -29,8 +30,11 @@ cat > ~/.gitconfig <<''EOF
   ll = "log --graph --decorate --date=format:'%F %T' --pretty='%C(auto) %h %d %s %C(#BCBCBC) | %cr | %cd | %an'"
   log-patches = log -p
   log-date-relative = log --date=relative
+  log-file = log --follow -p --
+  files-all-ever = !git log --pretty=format: --name-only --diff-filter=A | uniq-unsorted | tac
   b = branch --list -vva --sort=committerdate
   d = diff -- ':(exclude)package-lock.json' .
+  push-all-branches = push --all -u
 [push]
   default = simple
 [commit]

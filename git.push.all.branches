@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# Push all git branches
-
-source bash-helpers
-
-exec git push --all -u "$@"
