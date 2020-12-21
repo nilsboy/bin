@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Add, commit and push in one step
+
+source bash-helpers
+
+comment="$@"
+
+git add -A .
+if [[ ! "$comment" ]] ; then
+  git.commit
+else
+  git.commit -m "$(cat ~/.gitmessage)$comment"
+fi
+git push
