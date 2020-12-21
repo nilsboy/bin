@@ -32,7 +32,8 @@ my ($upstream) = $git =~ /^# branch.upstream (.+)$/gm;
 my ($remote, $remote_branch) = $upstream =~ /(.+)\/(.+)/;
 ($remote_branch) = $upstream if ! $remote_branch;
 my ($ahead, $behind)   = $git =~ /^# branch.ab (\+.+) (\-.+)$/gm;
-my ($changes) = $git =~ /^[12\?u]/m;
+# ignored is only shown if specified with git status --ignored
+my ($changes) = $git =~ /^[u12\?\!]/m;
 
 # my $project = `git rev-parse --show-toplevel 2>/dev/null`;
 # ($project) = $project =~ /.*\/([^\/]+)\n/;
