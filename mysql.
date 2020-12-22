@@ -23,6 +23,6 @@ mkdir -p $history_dir
 # MYSQL_PS1="\\u@${GREEN}$h${NO_COLOR}:${RED}\\d db${NO_COLOR}> " \
 xtitle "mysql@$host" && \
     MYSQL_PS1="\\u@$host:\\d db> " \
-    MYSQL_HISTFILE=$history_file alternative-run $0 \
+    MYSQL_HISTFILE=$history_file mysql $0 \
         --default-character-set=utf8 \
         --show-warnings --pager="less -FX" "$@"

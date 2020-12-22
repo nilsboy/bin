@@ -1,5 +1,0 @@
-# Search eternal history for an existing file an open it in vi
-
-set -e
-file=$(bash-eternal-history-search --file -c 1 "$@")
-command eval $EDITOR "$file"

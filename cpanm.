@@ -6,4 +6,4 @@ map { s/\//\:\:/g ; s/\.pm$//g } $ARGV[$#ARGV];
 
 my @local_lib = ( "--local-lib", "$ENV{REMOTE_HOME}/perl5" );
 
-system("alternative-run", "$0", "-nq", @local_lib , @ARGV) && exit 1;
+system("cpanm", "-nq", @local_lib , @ARGV) && exit 1;

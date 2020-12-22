@@ -1,4 +1,4 @@
-Tools that make my shell life easier.
+My shell helpers.
 
 See bashrc-pack for how I append them to my bashrc.
 
@@ -12,10 +12,6 @@ Descriptions:
 
 abs:
     Print the absolute path of a file or dir
-alternative:
-    Find an on disk executable alternative
-alternative-run:
-    Find an on disk executable alternative and run it
 apt-dump-installed-packages:
     Dump names of all installed packages to a file
 apt-hold-package:
@@ -63,8 +59,6 @@ bashrc-helper-hostname:
     Format hostname for bash prompt usage
 bashrc-helper-login-name:
     Format login for bash prompt usage
-bashrc-install:
-    Install and run specified installer_command
 bashrc-linux-distribution-fix-suse:
     Script to run when logging into a suse machine
 bashrc-pack:
@@ -91,8 +85,6 @@ command-knows-switch:
 cp-merge-directories-by-hardlinks:
     Merge two directories on the same disk recursively by using hard
     links
-cpanm:
-    Allow cpanm to install modules specified via Path/File.pm
 cpanm-install:
     Setup home directory based perl environment and cpanm
 cpanm-list-locally-installed-modules:
@@ -100,6 +92,8 @@ cpanm-list-locally-installed-modules:
 cpanm-reinstall-local-modules:
     Reinstall all cpanm installed perl modules (i.e. to recompile after
     server move)
+cpanm.:
+    Allow cpanm to install modules specified via Path/File.pm
 crontab-setup:
     Add default crontab settings to existing crontab
 csvview:
@@ -168,14 +162,14 @@ find-older-than-days:
     Recursively find files oder than days
 find-or-grep:
     Find a file or grep stdin
+find.relevant.:
+    Find usually relevant files
 firewall.setup.example:
     Firewall setup example
 git-env-validate:
     Ensure git-scm is configured appropriately
 git-ignore:
     Download and save a default .gitignore for a specific environment
-git-log-file:
-    Show complete changes to a file in git
 git-modified:
     List all modified files since last git commit
 git-project:
@@ -190,8 +184,6 @@ git-root:
     Print git project root
 git.all:
     Add, commit and push in one step
-git.push.all.branches:
-    Push all git branches
 git.setup:
     Setup git configuration
 git.user.check:
@@ -285,7 +277,7 @@ mouse.jiggle:
     Jiggle mouse to prevent system idle
 mybackup:
     create a backup
-mysql:
+mysql.:
     Fix mysql prompt to show real hostname - NEVER localhost
 mysqldump-structure:
     Dump the structure without the data of a mysql database
@@ -347,9 +339,6 @@ perl-module-find:
     Find a perl module or script
 perl-module-version:
     Print version of an installed perl module
-perl-named-process:
-    Set process name of perl process to script name. Usefull when run
-    via /usr/bin/env
 perl-plack-test-server:
     Start a plack server for debugging with autoreloading of changed
     files
@@ -497,11 +486,7 @@ user-add:
     Add a new user to the system without hassle
 vi-choose-file-from-list:
     Edit a file from a list on STDIN
-vi-from-find:
-    Recursively search for a file and open it in vim - TODO
-vi-from-history:
-    Search eternal history for an existing file an open it in vi
-vi-from-path:
+vi-executable:
     Find an executable in the path and edit it
 vi-from-perl-inc:
     Find an executable in the perl %INC and edit it
