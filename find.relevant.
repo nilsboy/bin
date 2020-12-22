@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Find usually relevant files
+
+source bash-helpers
+
+regex="$@"
+
+if [[ $regex ]] ; then
+  regex='-and -regex .*'$regex'.*'
+fi
+
+find \
+  -H \
+  -mount \
+  -type f \
+  -not -regex ".*/\..*" \
+  -and -not -regex ".*\(node_modules\).*" \
+  $regex
+
