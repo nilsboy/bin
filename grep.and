@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+# Search for lines matching one or more perl regex patterns
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+
+my $red      = "\x1b[38;5;124m";
+my $no_color = "\x1b[33;0m";
+
+if (!-t STDOUT) {
+  $red = $no_color = "";
+}
+
+my @patterns = @ARGV;
+
+LINE: while (<STDIN>) {
+  my $org = $_;
+
+  foreach my $pattern (@patterns) {
+    if (!s/($pattern)/$red$1$no_color/gi) {
+      next LINE;
+    }
+  }
+
+  print $org;
+}

@@ -10,7 +10,7 @@ use warnings;
 no warnings 'uninitialized';
 
 $/ = undef;
-my $data = <STDIN>;
+my $data    = <STDIN>;
 my $pattern = $ARGV[0];
 
 my $gray     = "\x1b[38;5;243m";
@@ -20,44 +20,43 @@ my $no_color = "\x1b[33;0m";
 
 my $positions = match_all_positions($pattern, $data);
 
-my $context = 100;
+my $context   = 100;
 my $max_width = 70;
-my $prefix = "    ";
+my $prefix    = "    ";
 my $separator = "\n$prefix" . "_" x $max_width . "\n\n";
 
 my @wrapped_matches;
 foreach my $pos (@$positions) {
-    my ($start, $end) = @$pos;
+  my ($start, $end) = @$pos;
 
-    my $context_start = $start - $context < 0 ? 0 : $start - $context;
-    my $pre   = substr($data, $context_start, $start - $context_start);
-    my $match = substr($data, $start, $end - $start);
-    my $post  = substr($data, $end, $context);
-    my $all   = $pre . $match . $post;
+  my $context_start = $start - $context < 0 ? 0 : $start - $context;
+  my $pre   = substr($data, $context_start, $start - $context_start);
+  my $match = substr($data, $start,         $end - $start);
+  my $post  = substr($data, $end,           $context);
+  my $all   = $pre . $match . $post;
 
-    my $wrapped = join("\n", unpack("(A$max_width)*", $all));
+  my $wrapped = join("\n", unpack("(A$max_width)*", $all));
 
-    my $pre_wrapped   = substr($wrapped, 0, length($pre));
-    my $match_wrapped = $red
-        . substr($wrapped, length($pre), length($match))
-        . $no_color;
-    my $post_wrapped  = substr($wrapped, length($pre) + length($match));
+  my $pre_wrapped = substr($wrapped, 0, length($pre));
+  my $match_wrapped =
+    $red . substr($wrapped, length($pre), length($match)) . $no_color;
+  my $post_wrapped = substr($wrapped, length($pre) + length($match));
 
-    my $all_wrapped = $pre_wrapped . $match_wrapped . $post_wrapped;
+  my $all_wrapped = $pre_wrapped . $match_wrapped . $post_wrapped;
 
-    $all_wrapped =~ s/^/$prefix/gm;
-    $all_wrapped =~ s/\n+$/\n/gm;
+  $all_wrapped =~ s/^/$prefix/gm;
+  $all_wrapped =~ s/\n+$/\n/gm;
 
-    push(@wrapped_matches, $all_wrapped);
+  push(@wrapped_matches, $all_wrapped);
 }
 
 print $separator . join($separator, @wrapped_matches) . $separator;
 
 sub match_all_positions {
-    my ($regex, $string) = @_;
-    my @ret;
-    while ($string =~ /$regex/igm) {
-        push @ret, [ $-[0], $+[0] ];
-    }
-    return \@ret
+  my ($regex, $string) = @_;
+  my @ret;
+  while ($string =~ /$regex/igm) {
+    push @ret, [ $-[0], $+[0] ];
+  }
+  return \@ret;
 }

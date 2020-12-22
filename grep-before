@@ -3,8 +3,8 @@
 # Print file contens before a specified regex first matches
 
 while (<STDIN>) {
-    exit 0 if /@ARGV/i;
-    print;
+  exit 0 if /@ARGV/i;
+  print;
 }
 
 exit 1;

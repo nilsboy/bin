@@ -6,13 +6,13 @@ use strict;
 use warnings;
 
 my $matches;
-while ( my $line = <STDIN> ) {
-    foreach my $regex (@ARGV) {
-        next if $line !~ /$regex/i;
-        $matches++;
-        print $line;
-        last;
-    }
+while (my $line = <STDIN>) {
+  foreach my $regex (@ARGV) {
+    next if $line !~ /$regex/i;
+    $matches++;
+    print $line;
+    last;
+  }
 }
 
-exit 1 if ! $matches;
+exit 1 if !$matches;

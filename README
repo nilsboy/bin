@@ -146,8 +146,6 @@ files-replace-from-env:
 filestamp:
     Create a new backup filename with a timestamp; replace an existing
     timestamp
-find-and:
-    Find files excluding dotfiles optionally matching several strings
 find-and-limit:
     find-and with a limit
 find-from-date:
@@ -160,8 +158,6 @@ find-newest:
     Recursively find newest files
 find-older-than-days:
     Recursively find files oder than days
-find-or-grep:
-    Find a file or grep stdin
 find.relevant.:
     Find usually relevant files
 firewall.setup.example:
@@ -198,8 +194,6 @@ gnome-terminal-prevent-cursor-blinking:
     Prevent the gnome-terminal cursor from blinking
 gotroot:
     Make sure we're running as root
-grep-and:
-    Search for lines matching one or more perl regex patterns
 grep-before:
     Print file contens before a specified regex first matches
 grep-from:
@@ -212,6 +206,8 @@ grep-or:
     or-grep list matching lines
 grep-or-with-header:
     or-grep and print paragraph headers
+grep.and:
+    Search for lines matching one or more perl regex patterns
 groups-reload-memberships:
     Start new shell to "reload" changes to the list of groups the user
     belongs to
