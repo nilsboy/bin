@@ -12,14 +12,14 @@ $Text::Wrap::columns = 72;
 die "Current dir not called bin" if !path(".")->basename eq "bin";
 
 my $readme = path("README.md");
-my ($preamble) = $readme->slurp =~ /(.+Descriptions\:)/igms;
+my ($preamble) = $readme->slurp =~ /(.*## Descriptions)/igms;
 
 $readme->spew("$preamble\n\n");
 
 foreach my $app (sort(path(".")->children)) {
 
     next if $app->is_dir;
-    next if $app->basename =~ /^\.|^readme$|^package.*json$|^authorized_keys$/i;
+    next if $app->basename =~ /^\.|^readme.md$|^package.*json$|^authorized_keys$/i;
 
     my ($description) = $app->slurp =~ /^=head1 NAME\s+(.+)/m;
     ($description) = $app->slurp =~ /^# (.+?)\n/m if !$description;
@@ -27,7 +27,7 @@ foreach my $app (sort(path(".")->children)) {
 
     $description =~ s/^$app[\s-]*//g;
 
-    $description = wrap('    ', '    ', $description) if $description;
+    # $description = wrap('    ', '    ', $description) if $description;
 
     print STDERR "Description ends with a dot app: $app\n"
         if $description =~ /\.$/;
@@ -35,5 +35,5 @@ foreach my $app (sort(path(".")->children)) {
     print STDERR "No description found for app: $app\n" if !$description;
     $description ||= "    TODO";
 
-    $readme->append("$app:\n$description\n");
+    $readme->append("* $app: $description\n");
 }
