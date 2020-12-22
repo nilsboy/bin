@@ -2,5 +2,5 @@
 
 # Find own public ip when behind proxy
 
-wcat http://checkip.dyndns.org \
+wget -qqO- http://checkip.dyndns.org \
     | perl -ne '/Address\: (.+?)</i || die; print $1'

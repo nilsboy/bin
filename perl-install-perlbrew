@@ -3,7 +3,7 @@
 # Install perlbrew
 
 set -e
-wcat http://install.perlbrew.pl | bash > /dev/null
+wget -qqO- http://install.perlbrew.pl | bash > /dev/null
 source ~/perl5/perlbrew/etc/bashrc
 perlbrew init > /dev/null
 perlbrew install-cpanm > /dev/null
