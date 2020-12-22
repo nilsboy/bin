@@ -131,12 +131,14 @@ sub normalize {
     $_ = basename($abs);
 
     s/&/_and_/g;
+    s/^.*?\.(?:net|com)(?=\W.+)//gi;
     s/[^\w.-]+/_/g;
     s/_\././g;
     s/\._/./g;
     s/_+/_/g;
     s/\.+/./g;
-    s/.*?www_[^_]+_[^_]+_//gi;
+    s/^\.+//g;
+    s/\.+$//g;
 
     if ( !$_ ) {
         $empty_file_name_count++;
