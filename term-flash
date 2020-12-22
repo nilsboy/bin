@@ -12,16 +12,15 @@ trap cleanup ERR INT
 message="$@"
 
 if [[ $TMUX ]] ; then
-  # escape sequences to change terminal background do not work in tmux.
-  echo "Detaching from tmux..."
-  tmux detach -E "term-flash Detached from tmux. $message"
-  exit
+  exec tmux-flash "$message"
 fi
 
 echo "$message"
 while true ; do
-  printf \\e[?5h
+  tmux set -g window-active-style 'bg=colour9'
+  # printf \\e[?5h
   sleep 1
-  printf \\e[?5l
+  tmux set -g window-active-style 'bg=colour231'
+  # printf \\e[?5l
   sleep 1
 done

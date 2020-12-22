@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Flash the current pane background
+
+source bash-helpers
+
+function cleanup() {
+  tmux set window-active-style 'bg=default'
+  tmux set window-style 'bg=default'
+}
+trap cleanup ERR INT
+
+message="$@"
+
+echo "$message"
+while true ; do
+  tmux set window-active-style 'bg=black'
+  tmux set window-style 'bg=black'
+  sleep 1
+  tmux set window-active-style 'bg=white'
+  tmux set window-style 'bg=white'
+  sleep 1
+done
+
