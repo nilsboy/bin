@@ -406,7 +406,7 @@ ssh-agent-env-restore:
     Dump ssh-agent vars stored by ssh-agent-env-grab
 ssh-alias:
     Send remote host alias to remote host to display in prompt etc
-ssh-copy-id-my:
+ssh-copy-id.:
     Copy one public key instead of all
 ssh-no-check:
     SSH without host key checks
