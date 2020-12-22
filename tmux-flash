@@ -12,6 +12,9 @@ trap cleanup ERR INT
 
 message="$@"
 
+# Only blink specific pane - see also: $TMUX_PANE
+# select-pane -t:.1 -P 'bg=red' 
+
 echo "$message"
 while true ; do
   tmux set window-active-style 'bg=black'

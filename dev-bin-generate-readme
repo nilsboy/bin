@@ -36,5 +36,5 @@ foreach my $app (sort(path(".")->children)) {
   print STDERR "No description found for app: $app\n" if !$description;
   $description ||= "    TODO";
 
-  $readme->append("* $app: $description\n");
+  $readme->append("* [$app](./$app): $description\n");
 }
