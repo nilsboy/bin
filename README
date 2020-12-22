@@ -285,6 +285,8 @@ net-ip2name:
     Replace ip adresses with host names inside of text
 net-open-ports:
     List all open ports
+net-remote-shell:
+    Create shell access on a free port
 net-scan-private-network:
     Scan for hosts in private network
 net-wlan-rtl8723be-wrong-antenna-fix:
@@ -389,14 +391,6 @@ run-or-test:
     Run a programs tests if any exist otherwise the program itself
 screen-reattach:
     Reattach to a screen session
-shell-color-test:
-    most color mappings taken from xterm-colortest
-shell-line-wrap-off:
-    Turn off shell line wrapping
-shell-line-wrap-on:
-    Turn off shell line wrapping
-shell-open-access-on-freeport:
-    Create shell access on a free port
 sleepuntil:
     Sleep until a specific date and time
 sort-by-file-modification:
@@ -431,6 +425,16 @@ ssl-strip:
     Remove ssl encryption from https and other protocols
 sudo.:
     Keep path with sudo
+term-bg-switch:
+    Switch terminal background color
+term-color-test:
+    most color mappings taken from xterm-colortest
+term-flash:
+    Flash the terminal background
+term-line-wrap-off:
+    Turn off shell line wrapping
+term-line-wrap-on:
+    Turn off shell line wrapping
 text-context-grep:
     Grep for a regex and display matches with context
 text-from-any:
@@ -480,8 +484,6 @@ url-encode:
     Encode a string to URL notation
 user-add:
     Add a new user to the system without hassle
-vi-choose-file-from-list:
-    Edit a file from a list on STDIN
 vi-executable:
     Find an executable in the path and edit it
 vi-from-perl-inc:

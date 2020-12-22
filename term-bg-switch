@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Switch terminal background color
+# Press <ctrl-c> to keep the current background color.
+
+source bash-helpers
+
+while true ; do
+  printf \\e[?5h
+  sleep 1
+  printf \\e[?5l
+  sleep 1
+done

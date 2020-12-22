@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Flash the terminal background
+# Does not work in tmux.
+
+source bash-helpers
+
+function cleanup() {
+  printf \\e[?5l
+}
+trap cleanup ERR INT
+
+while true ; do
+  printf \\e[?5h
+  sleep 1
+  printf \\e[?5l
+  sleep 1
+done
