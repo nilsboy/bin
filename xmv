@@ -137,8 +137,8 @@ sub normalize {
     s/\._/./g;
     s/_+/_/g;
     s/\.+/./g;
-    s/^\.+//g;
-    s/\.+$//g;
+    s/^[\._-]+//g;
+    s/[\._-]+$//g;
 
     if ( !$_ ) {
         $empty_file_name_count++;
