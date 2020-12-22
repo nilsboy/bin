@@ -11,7 +11,7 @@ $Text::Wrap::columns = 72;
 
 die "Current dir not called bin" if !path(".")->basename eq "bin";
 
-my $readme = path("README");
+my $readme = path("README.md");
 my ($preamble) = $readme->slurp =~ /(.+Descriptions\:)/igms;
 
 $readme->spew("$preamble\n\n");

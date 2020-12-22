@@ -1,4 +1,4 @@
-My shell helpers.
+# My shell tools
 
 See bashrc-pack for how I append them to my bashrc.
 
@@ -8,8 +8,10 @@ additional dependencies and run directly on any current linux distro.
 Most bash scripts depend on my bash-helpers script - so make sure it's
 in your path.
 
-Descriptions:
+# Descriptions:
 
+README.md:
+    My shell tools
 abs:
     Print the absolute path of a file or dir
 apt-dump-installed-packages:
