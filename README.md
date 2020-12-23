@@ -258,7 +258,6 @@ in your path.
 * [webserver-file-manager](./webserver-file-manager): Serve a file manager for the current directory via http
 * [webserver-serve-current-directory](./webserver-serve-current-directory): Serve current directory files via http
 * [webserver-serve-current-directory.pl](./webserver-serve-current-directory.pl): Serve current directory files via http - perl version
-* [wikipedia-via-dns](./wikipedia-via-dns): Query wikipedia via DNS
 * [window-blink](./window-blink): Blink current window
 * [x2x-east](./x2x-east): Share input devices with another host
 * [xdg-cache-home](./xdg-cache-home): Return xdg cache home
