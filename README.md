@@ -81,7 +81,6 @@ in your path.
 * [find-newest](./find-newest): Recursively find newest files
 * [find-older-than-days](./find-older-than-days): Recursively find files oder than days
 * [find.relevant.](./find.relevant.): Find usually relevant files
-* [firewall.setup.example](./firewall.setup.example): Firewall setup example
 * [git-env-validate](./git-env-validate): Ensure git-scm is configured appropriately
 * [git-ignore](./git-ignore): Download and save a default .gitignore for a specific environment
 * [git-modified](./git-modified): List all modified files since last git commit
@@ -105,13 +104,13 @@ in your path.
 * [grep-or](./grep-or): or-grep list matching lines
 * [grep-or-with-header](./grep-or-with-header): or-grep and print paragraph headers
 * [grep.and](./grep.and): Search for lines matching one or more perl regex patterns
+* [grep.with.context](./grep.with.context): Grep for a regex and display matches with context
 * [groups-reload-memberships](./groups-reload-memberships): Start new shell to "reload" changes to the list of groups the user belongs to
 * [hd-set-spin-timeout](./hd-set-spin-timeout): Activate spindown and set spindown timeout on (buggy - i.e. Seagate) hard drives that don't do it themselfes
 * [head-warn](./head-warn): Limit input lines and warn if more lines are left
 * [html-strip](./html-strip): Strip HTML of tags and entities
 * [http-echo-server](./http-echo-server): Test HTTP server that response with the request
 * [internalip](./internalip): get internal IP address
-* [iptables-port-redirect](./iptables-port-redirect): Forward an incoming port to a different port
 * [java-decompile-jar](./java-decompile-jar): Recursively decompile a jar including contained jars
 * [java-install-oracle-java-v8](./java-install-oracle-java-v8): Install oracle java 8
 * [js-format-using-prettydiff](./js-format-using-prettydiff): Javascript formatter using "npm install prettydiff"
@@ -140,11 +139,13 @@ in your path.
 * [mysqldump-structure](./mysqldump-structure): Dump the structure without the data of a mysql database
 * [neovim-setup](./neovim-setup): Setup neovim
 * [net-find-free-port](./net-find-free-port): Find an unused port
+* [net-forward-port](./net-forward-port): Forward an incoming port to a different port
 * [net-ip2name](./net-ip2name): Replace ip adresses with host names inside of text
 * [net-open-ports](./net-open-ports): List all open ports
 * [net-remote-shell](./net-remote-shell): Create shell access on a free port
 * [net-scan-private-network](./net-scan-private-network): Scan for hosts in private network
 * [net-wlan-rtl8723be-wrong-antenna-fix](./net-wlan-rtl8723be-wrong-antenna-fix): Fix wrong antenna problem of rtl8723be wlan adaptor
+* [net.firewall.setup.example](./net.firewall.setup.example): Firewall setup example
 * [node-install](./node-install): Install latest node version
 * [note](./note): View quick notes in notes.md file
 * [notes.md](./notes.md): Ubuntu Setup
@@ -214,7 +215,6 @@ in your path.
 * [term-flash](./term-flash): Flash the terminal background
 * [term-line-wrap-off](./term-line-wrap-off): Turn off shell line wrapping
 * [term-line-wrap-on](./term-line-wrap-on): Turn off shell line wrapping
-* [text-context-grep](./text-context-grep): Grep for a regex and display matches with context
 * [text-from-any](./text-from-any): Convert any file to text
 * [text-quote](./text-quote): Quote text
 * [text-remove-comments](./text-remove-comments): Remove comment from text
