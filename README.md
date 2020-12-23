@@ -146,6 +146,9 @@ in your path.
 * [net-scan-private-network](./net-scan-private-network): Scan for hosts in private network
 * [net-wlan-rtl8723be-wrong-antenna-fix](./net-wlan-rtl8723be-wrong-antenna-fix): Fix wrong antenna problem of rtl8723be wlan adaptor
 * [net.firewall.setup.example](./net.firewall.setup.example): Firewall setup example
+* [net.serve.dir](./net.serve.dir): Serve current directory files via http
+* [net.serve.file-manager](./net.serve.file-manager): Serve a file manager for the current directory via http
+* [net.serve.json](./net.serve.json): JSON backed rest server
 * [node-install](./node-install): Install latest node version
 * [note](./note): View quick notes in notes.md file
 * [notes.md](./notes.md): Ubuntu Setup
@@ -190,9 +193,7 @@ in your path.
 * [rel](./rel): Create a relative path from an absolute path
 * [replace](./replace): Change the contens of text files by perl expression
 * [rest-post-json](./rest-post-json): Send a POST request to a website
-* [rest-server](./rest-server): JSON backed rest server
 * [run-and-capture](./run-and-capture): Run a program and pretty print all its outputs
-* [run-or-test](./run-or-test): Run a programs tests if any exist otherwise the program itself
 * [screen-reattach](./screen-reattach): Reattach to a screen session
 * [sleepuntil](./sleepuntil): Sleep until a specific date and time
 * [sort-by-file-modification](./sort-by-file-modification): Sort a list of file names by their modification time
@@ -255,9 +256,6 @@ in your path.
 * [vnc-vino-preferences](./vnc-vino-preferences): Set vino preferences
 * [vncviewer](./vncviewer): preconfigured to use ssh
 * [wcat](./wcat): Easily dump a web site
-* [webserver-file-manager](./webserver-file-manager): Serve a file manager for the current directory via http
-* [webserver-serve-current-directory](./webserver-serve-current-directory): Serve current directory files via http
-* [webserver-serve-current-directory.pl](./webserver-serve-current-directory.pl): Serve current directory files via http - perl version
 * [window-blink](./window-blink): Blink current window
 * [x2x-east](./x2x-east): Share input devices with another host
 * [xdg-cache-home](./xdg-cache-home): Return xdg cache home
