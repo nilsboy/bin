@@ -75,7 +75,6 @@ in your path.
 * [filename](./filename): Find the filename without the extension of a filename
 * [files-replace-from-env](./files-replace-from-env): Replace files with content from environment variables
 * [filestamp](./filestamp): Create a new backup filename with a timestamp; replace an existing timestamp
-* [find-and-limit](./find-and-limit): find-and with a limit
 * [find-from-date](./find-from-date): Find files newer than date
 * [find-largest-directories](./find-largest-directories): Find largest directories recursively from current directory
 * [find-largest-files](./find-largest-files): Find largest files recursively from current directory
