@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Show local DNS status
+
+source bash-helpers
+
+systemd-resolve --status

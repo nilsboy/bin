@@ -145,6 +145,8 @@ in your path.
 * [net-remote-shell](./net-remote-shell): Create shell access on a free port
 * [net-scan-private-network](./net-scan-private-network): Scan for hosts in private network
 * [net-wlan-rtl8723be-wrong-antenna-fix](./net-wlan-rtl8723be-wrong-antenna-fix): Fix wrong antenna problem of rtl8723be wlan adaptor
+* [net.dns.dump](./net.dns.dump): dump all infos on a domain
+* [net.dns.local](./net.dns.local): Show local DNS status
 * [net.firewall.setup.example](./net.firewall.setup.example): Firewall setup example
 * [net.serve.dir](./net.serve.dir): Serve current directory files via http
 * [net.serve.file-manager](./net.serve.file-manager): Serve a file manager for the current directory via http

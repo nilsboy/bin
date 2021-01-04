@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# dump all infos on a domain
+
+source bash-helpers
+
+dig "$@" any
+
+INFO type257
+dig "$@" type257
