@@ -2,4 +2,4 @@
 
 # Find an executable in path
 
-compgen -c | sort -u | find-or-grep "$@"
+compgen -c | sort -u | grep -i "$@"
