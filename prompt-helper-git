@@ -29,7 +29,7 @@ $git = `git status --branch --porcelain=v2 2>/dev/null` || exit;
 
 my ($branch)   = $git =~ /^# branch.head (.+)$/gm;
 my ($upstream) = $git =~ /^# branch.upstream (.+)$/gm;
-my ($remote, $remote_branch) = $upstream =~ /(.+)\/(.+)/;
+my ($remote, $remote_branch) = $upstream =~ /(.+?)\/(.+)/;
 ($remote_branch) = $upstream if ! $remote_branch;
 my ($ahead, $behind)   = $git =~ /^# branch.ab (\+.+) (\-.+)$/gm;
 # ignored is only shown if specified with git status --ignored
