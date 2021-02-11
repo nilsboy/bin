@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Record screen
+
+source bash-helpers
+
+tmp=$(mktemp --suffix=.mkv)
+
+INFO "Recording to $tmp..."
+
+ffmpeg \
+  -f x11grab \
+  -show_region 1 \
+  -s hd1080 \
+  -framerate 10 -r 10 \
+  -i :0.0+0+0 \
+  -c:v libx264 \
+  -crf 29 \
+  $tmp
+
+# audio:
+# ffmpeg -video_size 1024x768 -framerate 25 -f x11grab -i :0.0+100,200 -f pulse -ac 2 -i default $tmp

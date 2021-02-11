@@ -1,0 +1,24 @@
+#!/usr/bin/env perl
+
+# Sort a list by contained delimiter [default: /] count
+
+use strict;
+use warnings;
+no warnings 'uninitialized';
+use Data::Dumper;
+use utf8;
+
+my $delimiter = $ARGV[0] || '/';
+
+my @files = ();
+while (<STDIN>) {
+  push(@files, $_);
+}
+
+@files = sort {
+  my $aLength = split($delimiter, $a) . length();
+  my $bLength = split($delimiter, $b) . length();
+  $aLength cmp $bLength;
+} @files;
+
+print @files;

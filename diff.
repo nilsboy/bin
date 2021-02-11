@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Diff side by side with max width
+
+diff -run $0 -y -W $COLUMNS "$@" | less
