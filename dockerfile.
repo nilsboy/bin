@@ -19,7 +19,13 @@ fi
 
 remove=--rm
 
+if [[ -e .env ]] ; then
+  INFO "Using env file .env"
+  env_option="--env-file .env"
+fi
+
 sudo docker run \
+  $env_option \
   $remove \
   -v $HOME/.bashrc:/root/.bashrc-my \
   -v $HOME/.bin:/root/.bin \
