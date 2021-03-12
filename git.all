@@ -10,6 +10,6 @@ git add -A .
 if [[ ! "$comment" ]] ; then
   git commit -v
 else
-  git commit -v -m "$(cat ~/.gitmessage)$comment"
+  git commit -v -m "$(cat ~/.gitmessage | grep -v '#')$comment"
 fi
 git push
