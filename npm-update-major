@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Update all modules to their newest versions - including major
+
+source bash-helpers
+
+npx -p npm-check-updates ncu -u

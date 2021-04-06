@@ -58,10 +58,12 @@ in your path.
 * [df.](./df.): Cleaned up df version
 * [diff-dir](./diff-dir): Diff 2 directories recursively comparing file contents and not file attributes
 * [diff-so-fancy](./diff-so-fancy): Install diff-so-fancy
+* [diff.](./diff.): Diff side by side with max width
 * [dir-name-prettifier](./dir-name-prettifier): shorten prompt dir to max 15 chars
 * [docker-ls](./docker-ls): List some docker information
 * [docker-ubuntu](./docker-ubuntu): Start a volatile ubuntu docker container
 * [docker-ubuntu-persistent](./docker-ubuntu-persistent): Start a persistent ubuntu docker container
+* [dockerfile.](./dockerfile.): Build and run a Dockerfile
 * [docopt-convert](./docopt-convert): Convert a docopt specification
 * [dos2unix](./dos2unix): Convert line endings from dos to unix
 * [env-grep](./env-grep): Grep environment
@@ -144,6 +146,7 @@ in your path.
 * [net-open-ports](./net-open-ports): List all open ports
 * [net-remote-shell](./net-remote-shell): Create shell access on a free port
 * [net-scan-private-network](./net-scan-private-network): Scan for hosts in private network
+* [net-verify-ports-are-open](./net-verify-ports-are-open): Check if a list ports is reachable
 * [net-wlan-rtl8723be-wrong-antenna-fix](./net-wlan-rtl8723be-wrong-antenna-fix): Fix wrong antenna problem of rtl8723be wlan adaptor
 * [net.dns.dump](./net.dns.dump): dump all infos on a domain
 * [net.dns.local](./net.dns.local): Show local DNS status
@@ -157,6 +160,7 @@ in your path.
 * [npm-readme](./npm-readme): Find and print README.md of node executable
 * [npm-set-global-modules-dir](./npm-set-global-modules-dir): Make npm use local dir for modules
 * [npm-set-proxy-from-environment](./npm-set-proxy-from-environment): Set proxy from environment
+* [npm-update-major](./npm-update-major): Update all modules to their newest versions - including major
 * [nvm-setup](./nvm-setup): Setup nvm (node version manager)
 * [once](./once): Print stdin once if it has changed since last time
 * [password-generate](./password-generate): Generate a list of random and secure passwords
@@ -200,6 +204,7 @@ in your path.
 * [sleepuntil](./sleepuntil): Sleep until a specific date and time
 * [sort-by-file-modification](./sort-by-file-modification): Sort a list of file names by their modification time
 * [sort-by-path-depth](./sort-by-path-depth): Sort input by depth of path
+* [sort-by-slash](./sort-by-slash): Sort a list by contained delimiter [default: /] count
 * [ssh-agent-env-clear](./ssh-agent-env-clear): Remove connection to ssh-agent
 * [ssh-agent-env-grab](./ssh-agent-env-grab): Save ssh-agent environemnt variables to be loaded in another session or on
 * [ssh-agent-env-restore](./ssh-agent-env-restore): Dump ssh-agent vars stored by ssh-agent-env-grab
@@ -246,6 +251,7 @@ in your path.
 * [vi-from-perl-inc](./vi-from-perl-inc): Find an executable in the perl %INC and edit it
 * [video-dvd-install-decss](./video-dvd-install-decss): Install decss for encrypted dvd playback
 * [video-dvd-rip](./video-dvd-rip): Rip and transcode a video dvd
+* [video-record-screen](./video-record-screen): Record screen
 * [video-transcode](./video-transcode): Transcode a media file to x264 preserving all video, audio and subtitle tracks
 * [vidir.](./vidir.): more save vidir
 * [vim-edit](./vim-edit): Edit input fields with vim

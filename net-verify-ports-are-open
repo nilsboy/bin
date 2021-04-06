@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Check if a list ports is reachable.
+# Check if a list ports is reachable
 
 # Needs a file of lines with this format:
 # host : 22, 443, 3306, 8080-8085
