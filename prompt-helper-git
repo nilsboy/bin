@@ -43,6 +43,9 @@ my $branch_info =  ($remote_branch . $ahead . $behind ne '' || $branch eq '(deta
 $branch_info = '' if $branch eq $remote_branch;
 
 my ($branch_prefix) = $branch =~ /^((.*?\/)*.{1,4})/;
+if($branch eq '(detached)') {
+  $branch_prefix = $branch;
+}
 
 print ""
   . $grey
