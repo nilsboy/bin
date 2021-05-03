@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# disable dash to dock tooltip
+# SEE ALSO: https://github.com/micheleg/dash-to-dock/issues/467
+# SEE ALSO: https://github.com/micheleg/dash-to-dock/issues/1108
+
+source bash-helpers
+
+gotroot
+
+mkdir -p ~/.themes/ubuntu/gnome-shell/
+
+cat << EOF >> /usr/share/gnome-shell/theme/ubuntu.css
+.dash-label {
+  width: 0px;
+  height: 0px;
+  padding: 0px;
+  border: none;
+}
+EOF
