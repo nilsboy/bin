@@ -60,7 +60,6 @@ touch $id_file
 set -x
 
 rsync \
-  --verbose \
   --archive \
   --partial --partial-dir=rsync-partial \
   --delete \

@@ -137,6 +137,7 @@ in your path.
 * [mount.overlay](./mount.overlay): Mount a directory over another
 * [mouse.jiggle](./mouse.jiggle): Jiggle mouse to prevent system idle
 * [mybackup](./mybackup): create a backup
+* [mybackup-gui](./mybackup-gui): create a backup and wait when done
 * [mysql.](./mysql.): Fix mysql prompt to show real hostname - NEVER localhost
 * [mysqldump-structure](./mysqldump-structure): Dump the structure without the data of a mysql database
 * [neovim-setup](./neovim-setup): Setup neovim

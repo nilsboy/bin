@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# create a backup and wait when done
+
+source bash-helpers
+
+clear
+
+mybackup $HOME
+
+echo
+echo
+echo
+
+INFO "#####################################################################"
+INFO "Backup completed!"
+INFO "#####################################################################"
+
+echo
+echo
+echo
+
+read
