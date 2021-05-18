@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Add mybackup desktop app for the dock
+
+source bash-helpers
+
+type rsync &>/dev/null || pkexec apt install rsync
+
+cat << EOF > ~/.local/share/applications/mybackup.desktop
+[Desktop Entry]
+Type=Application
+Name=mybackup
+Icon=backups-app
+Exec=$HOME/.bin/mybackup-gui
+Terminal=true
+EOF
+
+INFO "Now open the dash, search for mybackup and add it to the favorites"
+

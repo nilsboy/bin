@@ -16,7 +16,7 @@ mounts=$(ls -d $drives 2>/dev/null | wc -l)
 set -e
 
 if [[ $mounts == 0 ]] ; then
-  DIE "No backup drive found - please connect drive."
+  DIE "No backup drive found - please connect a drive with 'backup' in its name."
 fi
 
 if [[ $mounts > 1 ]] ; then

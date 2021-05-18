@@ -6,15 +6,11 @@ source bash-helpers
 
 clear
 
-mybackup $HOME
-
 echo
 echo
 echo
 
-INFO "#####################################################################"
-INFO "Backup completed!"
-INFO "#####################################################################"
+mybackup $HOME || true
 
 echo
 echo
