@@ -240,6 +240,7 @@ in your path.
 * [trash](./trash): Move a file to a trash dir at the files location
 * [tree](./tree): List a directory as a tree
 * [tree-diff](./tree-diff): Diff two directory structures
+* [ubuntu-add-show-desktop-app](./ubuntu-add-show-desktop-app): Add show desktop app for the dock
 * [ubuntu-dock-disable-tooltip](./ubuntu-dock-disable-tooltip): disable dash to dock tooltip
 * [ubuntu-setup-automatic-updates](./ubuntu-setup-automatic-updates): Make sure update and backports soures are activated
 * [ubuntu-unity-set-time-format](./ubuntu-unity-set-time-format): Set time format of ubuntu unity desktop clock

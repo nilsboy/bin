@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Add show desktop app for the dock
+# https://askubuntu.com/questions/903532/how-can-i-add-show-desktop-to-the-gnome-dash-or-ubuntu-dock
+
+source bash-helpers
+
+type wmctrl &>/dev/null || pkexec apt install wmctrl
+
+cat << ''EOF > ~/.show-desktop.sh
+#!/bin/bash
+status="$(wmctrl -m | grep "showing the desktop" | sed -r 's/(.*)(ON|OFF)/\2/g')"
+
+if [ $status == "ON" ]; then
+    wmctrl -k off
+else
+    wmctrl -k on
+fi
+EOF
+
+chmod +x ~/.show-desktop.sh
+
+cat << EOF > ~/.local/share/applications/show-desktop.desktop
+[Desktop Entry]
+Type=Application
+Name=Show Desktop
+Icon=user-desktop
+Exec=$HOME/.show-desktop.sh
+EOF
+
+INFO "Now open the dash, search for show desktop and add it to the favorites"
