@@ -1,0 +1,25 @@
+# Display a note inside the prompt
+
+source bash-helpers
+
+color=$GREEN
+
+if [[ "$MY_PROMPT_NOTE" =~ ^\s*$ ]] ; then
+  echo -n
+  exit
+fi
+
+if [[ "$MY_PROMPT_NOTE" =~ (dev|test|git|pet|prod|docker) ]] ; then
+  pattern=${BASH_REMATCH[1]}
+  case $pattern in
+    dev)    color=$GREY ;;
+    test)   color=$BLUE ;;
+    git)    color=$ORANGE ;;
+    pet)    color=$PURPLE ;;
+    prod)   color=$RED ;;
+    docker) color=$PINK ;;
+  esac
+fi
+
+echo -n "$color$MY_PROMPT_NOTE$NO_COLOR"
+

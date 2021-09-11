@@ -42,7 +42,7 @@ my $branch_color = $red if $branch eq '(detached)';
 my $branch_info =  ($remote_branch . $ahead . $behind ne '' || $branch eq '(detached)' ? '@' . $branch_color . $branch . $no_color : '' );
 $branch_info = '' if $branch eq $remote_branch;
 
-my ($branch_prefix) = $branch =~ /^((.*?\/)*.{1,4})/;
+my ($branch_prefix) = $branch =~ /^((.*?\/)*.{1,8})/;
 if($branch eq '(detached)') {
   $branch_prefix = $branch;
 }

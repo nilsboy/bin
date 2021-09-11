@@ -4,6 +4,7 @@ source bash-helpers
 
 time-humanize-seconds $elapsed
 eval $BASHRC_PROMPT_HELPERS
+prefixif $(bashrc-helper-note)
 echo -n " "
 bashrc-helper-login-name
 echo -n "$GREY@$NO_COLOR"
