@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# Install 3-finger touchpad gestures
+
+source bash-helpers
+
+sudo gpasswd -a $USER input
+
+sudo apt-get install libinput-tools xdotool ruby
+
+sudo gem install fusuma
+
+mkdir -p ~/.config/fusuma
+cd ~/.config/fusuma
+
+bak config.yml
+
+cat <<EOF > config.yml
+swipe:
+  3: 
+    left: 
+      command: 'xdotool key alt+Right'
+    right: 
+      command: 'xdotool key alt+Left'
+    up: 
+      command: 'xdotool key super'
+    down: 
+      command: 'xdotool key super'
+  4:
+    left: 
+      command: 'xdotool key ctrl+alt+Down'
+    right: 
+      command: 'xdotool key ctrl+alt+Up'
+    up: 
+      command: 'xdotool key ctrl+alt+Down'
+    down: 
+      command: 'xdotool key ctrl+alt+Up'
+pinch:
+  in:
+    command: 'xdotool key ctrl+plus'
+  out:
+     command: 'xdotool key ctrl+minus'
+
+threshold:
+  swipe: 0.4
+  pinch: 0.4
+
+interval:
+  swipe: 0.8
+  pinch: 0.1
+EOF
+
+sudo fusuma
+

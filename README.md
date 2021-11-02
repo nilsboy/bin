@@ -34,6 +34,7 @@ in your path.
 * [bashrc-eternal-history-add-simple](./bashrc-eternal-history-add-simple): Add an entry to the eternal history
 * [bashrc-helper-hostname](./bashrc-helper-hostname): Format hostname for bash prompt usage
 * [bashrc-helper-login-name](./bashrc-helper-login-name): Format login for bash prompt usage
+* [bashrc-helper-note](./bashrc-helper-note): Display a note inside the prompt
 * [bashrc-linux-distribution-fix-suse](./bashrc-linux-distribution-fix-suse): Script to run when logging into a suse machine
 * [bashrc-pack](./bashrc-pack): Attach scripts to the bashrc skeleton
 * [bashrc-unpack-and-run](./bashrc-unpack-and-run): Run a script that is attached to the bashrc
@@ -135,6 +136,7 @@ in your path.
 * [mem-swap-per-process](./mem-swap-per-process): Show swap usage per process
 * [mount.](./mount.): Show mounts without snap etc
 * [mount.overlay](./mount.overlay): Mount a directory over another
+* [mouse-gestures-install](./mouse-gestures-install): Install 3-finger touchpad gestures
 * [mouse.jiggle](./mouse.jiggle): Jiggle mouse to prevent system idle
 * [mybackup](./mybackup): create a backup
 * [mybackup-gui](./mybackup-gui): create a backup and wait when done
@@ -240,6 +242,7 @@ in your path.
 * [trash](./trash): Move a file to a trash dir at the files location
 * [tree](./tree): List a directory as a tree
 * [tree-diff](./tree-diff): Diff two directory structures
+* [ubuntu-add-mybackup-app](./ubuntu-add-mybackup-app): Add mybackup desktop app for the dock
 * [ubuntu-add-show-desktop-app](./ubuntu-add-show-desktop-app): Add show desktop app for the dock
 * [ubuntu-dock-disable-tooltip](./ubuntu-dock-disable-tooltip): disable dash to dock tooltip
 * [ubuntu-setup-automatic-updates](./ubuntu-setup-automatic-updates): Make sure update and backports soures are activated
