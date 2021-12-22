@@ -10,7 +10,7 @@ forwardRootTo=${1:?Specify username to forward root mail to.}
 
 apt-get install postfix mailutils mutt
 
-bak /etc/aliases
+bakp /etc/aliases
 
 cat << EOF > /etc/aliases
 # See man 5 aliases for format
