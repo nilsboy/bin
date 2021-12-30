@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Display cron log
+
+source bash-helpers
+
+pkexec journalctl -u cron.service
