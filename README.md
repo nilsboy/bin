@@ -205,6 +205,7 @@ in your path.
 * [rest-post-json](./rest-post-json): Send a POST request to a website
 * [run-and-capture](./run-and-capture): Run a program and pretty print all its outputs
 * [screen-reattach](./screen-reattach): Reattach to a screen session
+* [shell-remove-colors](./shell-remove-colors): Remove ANSI color sequences
 * [sleepuntil](./sleepuntil): Sleep until a specific date and time
 * [sort-by-file-modification](./sort-by-file-modification): Sort a list of file names by their modification time
 * [sort-by-path-depth](./sort-by-path-depth): Sort input by depth of path

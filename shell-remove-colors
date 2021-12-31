@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Remove ANSI color sequences
+# https://superuser.com/a/380778
+
+source bash-helpers
+
+perl -pe 's/\e\[[0-9;]*m(?:\e\[K)?//g'
