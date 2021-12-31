@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Create HTML list of all videos of a youtube channel in chronological order
+
+source bash-helpers
+
+name=${1:?Specify name}
+url=${2:?Specify url like https://www.youtube.com/channel/UCSnqXeK94-iNmwqGO__eJ5g/}
+
+youtube-dl --flat-playlist --playlist-reverse -j "$url/videos" \
+  > "$name.json"
+
+cat "$name.json" \
+  | jq ".title, .url" > "$name.txt"
+
+cat "$name.txt" \
+  | perl -007 -ne 'while( /(.+)\n(.+)/gm ) { $title = $1 ; $vid = $2 ; $vid =~ s/"//g ; $title =~ s/"//g ; print "<a href=http://youtube.com/watch?v=$vid>$title</a><br/>\n" }' \
+  > "$name.html"
+

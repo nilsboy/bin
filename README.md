@@ -277,3 +277,4 @@ in your path.
 * [xdg-cache-home](./xdg-cache-home): Return xdg cache home
 * [xmv](./xmv): Rename files by perl expression
 * [xtitle](./xtitle): Change the title of a x window
+* [youtube-list-all-channel-videos](./youtube-list-all-channel-videos): Create HTML list of all videos of a youtube channel in chronological order
