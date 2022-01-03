@@ -13,7 +13,9 @@ youtube-dl --flat-playlist --playlist-reverse -j "$url/videos" \
 cat "$name.json" \
   | jq ".title, .url" > "$name.txt"
 
+echo "<title>$name</title>" > "$name.html"
+
 cat "$name.txt" \
   | perl -007 -ne 'while( /(.+)\n(.+)/gm ) { $title = $1 ; $vid = $2 ; $vid =~ s/"//g ; $title =~ s/"//g ; print "<a href=http://youtube.com/watch?v=$vid>$title</a><br/>\n" }' \
-  > "$name.html"
+  >> "$name.html"
 
