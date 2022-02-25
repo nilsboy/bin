@@ -25,11 +25,11 @@ function _printifok() {
 }
 
 function _printifany() {
-  local msg=$1
-  local cmd=$2
-  type $cmd &>/dev/null || return
+  local msg=$1 ; shift
+  local cmd="$*"
+  # type $cmd &>/dev/null || return
 
-  local out=$($cmd --help 2>&1)
+  local out=$($cmd 2>&1)
   # perldoc
   if [[ -z $out ]] ; then
     return
@@ -57,9 +57,12 @@ fi
 _printifok options man-explain-options $cmd "$@"
 _printifok help help -m $cmd
 _printifok man man -a $cmd
-_printifany "--help" $cmd
 _printifok README npm-readme $cmd
 _printifok perldoc perldoc -f $cmd
+
+if [[ $RUN_HELP ]] ; then
+  _printifany "--help" $cmd --help
+fi
 
 if [[ $ALL ]] ; then
   _printifok related man -k $cmd
