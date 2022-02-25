@@ -50,7 +50,8 @@ elif [[ $arg =~ ^- ]] ; then
 elif [[ $arg ]] ; then
    arg="+/$arg"
 else
-   arg='+/^--- .+ -+$'
+   # arg='+/^--- .+ -+$'
+   arg='+/^\w+\([0-9]\).+|^--- .+ -+$'
 fi
 
 (
