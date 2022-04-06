@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Set the JPEG quality level of Gnomes SimpleScan which unfortunately does not provide a gui for that and by default uses 100% which produces huge images/PDFs.
+
+# NOTE: SimpleScan aka. Dokument Scanner
+
+source bash-helpers
+
+level=${1:-75}
+
+INFO "Setting jpeg-quality to $level"
+
+gsettings set org.gnome.SimpleScan jpeg-quality $level
