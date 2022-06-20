@@ -2,6 +2,9 @@
 
 # create a backup
 
+# create script lock (from flock manpage)
+[ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en -E 0 "$0" "$0"
+
 source bash-helpers
 
 # if run from cron
