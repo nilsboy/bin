@@ -250,6 +250,7 @@ in your path.
 * [ubuntu-dock-disable-tooltip](./ubuntu-dock-disable-tooltip): disable dash to dock tooltip
 * [ubuntu-setup-automatic-updates](./ubuntu-setup-automatic-updates): Make sure update and backports soures are activated
 * [ubuntu-unity-set-time-format](./ubuntu-unity-set-time-format): Set time format of ubuntu unity desktop clock
+* [ubuntu-x11-turnoff-screen-blanking](./ubuntu-x11-turnoff-screen-blanking): Turn off power savings / screen blanking in X11
 * [uniq-unsorted](./uniq-unsorted): uniq replacement without the need for sorted input
 * [unix2dos](./unix2dos): Convert line endings from unix to dos
 * [url](./url): Print absolute SSH url of a file or directory

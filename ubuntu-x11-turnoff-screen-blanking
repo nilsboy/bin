@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Turn off power savings / screen blanking in X11
+# Sometimes this turns on by itself.
+# Logging out of your X11 session also works.
+# from: https://unix.stackexchange.com/questions/168763/how-to-stop-the-screen-from-blanking-blacking-out
+
+# TODO: test
+
+source bash-helpers
+
+xset dpms 0 0 0 
+xset s noblank
+xset s off
