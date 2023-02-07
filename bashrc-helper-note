@@ -9,13 +9,12 @@ if [[ "$MY_PROMPT_NOTE" =~ ^\s*$ ]] ; then
   exit
 fi
 
-if [[ "$MY_PROMPT_NOTE" =~ (dev|test|git|pet|prod|docker) ]] ; then
+if [[ "$MY_PROMPT_NOTE" =~ (local|dev|test|prod|docker) ]] ; then
   pattern=${BASH_REMATCH[1]}
   case $pattern in
-    dev)    color=$GREY ;;
-    test)   color=$BLUE ;;
-    git)    color=$ORANGE ;;
-    pet)    color=$PURPLE ;;
+    local)  color=$BLUE ;;
+    dev)    color=$GREEN ;;
+    test)   color=$ORANGE ;;
     prod)   color=$RED ;;
     docker) color=$PINK ;;
   esac
