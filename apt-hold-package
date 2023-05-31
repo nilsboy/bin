@@ -6,5 +6,5 @@ set -e
 
 package_name=${1?package name?}
 dpkg --get-selections $package_name
-echo $package_name hold | sudo dpkg --set-selections
+echo $package_name hold | pkexec dpkg --set-selections
 dpkg --get-selections $package_name
