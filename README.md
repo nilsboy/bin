@@ -257,6 +257,7 @@ in your path.
 * [url-decode](./url-decode): Decode a string from URL notation
 * [url-encode](./url-encode): Encode a string to URL notation
 * [user-add](./user-add): Add a new user to the system without hassle
+* [vi](./vi): Keep path with sudo
 * [vi-executable](./vi-executable): Find an executable in the path and edit it
 * [vi-from-perl-inc](./vi-from-perl-inc): Find an executable in the perl %INC and edit it
 * [video-dvd-install-decss](./video-dvd-install-decss): Install decss for encrypted dvd playback

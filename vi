@@ -1,0 +1,8 @@
+# Keep path with sudo
+
+# $ORIGIN_USER set by 'sudo.'
+if [[ ! -z $ORIGIN_USER ]] ; then
+  HOME=/home/$ORIGIN_USER
+  USER=$ORIGIN_USER
+fi
+exec /snap/bin/nvim "$@"

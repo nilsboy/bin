@@ -4,4 +4,5 @@
 
 cmd=${1:?Specify cmd}
 
-exec sudo env PATH=$PATH "$@"
+# $ORIGIN_USER for use with vim when run as root
+exec sudo env PATH=$PATH ORIGIN_USER=$USER "$@"
