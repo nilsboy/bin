@@ -1,4 +1,8 @@
+#!/usr/bin/env bash
+
 # Keep path with sudo
+
+source bash-helpers
 
 # $ORIGIN_USER set by 'sudo.'
 if [[ ! -z $ORIGIN_USER ]] ; then
