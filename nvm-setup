@@ -27,6 +27,7 @@ export NVM_DIR="$HOME/.nvm"
 nvm install $node_version
 npm install -g npm@latest >/dev/null
 npm config delete prefix
+npm config set fund false
 
 echo "Installed node version: `node --version`."
 
