@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Forward a local port to public port
+
+source bash-helpers
+
+port=${1:?Specify port}
+
+ssh -R 80:localhost:$port localhost.run

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Run ssh without key agent
+
+source bash-helpers
+
+ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no "$@"
