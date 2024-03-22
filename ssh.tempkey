@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Run ssh without key agent
+
+source bash-helpers
+
+tmp=$(mktemp -u --suffix=.)
+
+ssh-keygen -q -N "" -t rsa -b 4096 -f $tmp
+SSH_AUTH_SOCK= ssh -i $tmp "$@"
+

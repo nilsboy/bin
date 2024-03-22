@@ -6,4 +6,5 @@ source bash-helpers
 
 port=${1:?Specify port}
 
-ssh -R 80:localhost:$port localhost.run
+# needs a key to work
+ssh.tempkey -v -R 80:localhost:$port localhost.run
