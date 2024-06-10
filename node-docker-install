@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Setup nvm (node version manager)
+
+set -e
+set -o pipefail
+
+if grep -q docker /proc/1/cgroup; then 
+   echo "inside docker"
+else
+   echo "RUN INSIDE DOCKER ONLY!"
+   exit 1
+fi
+
+node_version=${1:?Specify node_version e.g. v8.1.3 or stable}
+
+# needed to set for scripts that use wget too
+echo "check_certificate = off" >> ~/.wgetrc
+echo insecure >> ~/.curlrc
+
+curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+
+cat << ''EOF > ~/.bashrc
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# if [[ ! -z $NVM_BIN ]] ; then
+#   export NODE_PATH=$(echo ${NVM_BIN%%/bin}/lib/node_modules)
+# fi
+EOF
+
+unset npm_config_prefix
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+nvm install $node_version
+npm install -g npm@latest >/dev/null
+npm config delete prefix
+npm config set fund false
+
+echo "Installed node version: `node --version`."
