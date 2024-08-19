@@ -8,7 +8,7 @@ trap cleanup ERR INT EXIT SIGHUP SIGINT SIGTERM
 file=${1:-.env}
 
 tmp=$(mktemp --suffix=.)
-cat $file | perl -pe 's/&/\\&/g ; s/^/export /' > $tmp
+cat $file | perl -ne 'if (/^.+$/ && /^(?!#)/) { s/&/\\&/g ; s/^/export / ; print }' > $tmp
 cat $tmp
 echo '# Needs to be source from current shell to take effect.'
 
