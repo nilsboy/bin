@@ -4,5 +4,4 @@
 
 source bash-helpers
 
-npm install -g serve
-serve --port 5001 .
+npx serve "$@"
