@@ -9,7 +9,7 @@ if ! [[ $1 ]] ; then
   cmd=bash
 fi
 
-image=ubuntu:16.04
+image=ubuntu:24.04
 container=ubuntu-test
 remove=--rm
 
@@ -28,6 +28,6 @@ mkdir -p $mount
 docker_home=/root/
 
 sudo docker run $remove --name $container \
-    -v $HOME/.bashrc:$docker_home/.bashrc \
+    -v $HOME/.bashrc:$docker_home/.bashrc:ro \
     -v $mount:$docker_home \
     -ti $image "$cmd"

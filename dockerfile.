@@ -27,8 +27,8 @@ fi
 sudo docker run \
   $env_option \
   $remove \
-  -v $HOME/.bashrc:/root/.bashrc-my \
-  -v $HOME/.bin:/root/.bin \
+  -v $HOME/.bashrc:/root/.bashrc-my:ro \
+  -v $HOME/.bin:/root/.bin:ro \
   -v $(pwd):/root/pwd \
   -ti \
   --entrypoint '' \

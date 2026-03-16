@@ -3,6 +3,7 @@
 # Find an unused port
 
 set -e
+set -o pipefail
 
 port=$1
 ports="32768..61000";
