@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+# ==========================================
+# Ollama Cloud Installer for Linux
+# ==========================================
+
+MODEL="${OLLAMA_MODEL:-gemma4:cloud}"
+
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+success() {
+    echo -e "${GREEN}[OK]${NC} $1"
+}
+
+error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+    exit 1
+}
+
+echo "======================================"
+echo "       OLLAMA CLOUD INSTALLER"
+echo "======================================"
+
+# Check Linux
+if [[ "$(uname -s)" != "Linux" ]]; then
+    error "This script supports Linux only."
+fi
+
+# Check dependencies
+command -v curl >/dev/null 2>&1 || error "Please install curl first."
+
+# Install Ollama
+if ! command -v ollama >/dev/null 2>&1; then
+    info "Installing Ollama..."
+    curl -fsSL https://ollama.com/install.sh | sh
+else
+    success "Ollama is already installed."
+fi
+
+# Verify installation
+command -v ollama >/dev/null 2>&1 || error "Ollama installation failed."
+
+success "Ollama installed successfully."
+
+# Start Ollama service
+if command -v systemctl >/dev/null 2>&1; then
+    info "Starting Ollama service..."
+
+    if systemctl list-unit-files ollama.service --no-legend |
+        grep -q ollama.service; then
+        sudo systemctl enable --now ollama
+    else
+        info "Ollama systemd service not found."
+    fi
+fi
+
+# Authenticate
+echo
+info "Please sign in to your Ollama account."
+ollama signin
+
+success "Ollama authentication completed."
+
+# Display version
+echo
+ollama --version
+
+# Launch cloud model
+echo
+info "Launching Ollama Cloud model: $MODEL"
+
+ollama run "$MODEL"
+
+echo
+success "Ollama Cloud session finished."
+
