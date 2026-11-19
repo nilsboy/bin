@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Create a public repo on github with the name of the current director and push contents
+
+set -e
+set -o pipefail
+
+gh repo create "$(basename "$PWD")" --public --source=. --remote=origin --push
