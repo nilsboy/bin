@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+    echo "Usage: $0 <size><+|-> [directory]"
+    echo
+    echo "Examples:"
+    echo "  $0 3g+ /home       # Files larger than 3 GB"
+    echo "  $0 1m- /var        # Files smaller than 1 MB"
+    echo "  $0 500k+ .         # Files larger than 500 KB"
+    echo
+    echo "Units: k, m, g, t (binary multiples of 1024)"
+    exit 1
+}
+
+[[ $# -ge 1 && $# -le 2 ]] || usage
+
+condition=$1
+directory=${2:-.}
+
+# Parse size condition, e.g. 3g+ or 1m-
+if [[ ! "$condition" =~ ^([0-9]+([.][0-9]+)?)([kKmMgGtT])([+-])$ ]]; then
+    echo "Error: Invalid size condition: $condition" >&2
+    usage
+fi
+
+size=${BASH_REMATCH[1]}
+unit=${BASH_REMATCH[3],,}
+operator=${BASH_REMATCH[4]}
+
+# Convert units to bytes.
+case "$unit" in
+    k) multiplier=1024 ;;
+    m) multiplier=$((1024 ** 2)) ;;
+    g) multiplier=$((1024 ** 3)) ;;
+    t) multiplier=$((1024 ** 4)) ;;
+esac
+
+bytes=$(awk -v size="$size" -v multiplier="$multiplier" \
+    'BEGIN { printf "%.0f\n", size * multiplier }')
+
+# Search recursively.
+if [[ "$operator" == "+" ]]; then
+    find "$directory" -type f -size +"${bytes}"c | sort -V
+else
+    find "$directory" -type f -size -"${bytes}"c | sort -V
+fi
+

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Default to the current directory if no path is provided
+SEARCH_DIR="${1:-.}"
+
+# Check that the directory exists
+if [[ ! -d "$SEARCH_DIR" ]]; then
+    echo "Error: '$SEARCH_DIR' is not a valid directory." >&2
+    exit 1
+fi
+
+# Find and list empty directories
+find "$SEARCH_DIR" -type d -empty -print

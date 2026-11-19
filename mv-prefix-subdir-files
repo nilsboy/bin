@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Default to dry-run mode
+EXECUTE=false
+
+if [[ "${1:-}" == "-x" ]]; then
+    EXECUTE=true
+elif [[ $# -gt 0 ]]; then
+    echo "Usage: $0 [-x]"
+    exit 1
+fi
+
+if [[ "$EXECUTE" == true ]]; then
+    echo "Execute mode: files will be renamed."
+else
+    echo "Dry-run mode: no files will be changed."
+fi
+echo
+
+# Process each immediate subdirectory of the current directory
+for dir in */; do
+    [[ -d "$dir" ]] || continue
+
+    # Remove trailing slash to get the directory name
+    dirname="${dir%/}"
+
+    # Process files directly inside the subdirectory
+    for file in "$dir"*; do
+        [[ -f "$file" ]] || continue
+
+        filename="${file##*/}"
+        newfile="$dir${dirname}_${filename}"
+
+        # Avoid overwriting existing files
+        if [[ -e "$newfile" ]]; then
+            echo "Skipping: $file (target already exists: $newfile)"
+            continue
+        fi
+
+        echo "Rename:"
+        echo "   $file"
+        echo "-> $newfile"
+        echo
+
+        if [[ "$EXECUTE" == true ]]; then
+            mv -v -- "$file" "$newfile"
+        fi
+    done
+done
+
+echo "Done."
+

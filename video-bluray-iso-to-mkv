@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# Usage:
+#   ./bluray-to-mkv.sh movie.iso [output.mkv]
+
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+    echo "Usage: $0 <bluray.iso> [output.mkv]"
+    exit 1
+fi
+
+ISO=$(realpath "$1")
+OUTPUT="${2:-$(basename "${ISO%.*}").mkv}"
+MOUNTPOINT=$(mktemp -d -p $PWD)
+
+# Cleanup on exit, including errors and interruptions.
+cleanup() {
+    local exit_code=$?
+
+    # Prevent recursive trap execution.
+    trap - EXIT INT TERM
+
+    if mountpoint -q "$MOUNTPOINT"; then
+        echo
+        echo "Unmounting Blu-ray ISO..."
+
+        if ! sudo umount "$MOUNTPOINT"; then
+            echo "Warning: Failed to unmount $MOUNTPOINT" >&2
+            echo "Unmount it manually when possible." >&2
+        fi
+    fi
+
+    rmdir "$MOUNTPOINT" 2>/dev/null || true
+
+    exit "$exit_code"
+}
+
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+# Validate input.
+if [[ ! -f "$ISO" ]]; then
+    echo "Error: ISO file not found: $ISO" >&2
+    exit 1
+fi
+
+if ! command -v ffmpeg >/dev/null 2>&1; then
+    echo "Error: ffmpeg is not installed." >&2
+    exit 1
+fi
+
+if ! command -v mountpoint >/dev/null 2>&1; then
+    echo "Error: mountpoint command not found." >&2
+    exit 1
+fi
+
+if [[ -e "$OUTPUT" ]]; then
+    echo "Error: Output file already exists: $OUTPUT" >&2
+    exit 1
+fi
+
+# Mount the ISO read-only.
+echo "Mounting Blu-ray ISO..."
+sudo mount -o loop,ro "$ISO" "$MOUNTPOINT"
+
+STREAM_DIR="$MOUNTPOINT/BDMV/STREAM"
+
+if [[ ! -d "$STREAM_DIR" ]]; then
+    echo "Error: No BDMV/STREAM directory found." >&2
+    exit 1
+fi
+
+# Find the largest M2TS file.
+echo
+echo "Finding the largest M2TS file..."
+
+MAIN_M2TS=$(
+    find "$STREAM_DIR" \
+        -maxdepth 1 \
+        -type f \
+        -iname '*.m2ts' \
+        -printf '%s\t%p\n' |
+    sort -nr |
+    head -n 1 |
+    cut -f2-
+)
+
+if [[ -z "$MAIN_M2TS" ]]; then
+    echo "Error: No M2TS files found." >&2
+    exit 1
+fi
+
+echo "Selected: $(basename "$MAIN_M2TS")"
+echo "Size: $(du -h "$MAIN_M2TS" | cut -f1)"
+echo "Output: $OUTPUT"
+
+# Convert without re-encoding.
+echo
+echo "Converting to MKV..."
+
+video-transcode-new "$MAIN_M2TS"
+
+# ffmpeg -hide_banner -stats \
+#     -i "$MAIN_M2TS" \
+#     -map 0:v? \
+#     -map 0:a? \
+#     -map 0:s? \
+#     -map_metadata 0 \
+#     -c copy \
+#     "$OUTPUT"
+
+echo
+echo "Conversion complete: $OUTPUT"
+

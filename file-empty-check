@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Checks whether a file is empty.
+# Usage: ./check-empty.sh <file>
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <file>" >&2
+    exit 2
+fi
+
+file=$1
+
+if [ ! -f "$file" ]; then
+    echo "Error: file does not exist or is not a regular file: $file" >&2
+    exit 2
+elif [ ! -s "$file" ]; then
+    echo "File is empty: $file" >&2
+    exit 1
+else
+    exit 0
+fi
+

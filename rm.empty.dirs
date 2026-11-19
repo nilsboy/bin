@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+EXECUTE=false
+ROOT="."
+
+for arg in "$@"; do
+    case "$arg" in
+        -x)
+            EXECUTE=true
+            ;;
+        --help|-h)
+            echo "Usage: $0 [DIRECTORY] [-x]"
+            echo "  DIRECTORY  Root directory to scan (default: current directory)"
+            echo "  -x  Actually remove empty subdirectories"
+            echo "  Default    Dry-run only; nothing is deleted"
+            exit 0
+            ;;
+        *)
+            if [[ "$arg" == -* ]]; then
+                echo "Error: Unknown option: $arg" >&2
+                exit 1
+            fi
+            ROOT="$arg"
+            ;;
+    esac
+done
+
+if [[ ! -d "$ROOT" ]]; then
+    echo "Error: Not a directory: $ROOT" >&2
+    exit 1
+fi
+
+if [[ "$EXECUTE" == true ]]; then
+    echo "EXECUTE MODE: Empty directories will be removed."
+else
+    echo "DRY-RUN MODE: No directories will be removed."
+fi
+
+echo "Scanning: $ROOT"
+echo
+
+# Process deepest directories first, excluding the root itself.
+while IFS= read -r -d '' dir; do
+    if [[ -z "$(find "$dir" -mindepth 1 -maxdepth 1 -print -quit)" ]]; then
+        if [[ "$EXECUTE" == true ]]; then
+            if rmdir -- "$dir" 2>/dev/null; then
+                echo "REMOVED: $dir"
+            else
+                echo "SKIPPED: $dir (not empty or inaccessible)"
+            fi
+        else
+            echo "WOULD REMOVE: $dir"
+        fi
+    fi
+done < <(find "$ROOT" -mindepth 1 -depth -type d -print0)
+
+echo
+echo "Done."
+

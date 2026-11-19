@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Set the display aspect ratio of any video to 16:9
+# without re-encoding.
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <input_video>"
+    exit 1
+fi
+
+INPUT="$1"
+
+if [ ! -f "$INPUT" ]; then
+    echo "Error: File not found: $INPUT"
+    exit 1
+fi
+
+# Extract filename and extension
+DIR=$(dirname "$INPUT")
+BASENAME=$(basename "$INPUT")
+NAME="${BASENAME%.*}"
+EXT="${BASENAME##*.}"
+
+# Output file
+OUTPUT="${DIR}/${NAME}_16x9.${EXT}"
+
+# Check FFmpeg availability
+if ! command -v ffmpeg >/dev/null 2>&1; then
+    echo "Error: FFmpeg is not installed."
+    exit 1
+fi
+
+# Change display aspect ratio to 16:9 without re-encoding
+ffmpeg -i "$INPUT" \
+    -map 0 \
+    -c copy \
+    -aspect 16:9 \
+    "$OUTPUT"
+
+if [ $? -eq 0 ]; then
+    echo "Success: $OUTPUT"
+else
+    echo "Error: FFmpeg conversion failed."
+    exit 1
+fi
+
